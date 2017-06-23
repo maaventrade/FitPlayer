@@ -44,7 +44,9 @@ public class FragmentEditor extends Fragment
 				@Override
 				public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
 				{
-
+					DialogEdit dialog = new DialogEdit(mContext);
+					dialog.show();
+					
 				}}
 		);	
 

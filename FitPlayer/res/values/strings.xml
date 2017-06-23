@@ -18,5 +18,8 @@
     <string name="error_saving_file">Error saving file</string>
     <string name="error_load_xml">Error loading xml</string>
     
-    
+    <string name="name">Name:</string>
+    <string name="text">Text:</string>
+    <string name="duration">Duration:</string>
+        
 </resources>
