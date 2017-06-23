@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="alex.mochalov.fitplayer.MainActivity" >
+
+    <item
+        android:id="@+id/action_pause"
+        android:orderInCategory="3"
+        android:showAsAction="always"
+        android:title="@string/action_pause"/>
+
+    <item
+        android:id="@+id/action_start"
+        android:orderInCategory="10"
+        android:showAsAction="always"
+        android:title="@string/action_start"/>
+
+</menu>
