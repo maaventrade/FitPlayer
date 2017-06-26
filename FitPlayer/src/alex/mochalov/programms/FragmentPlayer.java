@@ -6,6 +6,7 @@ import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+import android.util.*;
 
 public class FragmentPlayer extends Fragment
 {
@@ -25,7 +26,7 @@ public class FragmentPlayer extends Fragment
 
 	long restOfTime = 0;
 
-	private Folder mainFolder;
+	private Record mainFolder;
 	
 	public FragmentPlayer(Context context){
 		super();
@@ -53,9 +54,13 @@ public class FragmentPlayer extends Fragment
 
 		Bundle args = getArguments();
 		String name = args.getString("name", "");
-		
+		Log.d("","load");
 		mainFolder = Utils.loadXML(mContext, name);
 
+		Log.d("","mainFolder "+mainFolder);
+		//mainFolder.log();
+		
+		
         adapter = new AdapterPlayer(mContext, mainFolder);
 
 		listViewRecords.setAdapter(adapter);
@@ -79,7 +84,7 @@ public class FragmentPlayer extends Fragment
 				}}
 		);	
 
-        record = (Record)mainFolder.getFirstRecord();
+        record = mainFolder.getFirstRecord();
         
         if (record != null){
 
@@ -184,4 +189,26 @@ public class FragmentPlayer extends Fragment
 			timerHandler.removeCallbacks(timerRunnable);
 		}
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		switch (id){
+			case R.id.action_pause:
+				pause();
+				return true;
+			case R.id.action_settings:
+				return true;
+			case R.id.action_start:
+				start();
+				return true;
+			default:	
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
 }

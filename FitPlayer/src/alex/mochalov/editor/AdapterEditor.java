@@ -3,7 +3,7 @@ package alex.mochalov.editor;
 import java.util.ArrayList;
 
 import alex.mochalov.fitplayer.R;
-import alex.mochalov.record.Folder;
+
 import alex.mochalov.record.Record;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,23 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import alex.mochalov.record.*;
 
 public class AdapterEditor extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	
-	private Folder mainFolder;
+	private Record mainFolder;
 	private ArrayList<Record> records;
 
 	private boolean mEnabled;
 	
-	AdapterEditor(Context context, Folder folder) {
+	AdapterEditor(Context context, Record folder) {
 
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mainFolder = folder;
+		
 		records = mainFolder.getRecords(); 
-
+		
 		mEnabled = true;
 	}
 

@@ -2,13 +2,15 @@ package alex.mochalov.fitplayer;
 
 import alex.mochalov.editor.FragmentEditor;
 import alex.mochalov.programms.*;
-import alex.mochalov.record.Folder;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
 import android.view.*;
+import alex.mochalov.record.*;
+import android.util.*;
 
 public class MainActivity extends Activity implements OnInitListener{
 
@@ -23,7 +25,7 @@ public class MainActivity extends Activity implements OnInitListener{
 	
 	FragmentTransaction ft;
 	
-	Folder mainFolder;
+	Record mainFolder;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class MainActivity extends Activity implements OnInitListener{
 			    args.putString("name", text);
 			    fragmentPlayer.setArguments(args);
 			    
-				ft.add(R.id.frgmCont, fragmentPlayer);
+				ft.replace(R.id.frgmCont, fragmentPlayer);
 				ft.addToBackStack(null);
 				ft.commit();
 				
@@ -70,7 +72,7 @@ public class MainActivity extends Activity implements OnInitListener{
 			    args.putString("name", text);
 			    fragmentEditor.setArguments(args);
 				
-				ft.add(R.id.frgmCont, fragmentEditor);
+				ft.replace(R.id.frgmCont, fragmentEditor);
 				ft.addToBackStack(null);
 				ft.commit();
 				
@@ -108,14 +110,10 @@ public class MainActivity extends Activity implements OnInitListener{
 		int id = item.getItemId();
 		
 		switch (id){
-		case R.id.action_pause:
-			//fr.pause();
-			return true;
+		
 		case R.id.action_settings:
 			return true;
-		case R.id.action_start:
-			//fr.start();
-			return true;
+		
 		default:	
 			return super.onOptionsItemSelected(item);
 		}
@@ -146,35 +144,6 @@ public class MainActivity extends Activity implements OnInitListener{
 	}
 
 	
-	private void fillData() {
-		mainFolder = new Folder("Main folder");
-		mainFolder.addRecord("Record 1", 
-							 "Синоптики из центра погоды «Фобос» сообщили, что пока москвичам не стоит ждать потепления.",
-							 1000);
-		mainFolder.addRecord("Record 2", 
-							 "В столице 22 июня ожидается прохладная погода до +17 градусов. Специалисты прогнозируют кратковременные дожди, погода будет облачная с прояснениями. В последующие дни температура воздуха немного поднимется, однако в столичном регионе все еще будет высокая вероятность осадков.",
-							 2000);
-		mainFolder.addRecord("Record 3", 
-							 "В четверг характер погоды в Центральном регионе изменится мало. Местами пройдут кратковременные дожди, которые в сочетании с прохладными воздушными массами будут сдерживать прогрев воздуха, – сказал представитель «Фобоса».Впрочем, согласно предварительному прогнозу, в понедельник, 26 июня, будет уже тепло – до +28 градусов.",
-							 3000);
-
-		mainFolder.addRecord("Record 4", 
-							 "For the first generation of tablets running Android 3.0, the proper way to declare tablet layouts was to put them in a directory with the xlarge configuration qualifier (for example, res/layout-xlarge/). In ",
-							 4000);
-		mainFolder.addRecord("Record 5", 
-							 "For the first generation of tablets running Android 3.0, the proper way to declare tablet layouts was to put them in a directory with the xlarge configuration qualifier (for example, res/layout-xlarge/). In ",
-							 5000);
-		mainFolder.addRecord("Record 6", 
-							 "For the first generation of tablets running Android 3.0, the proper way to declare tablet layouts was to put them in a directory with the xlarge configuration qualifier (for example, res/layout-xlarge/). In ",
-							 6000);
-		mainFolder.addRecord("Record 7", 
-							 "For the first generation of tablets running Android 3.0, the proper way to declare tablet layouts was to put them in a directory with the xlarge configuration qualifier (for example, res/layout-xlarge/). In ",
-							 7000);
-		mainFolder.addRecord("Record 8", 
-							 "For the first generation of tablets running Android 3.0, the proper way to declare tablet layouts was to put them in a directory with the xlarge configuration qualifier (for example, res/layout-xlarge/). In ",
-							 8000);
-		
-		Utils.saveProgramm(this, "New programm.xml", mainFolder);
-	}
+	
 	
 }

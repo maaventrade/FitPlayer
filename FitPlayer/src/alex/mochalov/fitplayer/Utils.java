@@ -1,7 +1,5 @@
 package alex.mochalov.fitplayer;
 
-import alex.mochalov.record.Folder;
-import alex.mochalov.record.RecObject;
 import alex.mochalov.record.Record;
 import android.content.*;
 import android.os.*;
@@ -67,7 +65,7 @@ public class Utils {
 		webView.loadData(translation, "text/html; charset=utf-8", "UTF-8");
 	}
 
-	public static boolean saveProgramm(Context context, String fileName, Folder mainFolder) {
+	public static boolean saveProgramm(Context context, String fileName, Record mainFolder) {
 		try {
 
 			File file = new File(APP_FOLDER);
@@ -115,8 +113,10 @@ public class Utils {
 		
 	}
 
-	public static Folder loadXML(Context mContext, String name) {
-		Folder mainFolder = null; 
+	public static Record loadXML(Context mContext, String name) {
+		Record mainFolder = null; 
+		Record currentFolder = null; 
+		Record record = null; 
 		//strings.clear();
 		/*
 		 * try { progressDialog.setMax(Utils.countLines(name)); } catch
@@ -154,22 +154,43 @@ public class Utils {
 			while (eventType != XmlPullParser.END_DOCUMENT) {
 
 				if(eventType == XmlPullParser.START_DOCUMENT) {} 
+				else if(eventType == XmlPullParser.END_TAG) {
+					if(parser.getName() == "children")
+						currentFolder = null;
+				}
 				else if(eventType == XmlPullParser.START_TAG) {
-					Log.d("", "START "+parser.getName());
+					//Log.d("", "START "+parser.getName());
 					
 					if(parser.getName() == null);
-					else if(parser.getName().equals("folder")){
+					else if(parser.getName().equals("children")){
+						currentFolder = record;
+						//Log.d("","currentFolder "+currentFolder);
+					}
+					else if(parser.getName().equals("record")){
+						
+						int duration = 0;
+						if (parser.getAttributeValue(null, "duration") != null)
+						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
+						
+						record = new Record(parser.getAttributeValue(null, "name"),
+							parser.getAttributeValue(null, "text"),
+							duration);
+						
 						if (mainFolder == null){
-							Log.d("", "name "+parser.getAttributeValue(null, "name"));
-							mainFolder = new Folder(parser.getAttributeValue(null, "name"));
+							mainFolder = record;
+							//Log.d("","mainFolder "+mainFolder);
 						}
-					} else if(parser.getName().equals("record")){
-						Log.d("", "name "+parser.getAttributeValue(null, "name"));
-						Log.d("", "text "+parser.getAttributeValue(null, "text"));
-						Log.d("", "duration "+parser.getAttributeValue(null, "duration"));
-						mainFolder.addRecord(parser.getAttributeValue(null, "name"),
-								parser.getAttributeValue(null, "text"),
-								Integer.parseInt(parser.getAttributeValue(null, "duration")));
+						
+						if (currentFolder != null){
+							//Log.d("","currentFolder add "+currentFolder);
+							currentFolder.addRecord(record);
+						}
+						//Log.d("", "name "+parser.getAttributeValue(null, "name"));
+						//Log.d("", "text "+parser.getAttributeValue(null, "text"));
+						//Log.d("", "duration "+parser.getAttributeValue(null, "duration"));
+						//mainFolder.addRecord(parser.getAttributeValue(null, "name"),
+						//		parser.getAttributeValue(null, "text"),
+						//		Integer.parseInt(parser.getAttributeValue(null, "duration")));
 					}
 				} 
 				

@@ -11,9 +11,10 @@
     
     <string name="action_edit">Edit</string>
     <string name="action_add">Add</string>
-    <string name="action_delete">Deletr</string>
+    <string name="action_delete">Delete</string>
     <string name="action_go">Go</string>
-    
+    <string name="action_save">Save</string>
+	
     <string name="file_saved">File saved</string>
     <string name="error_saving_file">Error saving file</string>
     <string name="error_load_xml">Error loading xml</string>
@@ -22,4 +23,7 @@
     <string name="text">Text:</string>
     <string name="duration">Duration:</string>
         
+	<string name="ok">Ok</string>
+	<string name="cancel">Cancel</string>
+	
 </resources>

@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="alex.mochalov.fitplayer.MainActivity" >
 
- 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

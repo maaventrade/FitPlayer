@@ -19,6 +19,9 @@ public class TtsUtils
 
 	public static void speak(String text)
 	{
+		
+		Toast.makeText(mContext,text,Toast.LENGTH_LONG).show();
+		
 		String[] textArray = text.split(":");
 		//Log.d("d", "text "+text+" "+textArray.length);
 		for (String s: textArray){

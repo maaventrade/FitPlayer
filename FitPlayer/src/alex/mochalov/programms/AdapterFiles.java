@@ -2,7 +2,7 @@ package alex.mochalov.programms;
 
 import java.util.ArrayList;
 
-import alex.mochalov.record.Folder;
+
 import alex.mochalov.record.Record;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ public class AdapterFiles extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	
-	private Folder mainFolder;
+	private Record mainFolder;
 	private ArrayList<String> mObjects;
 
 	AdapterFiles(Context context, ArrayList<String> objects) {

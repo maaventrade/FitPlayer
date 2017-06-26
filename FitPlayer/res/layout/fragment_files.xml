@@ -1,20 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-    
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
 	<TextView
-	    android:id="@+id/TextViewTimer"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:text="@string/timers"
-	    android:textAppearance="?android:attr/textAppearanceLarge" />
+		android:id="@+id/TextViewTimer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/timers"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:background="@color/bronze_light2"/>
 
 	<ListView
 		android:id="@+id/ListViewFiles"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_weight="0.9" />
-	
-	
+		android:layout_weight="0.9"/>
+
 </LinearLayout>
+
