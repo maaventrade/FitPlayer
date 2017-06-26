@@ -35,9 +35,9 @@ public class FragmentPlayer extends Fragment
 
 	public void start()
 	{
-		record = mainFolder.getRecord();
-		if (record != null)
-			start(record);
+		//record = mainFolder.getRecord();
+		//if (record != null)
+		//	start(record);
 	}
 
 
@@ -75,7 +75,7 @@ public class FragmentPlayer extends Fragment
 
 			        } else {
 
-			            record = mainFolder.setRecord(index);
+			            //record = mainFolder.setRecord(index);
 			        	listViewRecords.setItemChecked(index, true);
 			            setTextViewTimer(record.getDuration());
 
@@ -84,7 +84,7 @@ public class FragmentPlayer extends Fragment
 				}}
 		);	
 
-        record = mainFolder.getFirstRecord();
+//        record = mainFolder.getFirstRecord();
         
         if (record != null){
 
@@ -143,11 +143,11 @@ public class FragmentPlayer extends Fragment
 	}
 
 	private boolean getNextRecord(){
-        record = mainFolder.getNextRecord();
+       // record = mainFolder.getNextRecord();
 
         if (record != null){
 
-        	int position = mainFolder.getIndex();
+        	int position = 0; // mainFolder.getIndex();
     		listViewRecords.setItemChecked(position, true);
     		listViewRecords.smoothScrollToPositionFromTop(position, 0, 500);
 

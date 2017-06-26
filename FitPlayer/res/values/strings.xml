@@ -11,6 +11,7 @@
     
     <string name="action_edit">Edit</string>
     <string name="action_add">Add</string>
+    <string name="action_add_child">Add child</string>
     <string name="action_delete">Delete</string>
     <string name="action_go">Go</string>
     <string name="action_save">Save</string>

@@ -65,36 +65,6 @@ public class Utils {
 		webView.loadData(translation, "text/html; charset=utf-8", "UTF-8");
 	}
 
-	public static boolean saveProgramm(Context context, String fileName, Record mainFolder) {
-		try {
-
-			File file = new File(APP_FOLDER);
-			if(!file.exists()){                          
-				file.mkdirs();                  
-			}
-			file = new File(APP_FOLDER, fileName);
-			
-			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-
-			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>"+"\n");
-			writer.write("<body>"+"\n");
-
-			mainFolder.writeToFile(context, writer, mainFolder);
-			
-			writer.write("</body>"+"\n");
-
-			writer.close();
-			Toast.makeText(context,
-					context.getResources().getString(R.string.file_saved)+" "+fileName, Toast.LENGTH_LONG)
-					.show();
-		} catch (IOException e) {
-			//Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
-			Toast.makeText(context, context.getResources().getString(R.string.error_saving_file) +" "+e , Toast.LENGTH_LONG).show();
-			return false;
-		}
-		return true;
-	}
-
 	public static void readFilesList(ArrayList<String> programms) {
 		
 		File file = new File(APP_FOLDER);
@@ -183,7 +153,7 @@ public class Utils {
 						
 						if (currentFolder != null){
 							//Log.d("","currentFolder add "+currentFolder);
-							currentFolder.addRecord(record);
+							//currentFolder.addRecord(record);
 						}
 						//Log.d("", "name "+parser.getAttributeValue(null, "name"));
 						//Log.d("", "text "+parser.getAttributeValue(null, "text"));
@@ -206,6 +176,28 @@ public class Utils {
 			Toast.makeText(mContext, mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString(), Toast.LENGTH_LONG).show();
 		}
 		return mainFolder;
+	}
+
+	public static String MStoString(long l) {
+		int d1 = (int)(l/60000);
+		int d2 = (int)l/1000 - (int)(l/60000) * 60;
+		
+		String s1 = "";
+		String s2 = "";
+		
+		if (d1 <= 0)
+			s1 = "00";
+		else if (d1 < 10)
+			s1 = "0"+d1;
+		else s1 = ""+d1;
+		
+		if (d2 <= 0)
+			s2 = "00";
+		else if (d2 < 10)
+			s2 = "0"+d2;
+		else s2 = ""+d2;
+		
+		return s1+":"+s2;
 	}
 
 	

@@ -13,13 +13,18 @@
         android:showAsAction="always"
         android:title="@string/action_add"/>
     <item
-        android:id="@+id/action_delete"
+        android:id="@+id/action_add_child"
         android:orderInCategory="5"
+        android:showAsAction="always"
+        android:title="@string/action_add_child"/>
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="6"
         android:showAsAction="always"
         android:title="@string/action_delete"/>
     <item
         android:id="@+id/action_save"
-        android:orderInCategory="6"
+        android:orderInCategory="7"
         android:showAsAction="always"
         android:title="@string/action_save"/>
 

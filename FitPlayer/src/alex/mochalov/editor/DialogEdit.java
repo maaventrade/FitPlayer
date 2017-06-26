@@ -16,11 +16,14 @@ public class DialogEdit extends Dialog
 
 	private Context mContext;
 	private Dialog dialog;
-	private Record mObject;
+	private Record record;
 	
-	AdapterEditor mAdapter;
+	AdapterEditorExp mAdapter;
 	
 	private EditText name;
+	private EditText text;
+	private EditText duration;
+	
 	private Button btnOk;
 	private Button btnCancel;
 	
@@ -29,15 +32,15 @@ public class DialogEdit extends Dialog
 		void callbackACTION_DOWN(int bgID); 
 	} 
 
-	public DialogEdit(Context context, Record object, AdapterEditor adapter) {
+	public DialogEdit(Context context, Record object, AdapterEditorExp adapter) {
 		super(context);
 		mContext = context;
 		dialog = this;
-		mObject = object;
+		record = object;
 		
 		mAdapter = adapter;
 		
-		Log.d(""," mObject "+mObject);
+		Log.d(""," record "+record);
 		//setTitle(context.getResources().getString(R.string.select_canvas));
 	}
 
@@ -51,18 +54,16 @@ public class DialogEdit extends Dialog
 		setContentView(R.layout.dialog_edit);
 	
 		name = (EditText)findViewById(R.id.editTextName);
-		name.setText(mObject.getName());
+		name.setText(record.getName());
 
 		final TextView textView3 = (TextView)findViewById(R.id.textView3);
 		
+		text = (EditText)findViewById(R.id.editTextText);
+		text.setText(record.getText());
 		
-		EditText text = (EditText)findViewById(R.id.editTextText);
-		text.setText(mObject.getText());
-		
-		final EditText duration1 = (EditText)findViewById(R.id.editTextDuration1);
-		
-		
-		duration1.addTextChangedListener(new TextWatcher(){
+		duration = (EditText)findViewById(R.id.editTextDuration1);
+				
+		duration.addTextChangedListener(new TextWatcher(){
 
 				@Override
 				public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -77,28 +78,10 @@ public class DialogEdit extends Dialog
 					
 					int i = z.indexOf(":");
 					if (s.length() == 2){
-						duration1.setText(s+":");
-						duration1.setSelection(3);
+						duration.setText(s+":");
+						duration.setSelection(3);
 						
 					}
-
-					
-					//duration1.setText(z);
-					//if (z.length()
-					/*
-					if (!Character.isDigit(z.charAt(0)))
-						z = "0"+z.substring(1);
-					if (!Character.isDigit(z.charAt(1)))
-						z = z.substring(0,1)+"0"+z.substring(2);
-					
-					if (z.charAt(2) != ':' )
-						z = z.substring(0,2)+":"+z.substring(3);
-						
-					if (!Character.isDigit(z.charAt(3)))
-						z = z.substring(0,3)+"0"+z.substring(4);
-					if (!Character.isDigit(z.charAt(4)))
-						z = z.su bstring(0,4)+"0";
-						*/
 					textView3.setText("*"+s+"* "+start+" "+before+" "+count);
 				}
 
@@ -110,13 +93,25 @@ public class DialogEdit extends Dialog
 			});
 		
 		
-		//duration1.setText("00:00");
+		long l = record.getDuration();
+		
+		if (l == 0){
+			duration.setText("");
+		} else {
+			duration.setText(Utils.MStoString(l));
+		}
+		
 		
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
 		btnOk.setOnClickListener(new Button.OnClickListener(){
 				@Override
 				public void onClick(View p1)
-				{mObject.setName(name.getText());
+				{
+					
+					record.setName(name.getText());
+					record.setText(text.getText());
+					record.setDuration(duration.getText());
+					
 					mAdapter.notifyDataSetChanged();
 					dialog.dismiss();
 				}

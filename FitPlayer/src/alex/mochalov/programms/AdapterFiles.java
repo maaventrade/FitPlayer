@@ -2,13 +2,15 @@ package alex.mochalov.programms;
 
 import java.util.ArrayList;
 
-
 import alex.mochalov.record.Record;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import alex.mochalov.fitplayer.*;
 
@@ -47,13 +49,24 @@ public class AdapterFiles extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		if (convertView == null) { 
 			convertView = inflater.inflate(R.layout.item_files, null);
 		}
 				
+		final ListView listView = (ListView) parent;
 		TextView textViewName = (TextView)convertView.findViewById(R.id.TextViewName);
 		//TextView textViewText = (TextView)convertView.findViewById(R.id.TextViewText);
+		
+		ImageButton brnEdit = (ImageButton)convertView.findViewById(R.id.imageButtonEdit);
+		brnEdit.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				listView.performItemClick(listView.getChildAt(position), position, 
+						listView.getItemIdAtPosition(position));
+			}});
+		
+		ImageButton brnAdd = (ImageButton)convertView.findViewById(R.id.imageButtonAdd); 
 		
     	textViewName.setText(mObjects.get(position));
 		

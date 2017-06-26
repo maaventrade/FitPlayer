@@ -6,4 +6,6 @@
 
     <dimen name="huge_text">100sp</dimen>
     
+    <dimen name="item_padding">20sp</dimen>
+    
 </resources>

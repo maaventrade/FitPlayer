@@ -1,0 +1,223 @@
+package alex.mochalov.record;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import alex.mochalov.fitplayer.R;
+import alex.mochalov.fitplayer.Utils;
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+public class Programm {
+	
+	private static Record main;
+
+	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
+	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();	
+	
+	public static ArrayList<Record> getGroups() {
+		return listDataHeader;
+	}
+
+	public static HashMap<Record, List<Record>> getChilds() {
+		return listDataChild;
+	}
+
+	public static boolean loadXML(Context mContext, String fileName) {
+
+		listDataHeader.clear();
+		listDataChild.clear();
+		
+		Record currentGroup = null; 
+		Record record = null; 
+
+		try {
+			
+			String name = Utils.APP_FOLDER + "/" + fileName;
+			
+			Log.d("a","start "+name);
+			BufferedReader reader;
+			BufferedReader rd = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
+			
+			String line = rd.readLine();
+			
+			rd.close();
+			
+			if (line.toLowerCase().contains("windows-1251"))
+				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "windows-1251")); //Cp1252
+			else if (line.toLowerCase().contains("utf-8"))
+				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "UTF-8")); 
+			else if (line.toLowerCase().contains("utf-16"))
+				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "utf-16"));
+			else
+				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
+
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
+			factory.setNamespaceAware(true);         
+			XmlPullParser parser = factory.newPullParser();
+			
+			parser.setInput(reader);
+			
+			int eventType = parser.getEventType();         
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+
+				if(eventType == XmlPullParser.START_DOCUMENT) {} 
+				else if(eventType == XmlPullParser.END_TAG) {
+					Log.d("", "END "+parser.getName());
+					if(parser.getName().equals("children")){
+						currentGroup = null;
+						Log.d("", "currentGroup = null ");
+					}
+				}
+				else if(eventType == XmlPullParser.START_TAG) {
+					Log.d("", "START "+parser.getName());
+					
+					if(parser.getName() == null);
+					else if(parser.getName().equals("children")){
+						currentGroup = record;
+						listDataChild.put(currentGroup, new ArrayList<Record>());
+						Log.d("", "currentGroup = record "+record.getName());
+					}
+					else if(parser.getName().equals("record")){
+						
+						int duration = 0;
+						if (parser.getAttributeValue(null, "duration") != null)
+						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
+						
+						record = new Record(parser.getAttributeValue(null, "name"),
+							parser.getAttributeValue(null, "text"),
+							duration);
+						
+						if (currentGroup != null){
+							listDataChild.get(currentGroup).add(record);
+							Log.d("", "add data "+record.getName());
+						} else {
+							listDataHeader.add(record);
+							Log.d("", "add group "+record.getName());
+						}
+						
+					}
+				} 
+				
+				try {
+					eventType = parser.next();
+				}
+				catch (XmlPullParserException  e) {
+				}
+			}
+			
+					
+		} catch (Throwable t) {
+			Toast.makeText(mContext, mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString(), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		return true;
+	}
+
+	public static Record getGroup(int index) {
+		return listDataHeader.get(index);
+	}
+
+	public static Record getItem(int groupPosition, int childPosition) {
+		Record group = listDataHeader.get(groupPosition);
+		return listDataChild.get(group).get(childPosition);
+	}
+
+	public static void deleteRecord(Record selectedRecord) {
+		listDataHeader.remove(selectedRecord);
+		listDataChild.remove(selectedRecord);
+	}
+
+	public static Record addRecord(Record selectedRecord) {
+		Record record = new Record("New record");
+		
+		if (selectedRecord == null){
+			listDataHeader.add(record);
+		} else {
+			listDataHeader.add(listDataHeader.indexOf(selectedRecord)+1, record);
+		}
+		
+		return record;
+	}
+
+	public static Record addCHildRecord(Record selectedRecord) {
+		Record record = new Record("New record");
+		
+		if (listDataChild.get(selectedRecord) == null){
+			ArrayList<Record> newArray = new ArrayList<Record>();
+			newArray.add(record);
+			listDataChild.put(selectedRecord, newArray);
+		} else {
+			listDataChild.get(selectedRecord).add(record);
+		}
+		
+		return null;
+	}
+
+	public static boolean save(Context mContext, String fileName) {
+		try {
+
+			File file = new File(Utils.APP_FOLDER);
+			if(!file.exists()){                          
+				file.mkdirs();                  
+			}
+			file = new File(Utils.APP_FOLDER, fileName);
+			
+			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+
+			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>"+"\n");
+			writer.write("<body>"+"\n");
+
+			for (Record r: listDataHeader){
+				writer.write("<record name=\""
+						 +r.getName()+"\""
+						 +" text=\""+r.getText()+"\""
+						 +" duration=\""+r.getDuration()+"\""
+						 +">"+"\n");
+				
+				if (listDataChild.get(r) != null){
+					writer.write("<children>"+"\n");
+					for (Record l: listDataChild.get(r)){
+						writer.write("<record name=\""
+								 +l.getName()+"\""
+								 +" text=\""+l.getText()+"\""
+								 +" duration=\""+l.getDuration()+"\""
+								 +">"+"\n");
+						writer.write("</record>"+"\n");
+					}
+					writer.write("</children>"+"\n");
+				}
+				writer.write("</record>"+"\n");
+			}
+			
+			writer.write("</body>"+"\n");
+
+			writer.close();
+			Toast.makeText(mContext,
+					mContext.getResources().getString(R.string.file_saved)+" "+fileName, Toast.LENGTH_LONG)
+					.show();
+		} catch (IOException e) {
+			//Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
+			Toast.makeText(mContext, mContext.getResources().getString(R.string.error_saving_file) +" "+e , Toast.LENGTH_LONG).show();
+			return false;
+		}
+		return true;
+	}
+	
+}

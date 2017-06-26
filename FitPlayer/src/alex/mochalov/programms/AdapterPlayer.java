@@ -26,7 +26,7 @@ public class AdapterPlayer extends BaseAdapter {
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mainFolder = folder;
-		records = mainFolder.getRecords(); 
+		//records = mainFolder.getRecords(); 
 
 		mEnabled = true;
 	}

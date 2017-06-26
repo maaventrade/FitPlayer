@@ -46,37 +46,46 @@ public final class R {
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
         public static final int huge_text=0x7f050002;
+        public static final int item_padding=0x7f050003;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int item_background_selector=0x7f020001;
-        public static final int item_background_selector1=0x7f020002;
-        public static final int item_text_selector=0x7f020003;
-        public static final int item_text_selector1=0x7f020004;
+        public static final int add0=0x7f020000;
+        public static final int add1=0x7f020001;
+        public static final int edit0=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int item_background_selector=0x7f020004;
+        public static final int item_background_selector1=0x7f020005;
+        public static final int item_text_selector=0x7f020006;
+        public static final int item_text_selector1=0x7f020007;
+        public static final int selector_list_item=0x7f020008;
     }
     public static final class id {
         public static final int ListViewFiles=0x7f09000c;
         public static final int ListViewRecords=0x7f09000a;
+        public static final int TextViewDuration=0x7f09000e;
         public static final int TextViewFileName=0x7f090009;
         public static final int TextViewName=0x7f09000d;
-        public static final int TextViewText=0x7f09000e;
+        public static final int TextViewText=0x7f09000f;
         public static final int TextViewTimer=0x7f09000b;
-        public static final int action_add=0x7f090010;
-        public static final int action_delete=0x7f090011;
-        public static final int action_edit=0x7f09000f;
-        public static final int action_go=0x7f090013;
-        public static final int action_pause=0x7f090014;
-        public static final int action_save=0x7f090012;
-        public static final int action_settings=0x7f090016;
-        public static final int action_start=0x7f090015;
-        public static final int dialogeditButtonCancel=0x7f090008;
-        public static final int dialogeditButtonOk=0x7f090007;
+        public static final int action_add=0x7f090013;
+        public static final int action_add_child=0x7f090014;
+        public static final int action_delete=0x7f090015;
+        public static final int action_edit=0x7f090012;
+        public static final int action_go=0x7f090017;
+        public static final int action_pause=0x7f090018;
+        public static final int action_save=0x7f090016;
+        public static final int action_settings=0x7f09001a;
+        public static final int action_start=0x7f090019;
+        public static final int dialogeditButtonCancel=0x7f090002;
+        public static final int dialogeditButtonOk=0x7f090001;
         public static final int editTextDuration1=0x7f090006;
-        public static final int editTextName=0x7f090002;
-        public static final int editTextText=0x7f090004;
+        public static final int editTextName=0x7f090004;
+        public static final int editTextText=0x7f090008;
         public static final int frgmCont=0x7f090000;
-        public static final int textView1=0x7f090001;
-        public static final int textView2=0x7f090003;
+        public static final int imageButtonAdd=0x7f090011;
+        public static final int imageButtonEdit=0x7f090010;
+        public static final int textView1=0x7f090003;
+        public static final int textView2=0x7f090007;
         public static final int textView3=0x7f090005;
     }
     public static final class layout {
@@ -85,9 +94,10 @@ public final class R {
         public static final int fragment_editor=0x7f030002;
         public static final int fragment_files=0x7f030003;
         public static final int fragment_player=0x7f030004;
-        public static final int item_editor=0x7f030005;
-        public static final int item_files=0x7f030006;
-        public static final int item_player=0x7f030007;
+        public static final int item_editor_child=0x7f030005;
+        public static final int item_editor_group=0x7f030006;
+        public static final int item_files=0x7f030007;
+        public static final int item_player=0x7f030008;
     }
     public static final class menu {
         public static final int fragment_editor=0x7f080000;
@@ -97,22 +107,23 @@ public final class R {
     }
     public static final class string {
         public static final int action_add=0x7f060007;
-        public static final int action_delete=0x7f060008;
+        public static final int action_add_child=0x7f060008;
+        public static final int action_delete=0x7f060009;
         public static final int action_edit=0x7f060006;
-        public static final int action_go=0x7f060009;
+        public static final int action_go=0x7f06000a;
         public static final int action_pause=0x7f060005;
-        public static final int action_save=0x7f06000a;
+        public static final int action_save=0x7f06000b;
         public static final int action_settings=0x7f060003;
         public static final int action_start=0x7f060004;
         public static final int app_name=0x7f060000;
-        public static final int cancel=0x7f060012;
-        public static final int duration=0x7f060010;
-        public static final int error_load_xml=0x7f06000d;
-        public static final int error_saving_file=0x7f06000c;
-        public static final int file_saved=0x7f06000b;
-        public static final int name=0x7f06000e;
-        public static final int ok=0x7f060011;
-        public static final int text=0x7f06000f;
+        public static final int cancel=0x7f060013;
+        public static final int duration=0x7f060011;
+        public static final int error_load_xml=0x7f06000e;
+        public static final int error_saving_file=0x7f06000d;
+        public static final int file_saved=0x7f06000c;
+        public static final int name=0x7f06000f;
+        public static final int ok=0x7f060012;
+        public static final int text=0x7f060010;
         public static final int timers=0x7f060001;
         public static final int zero=0x7f060002;
     }
