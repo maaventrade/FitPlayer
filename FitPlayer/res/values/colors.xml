@@ -32,5 +32,7 @@
 	<color name= "salad">#C6FFC7</color>
 		
 	<color name= "yellow">#FFFF00</color>
-						
+
+	<color name= "transparent">#FF000000</color>
+								
 </resources>

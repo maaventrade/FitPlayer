@@ -61,6 +61,10 @@ public class Record {
 		mText = text.toString();
 	}
 
+	public void setText(String text) {
+		mText = text;
+	}
+
 	public void setDuration(Editable text) {
 		String s = text.toString();
 		
@@ -75,6 +79,10 @@ public class Record {
 		}
 		
 		
+	}
+
+	public void setDuration(long duration) {
+		mDuration = duration;
 	}
 
 	

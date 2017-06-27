@@ -13,16 +13,19 @@ import android.widget.*;
 
 public class MainActivity extends Activity implements OnInitListener{
 
-	FragmentFiles fp;
+	FragmentFiles fragmentFiles;
 	FragmentPlayer fragmentPlayer;
 	FragmentEditor fragmentEditor;
+	
+	String TAG_FRAGMENT_FILES = "TAG_FRAGMENT_FILES";
+	String TAG_FRAGMENT_PLAYER = "TAG_FRAGMENT_PLAYER";
+	String TAG_FRAGMENT_EDITOR = "TAG_FRAGMENT_EDITOR";
 	
 	Context mContext;
 
 	int MY_DATA_CHECK_CODE = 0;
 	boolean  langSupported;
 	
-	FragmentTransaction ft;
 	
 	Record mainFolder;
 	
@@ -36,69 +39,76 @@ public class MainActivity extends Activity implements OnInitListener{
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
         
-		//fillData();
-		
-		fp = new FragmentFiles(this);
-		fragmentPlayer = new FragmentPlayer(this);
-		fragmentEditor = new FragmentEditor(this);
-		/*
-		fp.listener = new FragmentFiles.
-			OnStartProgrammListener(){
 
-			@Override
-			public void onGoSelected(String text)
-			{
-				Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
-				try{
-				
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
-				
-				Bundle args = new Bundle();
-			    args.putString("name", text);
-			    fragmentPlayer.setArguments(args);
-			    
-				ft.replace(R.id.frgmCont, fragmentPlayer);
-				ft.addToBackStack(null);
-				
-				
-				ft.commit();
-				} catch(Error e){
-					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-				}
-				
-			}
+		if (savedInstanceState != null){
+			fragmentFiles = (FragmentFiles)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILES);
+			fragmentFiles.setParams(this);
 
-			@Override
-			public void onEditSelected(String text)
-			{
-				
-				ft = getFragmentManager().beginTransaction();
-				
-				Bundle args = new Bundle();
-			    args.putString("name", text);
-			    fragmentEditor.setArguments(args);
-				
-				ft.replace(R.id.frgmCont, fragmentEditor);
-				ft.addToBackStack(null);
-				ft.commit();
-				
-			}
+			fragmentPlayer = (FragmentPlayer)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_PLAYER);
+			if (fragmentPlayer != null)
+				fragmentPlayer.setParams(this);
+			else
+				fragmentPlayer = new FragmentPlayer(this);
+
+			fragmentEditor = (FragmentEditor)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_EDITOR);
+			if (fragmentEditor != null)
+				fragmentEditor.setParams(this);
+			else
+				fragmentEditor = new FragmentEditor(this);
 			
+			//Utils.setRandomize( savedInstanceState.getBoolean(RANDOMIZE));
+			//Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
+			//Dictionary.setDictionaryName(savedInstanceState.getString(DIC));
+			//Dictionary.setLastWord(savedInstanceState.getString(DIC_LASTWORD));
+			//Dictionary.setText(savedInstanceState.getString(DIC_TEXT));
+			
+		} else {
+			fragmentFiles = new FragmentFiles(this);
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			ft.add(R.id.frgmCont, fragmentFiles, TAG_FRAGMENT_FILES);
+			ft.commit();
 
-		};
-		*/
-		ft = getFragmentManager().beginTransaction();
-		ft.add(R.id.frgmCont, fp);
-		ft.commit();
+			fragmentPlayer = new FragmentPlayer(this);
+			fragmentEditor = new FragmentEditor(this);
+			
+			//Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
+		}		
 	}
 
 	
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+
+		//MenuData.setText(savedInstanceState.getString(MTEXT));
+		//Utils.setRandomize(savedInstanceState.getBoolean(RANDOMIZE));
+		//Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
+		
+		//Log.d("aaa", "SET HELPTEXTSCALE "+savedInstanceState.getInt(HELPTEXTSCALE));
+		
+		//MenuData.putRandomizationOrder(savedInstanceState.getIntArray(RANDOMIZATION_ORDER));
+		
+	}
+
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		//outState.putString(MTEXT, MenuData.getText());
+		//outState.putBoolean(RANDOMIZE, Utils.getRandomize());
+		//outState.putIntArray(RANDOMIZATION_ORDER, MenuData.getRandomizationOrder());
+		
+		//outState.putInt( HELPTEXTSCALE, Utils.getScale());
+		
+		//outState.putString( DIC, Dictionary.getDictionaryName());
+		//outState.putString(DIC_LASTWORD, Dictionary.getLastWord());
+		//outState.putString(DIC_TEXT, Dictionary.getText());
+		//Log.d("aaa", "PUT "+Utils.getScale());
+	}
+	
 	@Override
     public void onPause() {
-		
-        super.onPause();
 		TtsUtils.destroy();
 		
+        super.onPause();
     }	
 
 	@Override

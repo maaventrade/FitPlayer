@@ -32,7 +32,15 @@ public class FragmentPlayer extends Fragment
 		super();
 		mContext = context;
 	}
-
+	
+	public FragmentPlayer(){
+		super();
+	}
+	
+	public void setParams(Context context){
+		mContext = context;
+	}
+	
 	public void start()
 	{
 		//record = mainFolder.getRecord();

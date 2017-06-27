@@ -33,6 +33,13 @@ public class FragmentFiles extends Fragment
 		mContext = context;
 	}
 	
+	public FragmentFiles(){
+		super();
+	}
+	
+	public void setParams(Activity context){
+		mContext = context;
+	}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,14 +106,6 @@ public class FragmentFiles extends Fragment
 		int id = item.getItemId();
 		
 		switch (id){
-		case R.id.action_edit:
-				
-			if (listener != null && selectedString.length() > 0)
-				listener.onEditSelected(selectedString);
-			
-			return true;
-		case R.id.action_add:
-			return true;
 		case R.id.action_delete:
 			//fr.start();
 			return true;

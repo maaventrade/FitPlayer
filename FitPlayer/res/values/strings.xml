@@ -15,7 +15,8 @@
     <string name="action_delete">Delete</string>
     <string name="action_go">Go</string>
     <string name="action_save">Save</string>
-	
+    <string name="action_copy">Copy</string>
+    	
     <string name="file_saved">File saved</string>
     <string name="error_saving_file">Error saving file</string>
     <string name="error_load_xml">Error loading xml</string>

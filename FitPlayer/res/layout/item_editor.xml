@@ -1,15 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/bronze_light3"
-    android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants" 
+	android:background="@drawable/item_background_selector1"
+    android:orientation="horizontal" >
 
+	
 	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@color/bronze_light1"
-	    android:orientation="horizontal"
-	    android:paddingLeft="@dimen/item_padding" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/item_padding" >
 		
     <LinearLayout
         android:id="@+id/LayoutChild"
@@ -59,31 +61,21 @@
 			android:layout_height="match_parent" >
 
 			<ImageButton
-			    android:id="@+id/imageButtonEdit"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:src="@drawable/edit0" />
+				android:id="@+id/imageButtonEdit"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@null"
+				android:src="@drawable/edit0" />
 
 			<ImageButton
-			    android:id="@+id/imageButtonGo"
+			    android:id="@+id/imageButtonAdd"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:src="@drawable/go" />
+			    android:background="@null"
+			    android:src="@drawable/add0" />
 
 		</LinearLayout>
 		
 	</LinearLayout>
-		
-	<ExpandableListView
-	    android:id="@+id/ListViewRecords"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_weight="0.9"
-	    android:choiceMode="singleChoice"
-	    android:indicatorLeft="250dp"
-	    android:indicatorRight="300dp" 
-	    android:layoutDirection="rtl" 
-	    android:listSelector = "@drawable/selector_list_item"
-	    />
-	
 </LinearLayout>
+

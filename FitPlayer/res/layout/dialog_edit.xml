@@ -12,11 +12,12 @@
 		android:orientation="horizontal">
 
 		<Button
-			android:layout_height="wrap_content"
-			android:text="@string/ok"
-			android:layout_width="match_parent"
-			android:layout_weight="0.5"
-			android:id="@+id/dialogeditButtonOk"/>
+		    android:id="@+id/dialogeditButtonOk"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0.5"
+		    android:selectAllOnFocus="@bool/select_all"
+		    android:text="@string/ok" />
 
 		<Button
 			android:layout_height="wrap_content"
@@ -41,11 +42,12 @@
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 		<EditText
-			android:id="@+id/editTextName"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:ems="10">
+		    android:id="@+id/editTextName"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:ems="10"
+		    android:selectAllOnFocus="@bool/select_all" >
 
 			<requestFocus/>
 
@@ -101,6 +103,7 @@
 		    android:ems="10"
 		    android:inputType="textMultiLine"
 		    android:lines="2"
+		    android:selectAllOnFocus="@bool/select_all"
 		    android:singleLine="false" >
 
 			<requestFocus/>

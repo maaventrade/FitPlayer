@@ -12,6 +12,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -21,11 +22,12 @@ import alex.mochalov.fitplayer.R;
 import alex.mochalov.fitplayer.Utils;
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Programm {
 	
-	private static Record main;
+	private static Record main = new Record("New programm");
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();	
@@ -88,7 +90,18 @@ public class Programm {
 					Log.d("", "START "+parser.getName());
 					
 					if(parser.getName() == null);
-					else if(parser.getName().equals("children")){
+					else if(parser.getName().equals("main")){
+						
+						int duration = 0;
+						if (parser.getAttributeValue(null, "duration") != null)
+						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
+						
+						main = new Record(parser.getAttributeValue(null, "name"),
+							parser.getAttributeValue(null, "text"),
+							duration);
+						
+					}
+						else if(parser.getName().equals("children")){
 						currentGroup = record;
 						listDataChild.put(currentGroup, new ArrayList<Record>());
 						Log.d("", "currentGroup = record "+record.getName());
@@ -105,10 +118,8 @@ public class Programm {
 						
 						if (currentGroup != null){
 							listDataChild.get(currentGroup).add(record);
-							Log.d("", "add data "+record.getName());
 						} else {
 							listDataHeader.add(record);
-							Log.d("", "add group "+record.getName());
 						}
 						
 					}
@@ -144,18 +155,6 @@ public class Programm {
 		listDataChild.remove(selectedRecord);
 	}
 
-	public static Record addRecord(Record selectedRecord) {
-		Record record = new Record("New record");
-		
-		if (selectedRecord == null){
-			listDataHeader.add(record);
-		} else {
-			listDataHeader.add(listDataHeader.indexOf(selectedRecord)+1, record);
-		}
-		
-		return record;
-	}
-
 	public static Record addCHildRecord(Record selectedRecord) {
 		Record record = new Record("New record");
 		
@@ -184,6 +183,13 @@ public class Programm {
 			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>"+"\n");
 			writer.write("<body>"+"\n");
 
+			writer.write("<main name=\""
+					 +main.getName()+"\""
+					 +" text=\""+main.getText()+"\""
+					 +" duration=\""+main.getDuration()+"\""
+					 +">"+"\n");
+			writer.write("</main>"+"\n");
+			
 			for (Record r: listDataHeader){
 				writer.write("<record name=\""
 						 +r.getName()+"\""
@@ -219,5 +225,72 @@ public class Programm {
 		}
 		return true;
 	}
+
+	public static Record getMainRecord() {
+		return main;
+	}
+
+	public static void summDurations(Record record) {
+
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) {
+			if (entry.getValue().contains(record)){
+	            Record group = entry.getKey();
+	            long duration = 0;
+	            
+	            for (Record r : entry.getValue() )
+	            	duration = duration + r.getDuration();
+	            group.setDuration(duration);
+	            break;
+	        }
+	    }
+        //
+        // Calculate total duration
+        //
+        long duration = 0;
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+            for (Record r : entry.getValue() )
+            	duration = duration + r.getDuration();
+		main.setDuration(duration);		
+	}
+
+	public static Record addRecord(Record currentRecord) {
+		Record record = new Record("New record");
+		
+		if (listDataHeader.indexOf(currentRecord) >= 0){
+			if (currentRecord == null){
+				listDataHeader.add(record);
+			} else {
+				listDataHeader.add(listDataHeader.indexOf(currentRecord)+1, record);
+			}
+		} else {
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+				if (entry.getValue().contains(currentRecord))
+					entry.getValue().add(entry.getValue().indexOf(currentRecord)+1, record);
+											
+		}
+		
+		
+		return record;
+	}
+
+	public static Record copyRecord(Record currentRecord) {
+		Record record = new Record("New record");
+		record.mName = currentRecord.mName;
+		record.setText(currentRecord.getText());
+		record.setDuration(currentRecord.getDuration());
+		
+		if (listDataHeader.indexOf(currentRecord) > 0){
+			listDataHeader.add(record);
+		} else {
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+				if (entry.getValue().contains(currentRecord))
+					entry.getValue().add(record);
+											
+		}
+		
+		
+		return record;
+	}
+
 	
 }

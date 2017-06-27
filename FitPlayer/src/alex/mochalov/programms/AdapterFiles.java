@@ -9,10 +9,13 @@ import android.os.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+
 import java.util.*;
 
 public class AdapterFiles extends BaseAdapter {
 
+	private String TAG_FRAGMENT_EDITOR = "TAG_FRAGMENT_EDITOR";
+	
 	private LayoutInflater inflater;
 	
 	private Activity mContext;
@@ -27,15 +30,13 @@ public class AdapterFiles extends BaseAdapter {
 	public OnButtonClickListener listener;
 
 	AdapterFiles(Activity context, ArrayList<String> objects) {
-mContext = context;
+		mContext = context;
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mObjects = objects;
 	}
 	
 	AdapterFiles() {
-
-		
 	}
 
 	@Override
@@ -76,9 +77,8 @@ mContext = context;
 			    args.putString("name", (String)getItem(position));
 			    fragmentEditor.setArguments(args);
 
-				ft.replace(R.id.frgmCont, fragmentEditor);
+				ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
 				ft.addToBackStack(null);
-
 
 				ft.commit();
 				

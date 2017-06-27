@@ -7,6 +7,7 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.view.*;
+import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
@@ -28,26 +29,70 @@ public class FragmentEditor extends Fragment
 		mContext = context;
 	}
 
+	public FragmentEditor(){
+		super();
+	}
+	
+	public void setParams(Context context){
+		mContext = context;
+	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 		
         rootView = inflater.inflate(R.layout.fragment_editor, container, false);
-
-		TextView textViewFileName = (TextView)rootView.findViewById(R.id.TextViewFileName);
         
 		Bundle args = getArguments();
 		fileName = args.getString("name", "");
-		textViewFileName.setText(fileName);
+		//textViewFileName.setText(fileName);
         
         Programm.loadXML(mContext, fileName);
+
+		final TextView nameMain = (TextView)rootView.findViewById(R.id.TextViewName);
+		final TextView durationMain = (TextView)rootView.findViewById(R.id.TextViewDuration);
+		final TextView textMain = (TextView)rootView.findViewById(R.id.TextViewText);
+		
+		nameMain.setText( Programm.getMainRecord().getName());
+		durationMain.setText( Utils.MStoString(Programm.getMainRecord().getDuration()));
+		textMain.setText( Programm.getMainRecord().getText());
         
+		ImageButton brnEdit = (ImageButton)rootView
+				.findViewById(R.id.imageButtonEdit);
+		brnEdit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+				DialogEdit dialog = new DialogEdit(mContext, Programm.getMainRecord(), true);
+				dialog.callback = new DialogEdit.MyCallback() {
+					
+					@Override
+					public void callbackOk() {
+						nameMain.setText( Programm.getMainRecord().getName());
+						durationMain.setText( Utils.MStoString(Programm.getMainRecord().getDuration()));
+						textMain.setText( Programm.getMainRecord().getText());
+					}
+				};
+				
+				dialog.show();
+
+			}
+		});
+		
         ExpandableListView listViewRecords = (ExpandableListView)rootView.findViewById(R.id.ListViewRecords);
 		//listViewRecords.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
         
        //Создаем адаптер и передаем context и список с данными
         adapter = new AdapterEditorExp(mContext, Programm.getGroups(), Programm.getChilds());
+        adapter.callback = new AdapterEditorExp.MyCallback() {
+			
+			@Override
+			public void callbackEdited() {
+				durationMain.setText( Utils.MStoString(Programm.getMainRecord().getDuration()));
+			}
+		};
+        
         listViewRecords.setAdapter(adapter);    
         
         listViewRecords.setOnGroupClickListener(new OnGroupClickListener(){
@@ -97,27 +142,25 @@ public class FragmentEditor extends Fragment
 		int id = item.getItemId();
 
 		switch (id){
-			case R.id.action_edit:
-				if (selectedRecord != null){
-					
-					DialogEdit dialog = new DialogEdit(mContext, selectedRecord,
-													   adapter);
-					dialog.show();
-					
+		case R.id.action_copy:
+			Record newRecord = Programm.copyRecord(selectedRecord);
+			adapter.notifyDataSetChanged();
+			
+			DialogEdit dialog = new DialogEdit(mContext, newRecord, false);
+			dialog.callback = new DialogEdit.MyCallback() {
+				@Override
+				public void callbackOk() {
+					adapter.notifyDataSetChanged();
 				}
-				return true;
-			case R.id.action_add_child:
+			};
+			dialog.show();
+			
+		case R.id.action_add_child:
 				if (selectedRecord != null){
 				
 					selectedRecord = Programm.addCHildRecord(selectedRecord);
 					adapter.notifyDataSetChanged();
 				}
-				return true;
-			case R.id.action_add:
-				
-	        	selectedRecord = Programm.addRecord(selectedRecord);
-	        	adapter.notifyDataSetChanged();
-
 				return true;
 			case R.id.action_delete:
 				if (selectedRecord != null){
