@@ -1,16 +1,15 @@
 package alex.mochalov.fitplayer;
 
-import alex.mochalov.editor.FragmentEditor;
+import alex.mochalov.editor.*;
 import alex.mochalov.programms.*;
-
+import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
 import android.view.*;
-import alex.mochalov.record.*;
-import android.util.*;
+import android.widget.*;
 
 public class MainActivity extends Activity implements OnInitListener{
 
@@ -42,15 +41,17 @@ public class MainActivity extends Activity implements OnInitListener{
 		fp = new FragmentFiles(this);
 		fragmentPlayer = new FragmentPlayer(this);
 		fragmentEditor = new FragmentEditor(this);
-		
+		/*
 		fp.listener = new FragmentFiles.
 			OnStartProgrammListener(){
 
 			@Override
 			public void onGoSelected(String text)
 			{
+				Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
+				try{
 				
-				ft = getFragmentManager().beginTransaction();
+					FragmentTransaction ft = getFragmentManager().beginTransaction();
 				
 				Bundle args = new Bundle();
 			    args.putString("name", text);
@@ -58,7 +59,12 @@ public class MainActivity extends Activity implements OnInitListener{
 			    
 				ft.replace(R.id.frgmCont, fragmentPlayer);
 				ft.addToBackStack(null);
+				
+				
 				ft.commit();
+				} catch(Error e){
+					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+				}
 				
 			}
 
@@ -80,7 +86,7 @@ public class MainActivity extends Activity implements OnInitListener{
 			
 
 		};
-		
+		*/
 		ft = getFragmentManager().beginTransaction();
 		ft.add(R.id.frgmCont, fp);
 		ft.commit();

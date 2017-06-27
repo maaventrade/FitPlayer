@@ -1,34 +1,30 @@
 package alex.mochalov.editor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import alex.mochalov.fitplayer.R;
-import alex.mochalov.fitplayer.Utils;
-import alex.mochalov.record.Record;
-import android.content.Context;
-import android.graphics.Typeface;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.TextView;
+import alex.mochalov.fitplayer.*;
 import alex.mochalov.record.*;
+import android.content.*;
+import android.graphics.*;
+import android.view.*;
+import android.view.View.*;
+import android.widget.*;
+import java.util.*;
 
 public class AdapterEditorExp extends BaseExpandableListAdapter  {
 
     private Context mContext;
     
     private List<Record> mGroups; // header titles
-    private HashMap<Record, List<Record>> mChilds;    
+    private HashMap<Record, List<Record>> mChilds;   
+	
+	private AdapterEditorExp adapter;
   
     public AdapterEditorExp (Context context, List<Record> groups, HashMap<Record, List<Record>> childs){
         mContext = context;
         
         mGroups = groups;
         mChilds = childs;
+		
+		adapter = this;
     }
     
     
@@ -47,6 +43,11 @@ public class AdapterEditorExp extends BaseExpandableListAdapter  {
     public View getChildView(int groupPosition, final int childPosition,
             boolean isLastChild, View convertView, ViewGroup parent) {
  
+		return getView(groupPosition, 
+	  childPosition, isLastChild, false,
+	 convertView, parent);
+				
+				/*
         final Record record = (Record) getChild(groupPosition, childPosition);
  
         if (convertView == null) {
@@ -63,8 +64,56 @@ public class AdapterEditorExp extends BaseExpandableListAdapter  {
         		.findViewById(R.id.TextViewDuration);
         duration.setText(Utils.MStoString(record.getDuration()));
         
-        return convertView;
+        return convertView;*/
+		
     }
+
+	private View getView(int groupPosition, int childPosition, boolean isLastChild, boolean isExpanded, View convertView, ViewGroup parent)
+{
+
+Record record = null;
+	if (childPosition < 0)
+		record = (Record)getGroup(groupPosition);
+	else
+		record = (Record) getChild(groupPosition, childPosition);
+
+		final Record recordF = record;
+		
+	if (convertView == null) {
+		LayoutInflater infalInflater = (LayoutInflater) mContext
+			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		convertView = infalInflater.inflate(R.layout.item_editor_child, null);
+	}
+
+	TextView name = (TextView) convertView
+		.findViewById(R.id.TextViewName);
+	name.setText(record.getName());
+
+	TextView duration = (TextView) convertView
+		.findViewById(R.id.TextViewDuration);
+	duration.setText(Utils.MStoString(record.getDuration()));
+
+	if (childPosition < 0)
+		if (getChildrenCount(groupPosition) > 0)
+			name.setTypeface(null, Typeface.BOLD);
+			
+	ImageButton brnEdit = (ImageButton)convertView.findViewById(R.id.imageButtonEdit);
+	brnEdit.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				DialogEdit dialog = new DialogEdit(mContext, recordF,
+												   adapter);
+				dialog.show();
+				
+				
+			}});
+
+	ImageButton brnAdd = (ImageButton)convertView.findViewById(R.id.imageButtonAdd); 
+	
+	
+	return convertView;
+	
+}
  
     @Override
     public int getChildrenCount(int groupPosition) {
@@ -94,6 +143,10 @@ public class AdapterEditorExp extends BaseExpandableListAdapter  {
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
         
+		return getView(groupPosition, 
+	  -1, false, isExpanded,
+	  convertView, parent);
+				/*
     	Record record = (Record)getGroup(groupPosition);
         
         if (convertView == null) {
@@ -110,7 +163,7 @@ public class AdapterEditorExp extends BaseExpandableListAdapter  {
         
         name.setText(record.getName());
  
-        return convertView;
+        return convertView;*/
     }
  
     @Override

@@ -12,7 +12,7 @@ import android.widget.AdapterView.*;
 
 public class FragmentFiles extends Fragment
 {
-	private Context mContext;
+	private Activity mContext;
 	//Fragment thisFragment;
 	private View rootView;
 	
@@ -28,7 +28,7 @@ public class FragmentFiles extends Fragment
 	
 	public OnStartProgrammListener listener;
 	
-	public FragmentFiles(Context context){
+	public FragmentFiles(Activity context){
 		super();
 		mContext = context;
 	}
@@ -48,6 +48,23 @@ public class FragmentFiles extends Fragment
 
 		adapter = new AdapterFiles(mContext, programms);
 
+		adapter.listener = new AdapterFiles.OnButtonClickListener(){
+
+			@Override
+			public void onEdit(String text)
+			{
+				//Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
+				if (listener != null && text.length() > 0)
+					listener.onGoSelected(text);
+				
+			}
+
+			@Override
+			public void onAdd(String text)
+			{
+				// TODO: Implement this method
+			}
+		};
 		
 		listViewFiles.setAdapter(adapter);
 		
@@ -55,9 +72,15 @@ public class FragmentFiles extends Fragment
 				@Override
 				public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
 				{
-					//if (listener != null)
-					//	listener.onItemSelected((String) p1.getItemAtPosition(index));
 					selectedString = (String) p1.getItemAtPosition(index);
+					/*
+					if (Utils.action.equals("edit") &&
+						listener != null){
+							Utils.action = "";
+						Toast.makeText(mContext, selectedString, Toast.LENGTH_LONG).show();
+						listener.onGoSelected(selectedString);
+						}
+						*/
 				}}
 		);	
 		
@@ -77,7 +100,7 @@ public class FragmentFiles extends Fragment
 		
 		switch (id){
 		case R.id.action_edit:
-
+				
 			if (listener != null && selectedString.length() > 0)
 				listener.onEditSelected(selectedString);
 			

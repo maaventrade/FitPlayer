@@ -1,28 +1,33 @@
 package alex.mochalov.programms;
 
-import java.util.ArrayList;
-
-import alex.mochalov.record.Record;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import alex.mochalov.editor.*;
 import alex.mochalov.fitplayer.*;
+import alex.mochalov.record.*;
+import android.app.*;
+import android.content.*;
+import android.os.*;
+import android.view.*;
+import android.view.View.*;
+import android.widget.*;
+import java.util.*;
 
 public class AdapterFiles extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	
+	private Activity mContext;
+	
 	private Record mainFolder;
 	private ArrayList<String> mObjects;
+	
+	public interface OnButtonClickListener {
+		public void onEdit(String text);
+		public void onAdd(String text);
+	}
+	public OnButtonClickListener listener;
 
-	AdapterFiles(Context context, ArrayList<String> objects) {
-
+	AdapterFiles(Activity context, ArrayList<String> objects) {
+mContext = context;
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mObjects = objects;
@@ -54,7 +59,7 @@ public class AdapterFiles extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.item_files, null);
 		}
 				
-		final ListView listView = (ListView) parent;
+		
 		TextView textViewName = (TextView)convertView.findViewById(R.id.TextViewName);
 		//TextView textViewText = (TextView)convertView.findViewById(R.id.TextViewText);
 		
@@ -62,8 +67,21 @@ public class AdapterFiles extends BaseAdapter {
 		brnEdit.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				listView.performItemClick(listView.getChildAt(position), position, 
-						listView.getItemIdAtPosition(position));
+				
+				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+
+				FragmentEditor fragmentEditor = new FragmentEditor(mContext);
+				
+				Bundle args = new Bundle();
+			    args.putString("name", (String)getItem(position));
+			    fragmentEditor.setArguments(args);
+
+				ft.replace(R.id.frgmCont, fragmentEditor);
+				ft.addToBackStack(null);
+
+
+				ft.commit();
+				
 			}});
 		
 		ImageButton brnAdd = (ImageButton)convertView.findViewById(R.id.imageButtonAdd); 

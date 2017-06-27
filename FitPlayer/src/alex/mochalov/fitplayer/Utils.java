@@ -23,6 +23,8 @@ public class Utils {
 	
 	private static String language = "rus";
 	
+	public static String action = "";
+	
 	public static String getRecFolder(){
 		return REC_FOLDER;
 	}
