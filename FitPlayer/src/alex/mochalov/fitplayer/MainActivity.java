@@ -8,8 +8,8 @@ import android.content.*;
 import android.os.*;
 import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
+import android.util.*;
 import android.view.*;
-import android.widget.*;
 
 public class MainActivity extends Activity implements OnInitListener{
 
@@ -18,7 +18,7 @@ public class MainActivity extends Activity implements OnInitListener{
 	FragmentEditor fragmentEditor;
 	
 	String TAG_FRAGMENT_FILES = "TAG_FRAGMENT_FILES";
-	String TAG_FRAGMENT_PLAYER = "TAG_FRAGMENT_PLAYER";
+	
 	String TAG_FRAGMENT_EDITOR = "TAG_FRAGMENT_EDITOR";
 	
 	Context mContext;
@@ -38,13 +38,13 @@ public class MainActivity extends Activity implements OnInitListener{
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
-        
+        Log.d("e","1");
 
 		if (savedInstanceState != null){
 			fragmentFiles = (FragmentFiles)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILES);
 			fragmentFiles.setParams(this);
 
-			fragmentPlayer = (FragmentPlayer)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_PLAYER);
+			fragmentPlayer = (FragmentPlayer)getFragmentManager().findFragmentByTag(FragmentPlayer.TAG_FRAGMENT_PLAYER);
 			if (fragmentPlayer != null)
 				fragmentPlayer.setParams(this);
 			else

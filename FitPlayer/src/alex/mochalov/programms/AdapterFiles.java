@@ -83,6 +83,26 @@ public class AdapterFiles extends BaseAdapter {
 				ft.commit();
 				
 			}});
+			
+		ImageButton brnGo = (ImageButton)convertView.findViewById(R.id.imageButtonGo);
+		brnGo.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+
+					FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+
+					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+
+					Bundle args = new Bundle();
+					args.putString("name", (String)getItem(position));
+					fragmentPlayer.setArguments(args);
+
+					ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
+					ft.addToBackStack(null);
+
+					ft.commit();
+
+				}});
 		
 		ImageButton brnAdd = (ImageButton)convertView.findViewById(R.id.imageButtonAdd); 
 		

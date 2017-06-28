@@ -55,7 +55,7 @@ android:descendantFocusability="blocksDescendants"
             android:src="@drawable/add0" />
 
         <ImageButton
-            android:id="@+id/ImageButton01"
+            android:id="@+id/imageButtonGo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"

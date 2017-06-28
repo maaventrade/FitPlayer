@@ -67,7 +67,6 @@ public final class R {
         public static final int selector_list_item=0x7f02000b;
     }
     public static final class id {
-        public static final int ImageButton01=0x7f0a0013;
         public static final int LayoutChild=0x7f0a0009;
         public static final int ListViewFiles=0x7f0a0011;
         public static final int ListViewRecords=0x7f0a000f;
@@ -75,14 +74,14 @@ public final class R {
         public static final int TextViewName=0x7f0a000a;
         public static final int TextViewText=0x7f0a000c;
         public static final int TextViewTimer=0x7f0a0010;
-        public static final int action_add_child=0x7f0a0014;
-        public static final int action_copy=0x7f0a0015;
-        public static final int action_delete=0x7f0a0016;
-        public static final int action_go=0x7f0a0018;
-        public static final int action_pause=0x7f0a0019;
-        public static final int action_save=0x7f0a0017;
-        public static final int action_settings=0x7f0a001b;
-        public static final int action_start=0x7f0a001a;
+        public static final int action_add_child=0x7f0a0013;
+        public static final int action_copy=0x7f0a0014;
+        public static final int action_delete=0x7f0a0015;
+        public static final int action_go=0x7f0a0017;
+        public static final int action_pause=0x7f0a0018;
+        public static final int action_save=0x7f0a0016;
+        public static final int action_settings=0x7f0a001a;
+        public static final int action_start=0x7f0a0019;
         public static final int dialogeditButtonCancel=0x7f0a0002;
         public static final int dialogeditButtonOk=0x7f0a0001;
         public static final int editTextDuration1=0x7f0a0006;

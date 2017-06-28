@@ -30,8 +30,28 @@ public class Programm {
 	private static Record main = new Record("New programm");
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
-	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();	
+	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
+
+	private static Record currentRecord = null;
 	
+	/*
+	public static Record getNextRecord()
+	{
+		// TODO: Implement this method
+		return null;
+	}
+
+	public static Record getFirstRecord()
+	{
+
+		return null;
+	}
+
+	public static Record getCurrentRecord()
+	{
+		return currentRecord;
+	}	
+	*/
 	public static ArrayList<Record> getGroups() {
 		return listDataHeader;
 	}
@@ -40,6 +60,24 @@ public class Programm {
 		return listDataChild;
 	}
 
+	public static ArrayList<Record> getList(){
+		
+		ArrayList<Record> list = new ArrayList<Record>();
+		
+		for (Record r : listDataHeader){
+			boolean child = false;
+			List<Record> l = listDataChild.get(r);
+			if (l.size() == 0)
+				list.add(r);
+			else {
+				for(Record p: l)
+					list.add(p);
+			}
+		}
+		
+		return list;
+	}
+	
 	public static boolean loadXML(Context mContext, String fileName) {
 
 		listDataHeader.clear();

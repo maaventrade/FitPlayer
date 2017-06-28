@@ -16,16 +16,15 @@ public class AdapterPlayer extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	
-	private Record mainFolder;
-	private ArrayList<Record> records;
+	private ArrayList<Record> objects;
 
 	private boolean mEnabled;
 	
-	AdapterPlayer(Context context, Record folder) {
+	AdapterPlayer(Context context, ArrayList<Record> records) {
 
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mainFolder = folder;
+		objects = records;
 		//records = mainFolder.getRecords(); 
 
 		mEnabled = true;
@@ -44,12 +43,12 @@ public class AdapterPlayer extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		return records.size();
+		return objects.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return records.get(position);
+		return objects.get(position);
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class AdapterPlayer extends BaseAdapter {
 		if (convertView == null) { 
 			convertView = inflater.inflate(R.layout.item_player, null);
 		}
-		Record record = records.get(position);
+		Record record = objects.get(position);
 				
 		TextView textViewName = (TextView)convertView.findViewById(R.id.TextViewName);
 		TextView textViewText = (TextView)convertView.findViewById(R.id.TextViewText);

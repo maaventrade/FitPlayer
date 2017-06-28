@@ -6,10 +6,12 @@ import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
-import android.util.*;
+import java.util.*;
 
 public class FragmentPlayer extends Fragment
 {
+	public static final String TAG_FRAGMENT_PLAYER = "TAG_FRAGMENT_PLAYER";
+	
 	Context mContext;
 	//Fragment thisFragment;
 	private View rootView;
@@ -21,12 +23,12 @@ public class FragmentPlayer extends Fragment
 
 	boolean isRunning = false;
 	boolean isPaused = false;
-
-	Record record;
+	
+	private ArrayList<Record> records;
+	private int mIndex;
+	//private Record currentRecord;
 
 	long restOfTime = 0;
-
-	private Record mainFolder;
 	
 	public FragmentPlayer(Context context){
 		super();
@@ -36,6 +38,7 @@ public class FragmentPlayer extends Fragment
 	public FragmentPlayer(){
 		super();
 	}
+
 	
 	public void setParams(Context context){
 		mContext = context;
@@ -43,9 +46,8 @@ public class FragmentPlayer extends Fragment
 	
 	public void start()
 	{
-		//record = mainFolder.getRecord();
-		//if (record != null)
-		//	start(record);
+		if (mIndex >= 0 && mIndex < records.size())
+			start(records.get(mIndex));
 	}
 
 
@@ -61,22 +63,20 @@ public class FragmentPlayer extends Fragment
 		listViewRecords.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		Bundle args = getArguments();
-		String name = args.getString("name", "");
-		Log.d("","load");
-		mainFolder = Utils.loadXML(mContext, name);
-
-		Log.d("","mainFolder "+mainFolder);
-		//mainFolder.log();
+		String fileName = args.getString("name", "");
 		
+		Programm.loadXML(mContext, fileName);
 		
-        adapter = new AdapterPlayer(mContext, mainFolder);
+		records = Programm.getList();
+        adapter = new AdapterPlayer(mContext, records);
 
 		listViewRecords.setAdapter(adapter);
 		listViewRecords.setOnItemClickListener( new ListView.OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
 				{
-			        if (isRunning) {
+			      mIndex = index;
+					if (isRunning) {
 
 			        	timerHandler.removeCallbacks(timerRunnable);
 			            isRunning = false;
@@ -85,19 +85,18 @@ public class FragmentPlayer extends Fragment
 
 			            //record = mainFolder.setRecord(index);
 			        	listViewRecords.setItemChecked(index, true);
-			            setTextViewTimer(record.getDuration());
+			            setTextViewTimer(records.get(mIndex).getDuration());
 
 			        }
 
 				}}
 		);	
 
-//        record = mainFolder.getFirstRecord();
-        
-        if (record != null){
-
+       
+        if (records.size() > 0){
+			mIndex = 0;
     		listViewRecords.setItemChecked(0, true);
-        	setTextViewTimer(record.getDuration());
+        	setTextViewTimer(records.get(mIndex).getDuration());
 
         };
 
@@ -151,17 +150,17 @@ public class FragmentPlayer extends Fragment
 	}
 
 	private boolean getNextRecord(){
-       // record = mainFolder.getNextRecord();
 
-        if (record != null){
-
+        if (mIndex < records.size()){
+			mIndex++;
+			
         	int position = 0; // mainFolder.getIndex();
     		listViewRecords.setItemChecked(position, true);
     		listViewRecords.smoothScrollToPositionFromTop(position, 0, 500);
 
-    		start(record);
+    		start(records.get(mIndex));
 
-			TtsUtils.speak(record.getText());
+			TtsUtils.speak(records.get(mIndex).getText());
 
             return true;
 
