@@ -330,5 +330,14 @@ public class Programm {
 		return record;
 	}
 
+	public static Record getGroup(Record record) {
+		
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+			if (entry.getValue().contains(record))
+				return entry.getKey();
+		
+		return record;
+	}
+
 	
 }

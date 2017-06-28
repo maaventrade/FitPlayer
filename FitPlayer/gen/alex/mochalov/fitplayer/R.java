@@ -49,8 +49,9 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f060000;
         public static final int activity_vertical_margin=0x7f060001;
-        public static final int huge_text=0x7f060002;
-        public static final int item_padding=0x7f060003;
+        public static final int big_text=0x7f060002;
+        public static final int huge_text=0x7f060003;
+        public static final int item_padding=0x7f060004;
     }
     public static final class drawable {
         public static final int add0=0x7f020000;
@@ -59,38 +60,42 @@ public final class R {
         public static final int copy100=0x7f020003;
         public static final int edit0=0x7f020004;
         public static final int go=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int item_background_selector=0x7f020007;
-        public static final int item_background_selector1=0x7f020008;
-        public static final int item_text_selector=0x7f020009;
-        public static final int item_text_selector1=0x7f02000a;
-        public static final int selector_list_item=0x7f02000b;
+        public static final int go_96=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int item_background_selector=0x7f020008;
+        public static final int item_background_selector1=0x7f020009;
+        public static final int item_text_selector=0x7f02000a;
+        public static final int item_text_selector1=0x7f02000b;
+        public static final int selector_list_item=0x7f02000c;
+        public static final int stop_96=0x7f02000d;
     }
     public static final class id {
         public static final int LayoutChild=0x7f0a0009;
+        public static final int LinearLayoutHead=0x7f0a0012;
         public static final int ListViewFiles=0x7f0a0011;
         public static final int ListViewRecords=0x7f0a000f;
         public static final int TextViewDuration=0x7f0a000b;
         public static final int TextViewName=0x7f0a000a;
         public static final int TextViewText=0x7f0a000c;
         public static final int TextViewTimer=0x7f0a0010;
-        public static final int action_add_child=0x7f0a0013;
-        public static final int action_copy=0x7f0a0014;
-        public static final int action_delete=0x7f0a0015;
-        public static final int action_go=0x7f0a0017;
-        public static final int action_pause=0x7f0a0018;
-        public static final int action_save=0x7f0a0016;
-        public static final int action_settings=0x7f0a001a;
-        public static final int action_start=0x7f0a0019;
+        public static final int action_add_child=0x7f0a0015;
+        public static final int action_copy=0x7f0a0016;
+        public static final int action_delete=0x7f0a0017;
+        public static final int action_go=0x7f0a0019;
+        public static final int action_pause=0x7f0a001a;
+        public static final int action_save=0x7f0a0018;
+        public static final int action_settings=0x7f0a001c;
+        public static final int action_start=0x7f0a001b;
         public static final int dialogeditButtonCancel=0x7f0a0002;
         public static final int dialogeditButtonOk=0x7f0a0001;
         public static final int editTextDuration1=0x7f0a0006;
         public static final int editTextName=0x7f0a0004;
         public static final int editTextText=0x7f0a0008;
         public static final int frgmCont=0x7f0a0000;
-        public static final int imageButtonAdd=0x7f0a0012;
+        public static final int imageButtonAdd=0x7f0a0014;
         public static final int imageButtonEdit=0x7f0a000d;
         public static final int imageButtonGo=0x7f0a000e;
+        public static final int imageViewPlayPause=0x7f0a0013;
         public static final int textView1=0x7f0a0003;
         public static final int textView2=0x7f0a0007;
         public static final int textView3=0x7f0a0005;

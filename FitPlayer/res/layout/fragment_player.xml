@@ -1,25 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	android:paddingBottom="@dimen/activity_vertical_margin"
-	android:paddingLeft="@dimen/activity_horizontal_margin"
-	android:paddingRight="@dimen/activity_horizontal_margin"
-	android:paddingTop="@dimen/activity_vertical_margin"
-	android:clickable="true"
-	tools:context="alex.mochalov.fitplayer.MainActivity"
-	android:background="@color/bronze_light2">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/salad"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="alex.mochalov.fitplayer.MainActivity" >
 
-	<TextView
-		android:id="@+id/TextViewTimer"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:textSize="@dimen/huge_text"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
+        <LinearLayout
+            android:id="@+id/LinearLayoutHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TextViewTimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/salad"
+                android:clickable="false"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TextViewName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/salad"
+                    android:text="Big Text"
+                    android:textColor="@drawable/item_text_selector1"
+                    android:textSize="@dimen/big_text" />
+
+                <TextView
+                    android:id="@+id/TextViewText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@drawable/item_text_selector1" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <alex.mochalov.player.BImageView
+            android:id="@+id/imageViewPlayPause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/LinearLayoutHead"
+            android:layout_alignLeft="@id/LinearLayoutHead"
+            android:layout_alignRight="@id/LinearLayoutHead"
+            android:layout_alignTop="@id/LinearLayoutHead"
+            android:scaleType="center"
+            android:src="@drawable/go_96" />
+
+    </RelativeLayout>
+	
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">

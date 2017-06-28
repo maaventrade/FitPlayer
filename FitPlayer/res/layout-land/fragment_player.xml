@@ -8,26 +8,81 @@
     android:clickable="true"
     tools:context="alex.mochalov.fitplayer.MainActivity" >
 
+    <RelativeLayout
+        android:id="@+id/LinearLayoutHead"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6" >
+  
+        <TextView
+            android:id="@+id/TextViewTimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:text="@string/zero"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/huge_text" />
+
+        <alex.mochalov.player.BImageView
+            android:id="@+id/imageViewPlayPause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/TextViewTimer"
+            android:layout_alignLeft="@id/TextViewTimer"
+            android:layout_alignRight="@id/TextViewTimer"
+            android:layout_alignTop="@id/TextViewTimer"
+            android:scaleType="center"
+            android:src="@drawable/go_96" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:orientation="vertical" >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/salad"
+    android:clickable="false"
+    android:orientation="vertical" >
+
     <TextView
-        android:id="@+id/TextViewTimer"
+        android:id="@+id/TextViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.6"
-        android:text="@string/zero"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="@dimen/huge_text" />
+        android:background="@color/salad"
+        android:text="Big Text"
+        android:textColor="@drawable/item_text_selector1"
+        android:textSize="@dimen/big_text" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/TextViewText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.4" >
         
-		<ListView
-		    android:id="@+id/ListViewRecords"
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    android:layout_weight="0.9" />
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@drawable/item_text_selector1" />
+
+</LinearLayout>
         
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" >
+
+            <ListView
+                android:id="@+id/ListViewRecords"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9" >
+            </ListView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
