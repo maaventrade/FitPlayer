@@ -5,6 +5,7 @@ import alex.mochalov.fitplayer.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
+import android.net.Uri;
 import android.os.*;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -14,7 +15,7 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 
 public class FragmentEditor extends Fragment
 {
-	Context mContext;
+	Activity mContext;
 	private View rootView;
 
 	AdapterEditorExp adapter; 
@@ -23,8 +24,10 @@ public class FragmentEditor extends Fragment
 	private String fileName;
 	
 	private Record selectedRecord = null;
+	
+	private DialogEditMain dialogEditMain;
 
-	public FragmentEditor(Context context){
+	public FragmentEditor(Activity context){
 		super();
 		mContext = context;
 	}
@@ -33,7 +36,7 @@ public class FragmentEditor extends Fragment
 		super();
 	}
 	
-	public void setParams(Context context){
+	public void setParams(Activity context){
 		mContext = context;
 	}
 	
@@ -49,6 +52,7 @@ public class FragmentEditor extends Fragment
         
         Programm.loadXML(mContext, fileName);
 
+        //Edit programm Header
 		final TextView nameMain = (TextView)rootView.findViewById(R.id.TextViewName);
 		final TextView durationMain = (TextView)rootView.findViewById(R.id.TextViewDuration);
 		final TextView textMain = (TextView)rootView.findViewById(R.id.TextViewText);
@@ -63,8 +67,8 @@ public class FragmentEditor extends Fragment
 			@Override
 			public void onClick(View v) {
 				
-				DialogEdit dialog = new DialogEdit(mContext, Programm.getMainRecord(), true);
-				dialog.callback = new DialogEdit.MyCallback() {
+				dialogEditMain = new DialogEditMain(mContext, Programm.getMainRecord(), true);
+				dialogEditMain.callback = new DialogEditMain.MyCallback() {
 					
 					@Override
 					public void callbackOk() {
@@ -74,10 +78,11 @@ public class FragmentEditor extends Fragment
 					}
 				};
 				
-				dialog.show();
+				dialogEditMain.show();
 
 			}
 		});
+		// \Edit programm Header
 		
         ExpandableListView listViewRecords = (ExpandableListView)rootView.findViewById(R.id.ListViewRecords);
 		//listViewRecords.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

@@ -5,7 +5,13 @@
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
         <!-- API 11 theme customizations can go here. -->
     </style>
 
+    
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#C6FFC7</item>
+    </style>
+    
 </resources>

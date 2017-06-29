@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+    
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/textView1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/name"
+			android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+		<EditText
+		    android:id="@+id/editTextName"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:ems="10"
+		    android:selectAllOnFocus="@bool/select_all" >
+
+			<requestFocus/>
+
+		</EditText>
+
+	</LinearLayout>
+				
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/textView2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/text"
+			android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+		<EditText
+		    android:id="@+id/editTextText"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:ems="10"
+		    android:inputType="textMultiLine"
+		    android:selectAllOnFocus="@bool/select_all"
+		    android:singleLine="false" >
+
+			<requestFocus/>
+
+		</EditText>
+
+	</LinearLayout>
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+
+		<CheckBox
+		    android:id="@+id/playMusic"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/play_music" />
+
+	    <TextView
+	        android:id="@+id/textViewPathToMp3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/path_music"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <Button
+	        android:id="@+id/buttonSelectMusicPath"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="..." />
+
+	    <Button
+	        android:id="@+id/buttonTestMusic"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Test" />
+
+	</LinearLayout>
+
+	<CheckBox
+	    android:id="@+id/countBeforeTheEnd"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/count" />
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="0.5"
+	    android:orientation="horizontal" >
+
+		<CheckBox
+		    android:id="@+id/checkBoxNextGroupSignal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0.5"
+		    android:text="@string/next_group_signal" />
+
+<Spinner
+    android:id="@+id/spinnerNextGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:background="@android:drawable/btn_dropdown"
+    android:spinnerMode="dropdown" />
+
+<Button
+    android:id="@+id/buttonTestSound"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:text="Test" />
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="horizontal">
+
+		<Button
+		    android:id="@+id/dialogeditButtonOk"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0.5"
+		    android:selectAllOnFocus="@bool/select_all"
+		    android:text="@string/ok" />
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="@string/cancel"
+			android:layout_weight="0.5"
+			android:layout_width="match_parent"
+			android:id="@+id/dialogeditButtonCancel"/>
+
+	</LinearLayout>
+		
+</LinearLayout>
+

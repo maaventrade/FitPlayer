@@ -1,10 +1,12 @@
 package alex.mochalov.programms;
 import alex.mochalov.fitplayer.*;
 import android.app.*;
+import android.graphics.Color;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+
 import java.util.*;
 
 public class FragmentFiles extends Fragment
@@ -90,12 +92,9 @@ public class FragmentFiles extends Fragment
 				}}
 		);	
 		
-		ActionBar ab = mContext.getActionBar();
-		ab.setBackgroundDrawable(new ColorDrawable(
-									 R.color.blue));
+		
 		return rootView;
 	}
-	
 	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_files, menu);

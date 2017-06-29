@@ -28,6 +28,12 @@ import android.widget.Toast;
 public class Programm {
 	
 	private static Record main = new Record("New programm");
+	private static boolean soundNextGroupOn; 
+	private static String soundNextName; 
+	private static String soundNextGroupUri; 
+	private static boolean countBeforeTheEnd; 
+	private static boolean playMusic; 
+	private static String pathToMp3; 
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
@@ -225,6 +231,12 @@ public class Programm {
 					 +main.getName()+"\""
 					 +" text=\""+main.getText()+"\""
 					 +" duration=\""+main.getDuration()+"\""
+					 +" soundNextGroupOn=\""+soundNextGroupOn+"\""
+					 +" soundNextName=\""+soundNextName+"\""
+					 +" soundNextGroupUri=\""+soundNextGroupUri+"\""
+					 +" countBeforeTheEnd=\""+countBeforeTheEnd+"\""
+					 +" countBeforeTheEnd=\""+countBeforeTheEnd+"\""
+					 +" playMusic=\""+playMusic+"\""
 					 +">"+"\n");
 			writer.write("</main>"+"\n");
 			
@@ -339,5 +351,26 @@ public class Programm {
 		return record;
 	}
 
+	public static void setNextGroupSignal(boolean checked, String string1,
+			String string2) {
+
+		soundNextGroupOn = checked; 
+		soundNextName = string1; 
+		soundNextGroupUri = string2; 
+		
+	}
+
+	public static void setCountBeforeTheEnd(boolean checked) {
+		countBeforeTheEnd = checked; 
+	}
+
+	public static void setPlayMusic(boolean checked) {
+		playMusic = checked; 
+	}
+
+	public static void setPathToMp3(String param) {
+		pathToMp3 = param; 
+	}
 	
-}
+		
+}	

@@ -70,45 +70,56 @@ public final class R {
         public static final int stop_96=0x7f02000d;
     }
     public static final class id {
-        public static final int LayoutChild=0x7f0a0009;
-        public static final int LinearLayoutHead=0x7f0a0012;
-        public static final int ListViewFiles=0x7f0a0011;
-        public static final int ListViewRecords=0x7f0a000f;
-        public static final int TextViewDuration=0x7f0a000b;
-        public static final int TextViewName=0x7f0a000a;
-        public static final int TextViewText=0x7f0a000c;
-        public static final int TextViewTimer=0x7f0a0010;
-        public static final int action_add_child=0x7f0a0015;
-        public static final int action_copy=0x7f0a0016;
-        public static final int action_delete=0x7f0a0017;
-        public static final int action_go=0x7f0a0019;
-        public static final int action_pause=0x7f0a001a;
-        public static final int action_save=0x7f0a0018;
-        public static final int action_settings=0x7f0a001c;
-        public static final int action_start=0x7f0a001b;
+        public static final int LayoutChild=0x7f0a0012;
+        public static final int LinearLayoutHead=0x7f0a001b;
+        public static final int ListViewFiles=0x7f0a001a;
+        public static final int ListViewRecords=0x7f0a0018;
+        public static final int TextViewDuration=0x7f0a0014;
+        public static final int TextViewName=0x7f0a0013;
+        public static final int TextViewText=0x7f0a0015;
+        public static final int TextViewTimer=0x7f0a0019;
+        public static final int action_add_child=0x7f0a001e;
+        public static final int action_copy=0x7f0a001f;
+        public static final int action_delete=0x7f0a0020;
+        public static final int action_go=0x7f0a0022;
+        public static final int action_pause=0x7f0a0023;
+        public static final int action_save=0x7f0a0021;
+        public static final int action_settings=0x7f0a0025;
+        public static final int action_start=0x7f0a0024;
+        public static final int buttonSelectMusicPath=0x7f0a000b;
+        public static final int buttonTestMusic=0x7f0a000c;
+        public static final int buttonTestSound=0x7f0a0010;
+        public static final int checkBoxNextGroupSignal=0x7f0a000e;
+        public static final int countBeforeTheEnd=0x7f0a000d;
         public static final int dialogeditButtonCancel=0x7f0a0002;
         public static final int dialogeditButtonOk=0x7f0a0001;
         public static final int editTextDuration1=0x7f0a0006;
         public static final int editTextName=0x7f0a0004;
         public static final int editTextText=0x7f0a0008;
         public static final int frgmCont=0x7f0a0000;
-        public static final int imageButtonAdd=0x7f0a0014;
-        public static final int imageButtonEdit=0x7f0a000d;
-        public static final int imageButtonGo=0x7f0a000e;
-        public static final int imageViewPlayPause=0x7f0a0013;
+        public static final int imageButtonAdd=0x7f0a001d;
+        public static final int imageButtonEdit=0x7f0a0016;
+        public static final int imageButtonGo=0x7f0a0017;
+        public static final int imageViewPlayPause=0x7f0a001c;
+        public static final int listViewFiles=0x7f0a0011;
+        public static final int playMusic=0x7f0a0009;
+        public static final int spinnerNextGroup=0x7f0a000f;
         public static final int textView1=0x7f0a0003;
         public static final int textView2=0x7f0a0007;
         public static final int textView3=0x7f0a0005;
+        public static final int textViewPathToMp3=0x7f0a000a;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int dialog_edit=0x7f030001;
-        public static final int fragment_editor=0x7f030002;
-        public static final int fragment_files=0x7f030003;
-        public static final int fragment_player=0x7f030004;
-        public static final int item_editor=0x7f030005;
-        public static final int item_files=0x7f030006;
-        public static final int item_player=0x7f030007;
+        public static final int dialog_edit_main=0x7f030002;
+        public static final int dialog_select_path=0x7f030003;
+        public static final int fragment_editor=0x7f030004;
+        public static final int fragment_files=0x7f030005;
+        public static final int fragment_player=0x7f030006;
+        public static final int item_editor=0x7f030007;
+        public static final int item_files=0x7f030008;
+        public static final int item_player=0x7f030009;
     }
     public static final class menu {
         public static final int fragment_editor=0x7f090000;
@@ -129,12 +140,18 @@ public final class R {
         public static final int action_start=0x7f070004;
         public static final int app_name=0x7f070000;
         public static final int cancel=0x7f070014;
+        public static final int count=0x7f070018;
         public static final int duration=0x7f070012;
+        public static final int edit_main=0x7f070015;
         public static final int error_load_xml=0x7f07000f;
         public static final int error_saving_file=0x7f07000e;
         public static final int file_saved=0x7f07000d;
+        public static final int music=0x7f070016;
         public static final int name=0x7f070010;
+        public static final int next_group_signal=0x7f070019;
         public static final int ok=0x7f070013;
+        public static final int path_music=0x7f070017;
+        public static final int play_music=0x7f07001a;
         public static final int text=0x7f070011;
         public static final int timers=0x7f070001;
         public static final int zero=0x7f070002;
@@ -159,13 +176,14 @@ public final class R {
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
     
- API 14 theme customizations can go here. 
+ API 11 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f080001;
+        public static final int MyActionBar=0x7f080003;
         public static final int activated=0x7f080002;
     }
 }

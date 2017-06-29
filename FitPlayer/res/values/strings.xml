@@ -28,4 +28,15 @@
 	<string name="ok">Ok</string>
 	<string name="cancel">Cancel</string>
 	
+	<string name="edit_main">Edit programm parameters</string>
+	
+		<string name="music">Misic</string>
+	<string name="path_music">Path to music:</string>
+	<string name="count">Count before the end</string>
+		
+	<string name="next_group_signal">Next group signal:</string>
+	
+	<string name="play_music">Play music</string>
+		
+		
 </resources>

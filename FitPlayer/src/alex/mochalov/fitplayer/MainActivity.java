@@ -8,6 +8,8 @@ import android.app.*;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.*;
 import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
@@ -26,8 +28,8 @@ public class MainActivity extends Activity implements OnInitListener{
 	Context mContext;
 
 	int MY_DATA_CHECK_CODE = 0;
-	boolean  langSupported;
 	
+	boolean  langSupported;
 	
 	Record mainFolder;
 	
@@ -40,28 +42,23 @@ public class MainActivity extends Activity implements OnInitListener{
 		
 		mContext = this;
 		setContentView(R.layout.activity_main);
-		/*
+	/*
 		View decorView = getWindow().getDecorView();
 		// doesn't resize when the system bars hide and show.
 		decorView.setSystemUiVisibility(
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+           // | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
             | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
             | View.SYSTEM_UI_FLAG_IMMERSIVE
 			);
 	*/
 	
-		ActionBar ab = getActionBar();
-		ab.setBackgroundDrawable(new ColorDrawable(
-									 Color.BLUE));
-									 
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
  
-
 		if (savedInstanceState != null){
 			fragmentFiles = (FragmentFiles)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILES);
 			fragmentFiles.setParams(this);
@@ -94,7 +91,9 @@ public class MainActivity extends Activity implements OnInitListener{
 			fragmentEditor = new FragmentEditor(this);
 			
 			//Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
-		}		
+		}
+		
+		
 		
 	}
 /*
@@ -106,7 +105,7 @@ public class MainActivity extends Activity implements OnInitListener{
 			decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+               // | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                | View.SYSTEM_UI_FLAG_FULLSCREEN
                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -192,9 +191,8 @@ public class MainActivity extends Activity implements OnInitListener{
 						.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
 				startActivity(installIntent);
 			}
-
-		} else
-			super.onActivityResult(requestCode, resultCode, data);
+		}
+		else super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	
