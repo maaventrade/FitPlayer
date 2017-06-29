@@ -63,6 +63,9 @@ public class FragmentPlayer extends Fragment
 		setHasOptionsMenu(true);
         rootView = inflater.inflate(R.layout.fragment_player, container, false);
 
+		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+							  //        WindowManager.LayoutParams.MATCH_PARENT);
+		
 		textViewTimer = (TextView)rootView.findViewById(R.id.TextViewTimer);
 		textViewName = (TextView)rootView.findViewById(R.id.TextViewName);
 		textViewText = (TextView)rootView.findViewById(R.id.TextViewText);
@@ -98,7 +101,9 @@ public class FragmentPlayer extends Fragment
 			            //isRunning = false;
 
 			        } else {
-
+						
+						state = State.isStopped;
+						
 			        	listViewRecords.setItemChecked(index, true);
 			            setTextViewTimer(records.get(mIndex).getDuration());
 			            setTextViewGroup(records.get(mIndex));
@@ -118,6 +123,8 @@ public class FragmentPlayer extends Fragment
 
 		state = State.isStopped;
 		setButtonImage();
+	
+		
 		
 		return rootView;
 	}
@@ -184,7 +191,8 @@ public class FragmentPlayer extends Fragment
 
     		start(records.get(mIndex));
 
-			TtsUtils.speak(records.get(mIndex).getText());
+			//TtsUtils.speak(records.get(mIndex).getName()+"."+
+			//records.get(mIndex).getText());
 
             setTextViewGroup(records.get(mIndex));
             
@@ -204,7 +212,10 @@ public class FragmentPlayer extends Fragment
 		state = State.isRunning;
 		setButtonImage();
 
+		listViewRecords.smoothScrollToPositionFromTop(mIndex, 0, 500);
+		
 		restOfTime = record.getDuration() + 1000;
+	
 
     	adapter.setEnabled(false);
         timerHandler.postDelayed(timerRunnable, 0);
@@ -215,6 +226,7 @@ public class FragmentPlayer extends Fragment
 	private void reStart(){
 		state = State.isRunning;
 		setButtonImage();
+
 
     	adapter.setEnabled(false);
         timerHandler.postDelayed(timerRunnable, 0);
@@ -245,6 +257,7 @@ public class FragmentPlayer extends Fragment
 			state = State.isPaused;
 			setButtonImage();
 			timerHandler.removeCallbacks(timerRunnable);
+			adapter.setEnabled(true);
 		}
 	}
 

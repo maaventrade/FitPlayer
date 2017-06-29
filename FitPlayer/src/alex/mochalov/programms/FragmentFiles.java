@@ -1,14 +1,11 @@
 package alex.mochalov.programms;
 import alex.mochalov.fitplayer.*;
 import android.app.*;
-import android.content.*;
+import android.graphics.drawable.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
-
 import java.util.*;
-
-import android.widget.AdapterView.*;
 
 public class FragmentFiles extends Fragment
 {
@@ -69,7 +66,9 @@ public class FragmentFiles extends Fragment
 			@Override
 			public void onAdd(String text)
 			{
-				// TODO: Implement this method
+				
+				Toast.makeText(mContext, "adddd", Toast.LENGTH_LONG).show();
+				mContext.getActionBar().show();
 			}
 		};
 		
@@ -91,7 +90,9 @@ public class FragmentFiles extends Fragment
 				}}
 		);	
 		
-		
+		ActionBar ab = mContext.getActionBar();
+		ab.setBackgroundDrawable(new ColorDrawable(
+									 R.color.blue));
 		return rootView;
 	}
 	

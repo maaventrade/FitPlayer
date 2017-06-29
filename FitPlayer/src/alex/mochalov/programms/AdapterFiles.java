@@ -106,7 +106,13 @@ public class AdapterFiles extends BaseAdapter {
 				}});
 		
 		ImageButton brnAdd = (ImageButton)convertView.findViewById(R.id.imageButtonAdd); 
-		
+		brnAdd.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+
+					listener.onAdd("ttt");
+
+				}});
     	textViewName.setText(mObjects.get(position));
 		
 		return convertView;

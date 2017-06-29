@@ -1,15 +1,16 @@
 package alex.mochalov.fitplayer;
 
 import alex.mochalov.editor.*;
-import alex.mochalov.player.FragmentPlayer;
+import alex.mochalov.player.*;
 import alex.mochalov.programms.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.os.*;
 import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
-import android.util.*;
 import android.view.*;
 
 public class MainActivity extends Activity implements OnInitListener{
@@ -33,13 +34,33 @@ public class MainActivity extends Activity implements OnInitListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		mContext = this;
 		setContentView(R.layout.activity_main);
-
+		/*
+		View decorView = getWindow().getDecorView();
+		// doesn't resize when the system bars hide and show.
+		decorView.setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+            | View.SYSTEM_UI_FLAG_IMMERSIVE
+			);
+	*/
+	
+		ActionBar ab = getActionBar();
+		ab.setBackgroundDrawable(new ColorDrawable(
+									 Color.BLUE));
+									 
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
-        Log.d("e","1");
+ 
 
 		if (savedInstanceState != null){
 			fragmentFiles = (FragmentFiles)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILES);
@@ -74,9 +95,25 @@ public class MainActivity extends Activity implements OnInitListener{
 			
 			//Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
 		}		
+		
 	}
-
-	
+/*
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+		View decorView = getWindow().getDecorView();
+		if (hasFocus) {
+			decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+               | View.SYSTEM_UI_FLAG_FULLSCREEN
+               | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+				);}
+		getActionBar().show();
+	}
+	*/
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 
