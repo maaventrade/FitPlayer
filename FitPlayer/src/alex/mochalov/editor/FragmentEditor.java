@@ -123,7 +123,11 @@ public class FragmentEditor extends Fragment
 				int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
 			    parent.setItemChecked(index, true);
 			    
-				selectedRecord = Programm.getItem(groupPosition, childPosition);
+				Record selectedRecord1 = Programm.getItem(groupPosition, childPosition);
+				
+				if (selectedRecord1 == selectedRecord)
+					openDialogEdit(selectedRecord, false);				
+				else selectedRecord = selectedRecord1;
 				
 			    return true;
 			}
@@ -160,14 +164,7 @@ public class FragmentEditor extends Fragment
 			Record newRecord = Programm.copyRecord(selectedRecord);
 			adapter.notifyDataSetChanged();
 			
-			DialogEdit dialog = new DialogEdit(mContext, newRecord, false);
-			dialog.callback = new DialogEdit.MyCallback() {
-				@Override
-				public void callbackOk() {
-					adapter.notifyDataSetChanged();
-				}
-			};
-			dialog.show();
+			openDialogEdit(newRecord, false);
 			
 		case R.id.action_add_child:
 				if (selectedRecord != null){
@@ -194,6 +191,18 @@ public class FragmentEditor extends Fragment
 		}
 	}
 	
+	private void openDialogEdit(Record record, boolean isGroup) {
+		DialogEdit dialog = new DialogEdit(mContext, record, isGroup);
+		dialog.callback = new DialogEdit.MyCallback() {
+			@Override
+			public void callbackOk() {
+				adapter.notifyDataSetChanged();
+			}
+		};
+		dialog.show();
+		
+	}
+
 	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 	    @Override
 	    public void onClick(DialogInterface dialog, int which) {

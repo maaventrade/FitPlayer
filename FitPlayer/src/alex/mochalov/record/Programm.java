@@ -417,13 +417,14 @@ public class Programm {
 	public static long getTimeBefore(Record record) {
 		long time = 0;
 		
-		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
-            for (Record r : entry.getValue())
-            	if (r == record) break;
+		for (Record o : listDataHeader){
+			List<Record> entry = listDataChild.get(o);
+            for (Record r : entry)
+            	if (r == record) return time;
             	else time = time + r.getDuration();
+		}	
 		
 		return time;
-	}
+	}	
+}
 	
-		
-}	
