@@ -43,7 +43,6 @@ public class DialogEditMain extends Dialog
 	
 	private MediaPlayer mp;
 
-	
 	MyCallback callback = null;
 	interface MyCallback {
 		void callbackOk(); 

@@ -24,7 +24,8 @@
     <string name="name">Name:</string>
     <string name="text">Text:</string>
     <string name="duration">Duration:</string>
-        
+    <string name="starts_on">Starts on</string>
+    
 	<string name="ok">Ok</string>
 	<string name="cancel">Cancel</string>
 	

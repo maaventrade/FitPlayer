@@ -226,7 +226,18 @@ public class Programm {
 
 	public static void deleteRecord(Record selectedRecord) {
 		listDataHeader.remove(selectedRecord);
-		listDataChild.remove(selectedRecord);
+		
+		if (listDataChild.get(selectedRecord) != null)
+			listDataChild.remove(selectedRecord);
+		else {
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+	            for (Record r : entry.getValue())
+	            	if (r == selectedRecord){
+	            		entry.getValue().remove(r);
+	            		break;
+	            	}
+			
+		}
 	}
 
 	public static Record addCHildRecord(Record selectedRecord) {
@@ -354,6 +365,7 @@ public class Programm {
 	}
 
 	public static Record copyRecord(Record currentRecord) {
+		
 		Record record = new Record("New record");
 		record.mName = currentRecord.mName;
 		record.setText(currentRecord.getText());
@@ -400,6 +412,17 @@ public class Programm {
 
 	public static void setPathToMp3(String param) {
 		pathToMp3 = param; 
+	}
+
+	public static long getTimeBefore(Record record) {
+		long time = 0;
+		
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+            for (Record r : entry.getValue())
+            	if (r == record) break;
+            	else time = time + r.getDuration();
+		
+		return time;
 	}
 	
 		

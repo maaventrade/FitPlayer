@@ -127,11 +127,13 @@ public class FragmentEditor extends Fragment
 				
 			    return true;
 			}
+			
 		});
         	
+        
 		return rootView;
 	}
-	
+
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_editor, menu);
 		super.onCreateOptionsMenu(menu, inflater);
@@ -142,12 +144,19 @@ public class FragmentEditor extends Fragment
         super.onPause();
     }	
 	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 
 		switch (id){
 		case R.id.action_copy:
+			
+			if (selectedRecord == null){
+				Toast.makeText(mContext, "Line not selected", Toast.LENGTH_LONG).show();
+				return true;
+			}
+			
 			Record newRecord = Programm.copyRecord(selectedRecord);
 			adapter.notifyDataSetChanged();
 			
@@ -165,6 +174,7 @@ public class FragmentEditor extends Fragment
 				
 					selectedRecord = Programm.addCHildRecord(selectedRecord);
 					adapter.notifyDataSetChanged();
+					
 				}
 				return true;
 			case R.id.action_delete:

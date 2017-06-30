@@ -8,9 +8,10 @@ import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
 import android.util.*;
 import android.widget.*;
+
 import java.util.*;
 
-public class TtsUtils implements OnUtteranceCompletedListener
+public class TtsUtils 
 {
 	private static TextToSpeech tts;
 	private Locale locale;
@@ -19,23 +20,48 @@ public class TtsUtils implements OnUtteranceCompletedListener
 	
 	private static AudioManager am = null;
 	private static int volume_level;
+	
+	private static MediaPlayer mMediaPlayer = null;
+	private static boolean pause = false;
+	
+	private static boolean mWaiting = false;
+	
+	public static MyCallback callback = null;
+	public interface MyCallback {
+		void speakingDone(); 
+	} 
+
 /*
 	am.setStreamVolume(
 	AudioManager.STREAM_MUSIC,
 	volume_level,
 	0);*/
 	
-	public static void speak(String text)
+	public static void speak(String text, MediaPlayer mp, boolean waiting)
 	{
 
 		//Toast.makeText(mContext,text,Toast.LENGTH_LONG).show();
 
-		volume_level= am.getStreamVolume(AudioManager.STREAM_MUSIC);
+		//volume_level= am.getStreamVolume(AudioManager.STREAM_MUSIC);
 		
-		am.setStreamVolume(
-            AudioManager.STREAM_MUSIC,
-            1,// Set minimal volum
-            0);
+		//am.setStreamVolume(
+        //    AudioManager.STREAM_MUSIC,
+         //   1,// Set minimal volum
+          //  0);
+		
+		mWaiting = waiting;
+		
+		pause = false;
+		mMediaPlayer = mp;
+		
+		if (mMediaPlayer != null){
+			
+			if (mMediaPlayer.isPlaying()){
+				pause = true;
+				mMediaPlayer.pause();
+			}
+			
+		}
 			
 		String[] textArray = text.split(":");
 		//Log.d("d", "text "+text+" "+textArray.length);
@@ -73,6 +99,28 @@ public class TtsUtils implements OnUtteranceCompletedListener
 	{
 		mContext = context;
 		
+		tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+            @Override
+            public void onDone(String utteranceId) {
+            	if (mWaiting){
+            		if (callback != null)
+            			callback.speakingDone();
+            	}
+            	else if (pause && mMediaPlayer != null){
+            		mMediaPlayer.start();
+            	}
+            }
+
+            @Override
+            public void onError(String utteranceId) {
+            }
+
+            @Override
+            public void onStart(String utteranceId) {
+            }
+        });		
+		
+		
 		am = (AudioManager) mContext.getSystemService(mContext.AUDIO_SERVICE);
 		
 		langSupported = false;
@@ -80,8 +128,6 @@ public class TtsUtils implements OnUtteranceCompletedListener
 		Locale locale[] = Locale.getAvailableLocales();
 		for (int i=0; i < locale.length; i++)
 		{
-			//Log.d("", ""+locale[i].getISO3Language());
-			//Toast.makeText(this, locale[i].getLanguage().toUpperCase()+"  "+language, Toast.LENGTH_LONG).show();
 			if (locale[i].getISO3Language().equals(Utils.getLanguage()))
 			{
 				if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED)
@@ -97,7 +143,6 @@ public class TtsUtils implements OnUtteranceCompletedListener
 				return; 
 			}}
 		Toast.makeText(context, "язык не найден" + " (" + Utils.getLanguage() + ") ", Toast.LENGTH_LONG).show();
-
 	}
 
 	@SuppressWarnings("deprecation")
@@ -119,17 +164,6 @@ public class TtsUtils implements OnUtteranceCompletedListener
 		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
 	}
 
-	public void onInit(int status) {
-		if(status == TextToSpeech.SUCCESS) {
-			tts.setOnUtteranceCompletedListener(this);
-		}
-	}
-	
-	public void onUtteranceCompleted(String utteranceId) {
-		Log.i("atts", utteranceId); //utteranceId == "SOME MESSAGE"
-	
-	}
-	
 	private static void loadLangueges()
 	{
     	Locale locale[] = Locale.getAvailableLocales();

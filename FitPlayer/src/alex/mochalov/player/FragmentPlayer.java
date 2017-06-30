@@ -1,4 +1,5 @@
 package alex.mochalov.player;
+
 import alex.mochalov.fitplayer.*;
 import alex.mochalov.record.*;
 import android.app.*;
@@ -25,7 +26,7 @@ public class FragmentPlayer extends Fragment
 	private TextView textViewText;
 	private BImageView bImageView;
 	
-	private MediaPlayer mp;
+	private MediaPlayer mediaPlayer;
 	private String path;
 	ArrayList<String> mp3 = new ArrayList<String>();
 
@@ -37,9 +38,11 @@ public class FragmentPlayer extends Fragment
 	
 	private ArrayList<Record> records;
 	private int mIndex;
-
 	long restOfTime = 0;
 	
+	private boolean restartMusic = true;
+	
+
 	public FragmentPlayer(Context context){
 		super();
 		mContext = context;
@@ -106,6 +109,7 @@ public class FragmentPlayer extends Fragment
 			        } else {
 						
 						state = State.isStopped;
+						restartMusic = true;
 						
 			        	listViewRecords.setItemChecked(index, true);
 			            setTextViewTimer(records.get(mIndex).getDuration());
@@ -141,6 +145,31 @@ public class FragmentPlayer extends Fragment
 					mp3.add(files[i].getName());
 		
 		
+		TtsUtils.callback = new TtsUtils.MyCallback() {
+			@Override
+			public void speakingDone() {
+				Record record = records.get(mIndex);
+				
+		    	// Start music
+		    	if (Programm.isPlayMusicOn() && mp3.size() > 0){
+		    		if (restartMusic){
+						if (mediaPlayer != null)
+							mediaPlayer.stop();
+						int index = (int) (Math.random() * mp3.size());
+						mediaPlayer = MediaPlayer.create(mContext,
+												Uri.parse(path+"/" + mp3.get(index)));
+						restartMusic = false;
+		    		}
+					mediaPlayer.start();
+				}
+				
+				TtsUtils.speak(record.getText(), mediaPlayer, false);
+				
+		        timerHandler.postDelayed(timerRunnable, 0); 
+				
+			}
+		}; 
+		
 		return rootView;
 	}
 	
@@ -160,6 +189,11 @@ public class FragmentPlayer extends Fragment
 	@Override
     public void onPause() {
         super.onPause();
+        
+        if (mediaPlayer != null){
+        	mediaPlayer.stop();
+        	mediaPlayer = null;
+        }
         timerHandler.removeCallbacks(timerRunnable);
     }	
 	
@@ -223,36 +257,36 @@ public class FragmentPlayer extends Fragment
         }
 	}
 	
+	/**
+	 * Starts playing the incoming Record
+	 * 
+	 * @param record - incoming Record
+	 */
 	private void start(Record record){
 		state = State.isRunning;
-		setButtonImage();
-
-		listViewRecords.smoothScrollToPositionFromTop(mIndex, 0, 500);
 		
-		restOfTime = record.getDuration() + 1000;
-	
+		setButtonImage(); // Set image Pause 
 
-    	adapter.setEnabled(false);
-        timerHandler.postDelayed(timerRunnable, 0);
+		listViewRecords.smoothScrollToPositionFromTop(mIndex, 0, 500); // Move record to the top
+		
+		restOfTime = record.getDuration() + 1000; // Add a small reserve of the time
 
-		Toast.makeText(mContext, ""+Programm.isPlayMusicOn() +"  "+ mp3.size() , Toast.LENGTH_LONG).show();
-		
-		if (Programm.isPlayMusicOn() && mp3.size() > 0){
-			if (mp != null)
-				mp.stop();
-			int index = (int) (Math.random() * mp3.size());
-			mp = MediaPlayer.create(mContext,
-									Uri.parse(path+"/" + mp3.get(index)));
-			mp.start();
-		}
-		
-		TtsUtils.speak(record.getText());
+    	adapter.setEnabled(false); // Lock the list of the records
+    	
+    	// Speak the Name
+    	// When the even SpeakingDone arises we will start the timer and music   
+		TtsUtils.speak(record.getName(), mediaPlayer, true);
+
 	}
 	
 	private void reStart(){
+		
+    	if (Programm.isPlayMusicOn() && mp3.size() > 0)
+    		if (mediaPlayer != null)
+    			mediaPlayer.start();
+		
 		state = State.isRunning;
 		setButtonImage();
-
 
     	adapter.setEnabled(false);
         timerHandler.postDelayed(timerRunnable, 0);
@@ -280,6 +314,9 @@ public class FragmentPlayer extends Fragment
 		} else if (state == State.isPaused){
 			reStart();
 		} else {
+			if (mediaPlayer != null)
+				mediaPlayer.pause();
+			
 			state = State.isPaused;
 			setButtonImage();
 			timerHandler.removeCallbacks(timerRunnable);

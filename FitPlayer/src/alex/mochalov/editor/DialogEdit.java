@@ -46,12 +46,14 @@ public class DialogEdit extends Dialog
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-      //        WindowManager.LayoutParams.MATCH_PARENT);
-
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		setContentView(R.layout.dialog_edit);
-	
+		
+		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+              WindowManager.LayoutParams.MATCH_PARENT);
+
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(record.getName());
 		name.requestFocus();
@@ -59,7 +61,10 @@ public class DialogEdit extends Dialog
 		text = (EditText)findViewById(R.id.editTextText);
 		text.setText(record.getText());
 
-		final TextView textView3 = (TextView)findViewById(R.id.textView3);
+		TextView textViewStartTime = (TextView)findViewById(R.id.textViewStartTime);
+		textViewStartTime.setText(Utils.MStoString(Programm.getTimeBefore(record)));
+		
+		TextView textView3 = (TextView)findViewById(R.id.textView3);
 		duration = (EditText)findViewById(R.id.editTextDuration1);
 		if (mIsGroup){
 			duration.setVisibility(View.INVISIBLE);
@@ -83,12 +88,11 @@ public class DialogEdit extends Dialog
 						String z = s.toString();
 						
 						int i = z.indexOf(":");
-						if (s.length() == 2){
+						if (s.length() == 2 && start == 1){
 							duration.setText(s+":");
 							duration.setSelection(3);
 							
 						}
-						textView3.setText("*"+s+"* "+start+" "+before+" "+count);
 					}
 
 					@Override
@@ -135,27 +139,6 @@ public class DialogEdit extends Dialog
 					dialog.dismiss();
 				}
 			});
-/*
-      final ArrayList<Integer> canvas = new ArrayList<Integer>();
-      AdapterCanvas boxAdapter; 
-      boxAdapter = new AdapterCanvas(context, canvas);
-
-		canvas.add(new Integer(R.drawable.canvas0));
-		canvas.add(new Integer(R.drawable.canvas1));
-		canvas.add(new Integer(R.drawable.canvas2));
-		
-		ListView listView = (ListView) findViewById(R.id.listViewCanvas);
-      listView.setAdapter(boxAdapter);
-		listView.setOnItemClickListener( new ListView.OnItemClickListener(){
-				@Override
-				public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
-				{
-					callback.callbackACTION_DOWN(canvas.get(index));
-					dialog.dismiss();
-				}}
-		);
-		*/
-		
 	}	
 	
 

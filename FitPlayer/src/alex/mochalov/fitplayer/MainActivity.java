@@ -176,8 +176,10 @@ public class MainActivity extends Activity implements OnInitListener{
 
 	@Override
 	public void onInit(int status) {
-	      if (status == TextToSpeech.SUCCESS) 
-		    TtsUtils.init(this);
+	      if (status == TextToSpeech.SUCCESS){
+			    TtsUtils.init(this);
+	    	  
+	      }
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

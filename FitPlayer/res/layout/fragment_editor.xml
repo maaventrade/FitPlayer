@@ -62,13 +62,8 @@
 			    android:id="@+id/imageButtonEdit"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
+			    android:background="@color/blue"
 			    android:src="@drawable/edit0" />
-
-			<ImageButton
-			    android:id="@+id/imageButtonGo"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:src="@drawable/go" />
 
 		</LinearLayout>
 		

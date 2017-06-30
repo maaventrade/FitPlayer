@@ -76,8 +76,10 @@ public class Record {
 							s.substring(3, 5)) * 1000;
 		} catch (NumberFormatException e) {
 			mDuration = 0;
+		} catch (IndexOutOfBoundsException e) {
+			mDuration = 0;
 		}
-		
+		 
 		
 	}
 
