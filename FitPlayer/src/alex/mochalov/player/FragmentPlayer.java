@@ -3,13 +3,13 @@ import alex.mochalov.fitplayer.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
+import android.media.*;
+import android.net.*;
 import android.os.*;
 import android.view.*;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.*;
 import android.widget.*;
-
+import java.io.*;
 import java.util.*;
 
 public class FragmentPlayer extends Fragment
@@ -25,6 +25,9 @@ public class FragmentPlayer extends Fragment
 	private TextView textViewText;
 	private BImageView bImageView;
 	
+	private MediaPlayer mp;
+	private String path;
+	ArrayList<String> mp3 = new ArrayList<String>();
 
     AdapterPlayer adapter; 
 	ListView listViewRecords;
@@ -123,7 +126,19 @@ public class FragmentPlayer extends Fragment
 
 		state = State.isStopped;
 		setButtonImage();
-	
+		
+		path = Programm.getPathToMp3();
+		
+		File dir = new File(path+"/"); 
+		File[] files = dir.listFiles();
+		
+		Toast.makeText(mContext, path+"/", Toast.LENGTH_LONG).show();
+		
+		
+		if (files != null )
+			for (int i=0; i<files.length; i++)
+				if (files[i].getName().endsWith("mp3"))
+					mp3.add(files[i].getName());
 		
 		
 		return rootView;
@@ -220,6 +235,17 @@ public class FragmentPlayer extends Fragment
     	adapter.setEnabled(false);
         timerHandler.postDelayed(timerRunnable, 0);
 
+		Toast.makeText(mContext, ""+Programm.isPlayMusicOn() +"  "+ mp3.size() , Toast.LENGTH_LONG).show();
+		
+		if (Programm.isPlayMusicOn() && mp3.size() > 0){
+			if (mp != null)
+				mp.stop();
+			int index = (int) (Math.random() * mp3.size());
+			mp = MediaPlayer.create(mContext,
+									Uri.parse(path+"/" + mp3.get(index)));
+			mp.start();
+		}
+		
 		TtsUtils.speak(record.getText());
 	}
 	

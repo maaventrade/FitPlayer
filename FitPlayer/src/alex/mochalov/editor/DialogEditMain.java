@@ -1,30 +1,19 @@
 package alex.mochalov.editor;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import alex.mochalov.fitplayer.R;
-import alex.mochalov.fitplayer.Utils;
-import alex.mochalov.record.Programm;
-import alex.mochalov.record.Record;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
+import alex.mochalov.fitplayer.*;
+import alex.mochalov.record.*;
+import android.app.*;
+import android.database.*;
+import android.media.*;
+import android.net.*;
+import android.os.*;
+import android.view.*;
+import android.widget.*;
+import java.io.*;
+import java.util.*;
+import android.media.projection.*;
+import android.widget.MediaController.*;
+import android.content.*;
 
 public class DialogEditMain extends Dialog
 {
@@ -48,7 +37,12 @@ public class DialogEditMain extends Dialog
 	private Spinner spinnerNextGroup;
 	private TextView textViewPathToMp3;
 	
-	int MY_DATA_GET_SIGNALS = 5;
+	private CheckBox checkBoxNextGroupSignalOn;
+	private CheckBox countBeforeTheEnd;
+	private CheckBox playMusic;
+	
+	private MediaPlayer mp;
+
 	
 	MyCallback callback = null;
 	interface MyCallback {
@@ -104,22 +98,23 @@ public class DialogEditMain extends Dialog
 					record.setName(name.getText());
 					record.setText(text.getText());
 
-					CheckBox checkBoxNextGroupSignal = (CheckBox)findViewById(R.id.checkBoxNextGroupSignal); 
+					checkBoxNextGroupSignalOn = (CheckBox)findViewById(R.id.checkBoxNextGroupSignal); 
 					spinnerNextGroup.getSelectedItem().toString();
 					
 					String id = spinnerMap.get(spinnerNextGroup.getSelectedItemPosition());
 		        	RingtoneManager.getRingtone(mContext, Uri.parse(id)).play();
 					
-					Programm.setNextGroupSignal(checkBoxNextGroupSignal.isChecked(), 
+					Programm.setNextGroupSignal(checkBoxNextGroupSignalOn.isChecked(), 
 								spinnerNextGroup.getSelectedItem().toString(),
 								spinnerMap.get(spinnerNextGroup.getSelectedItemPosition()));
 
-					CheckBox countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
+					countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
 					Programm.setCountBeforeTheEnd(countBeforeTheEnd.isChecked());
 							
-					CheckBox playMusic = (CheckBox)findViewById(R.id.playMusic); 
+					playMusic = (CheckBox)findViewById(R.id.playMusic); 
 					Programm.setPlayMusic(playMusic.isChecked());
 					
+					Programm.setPathToMp3(textViewPathToMp3.getText().toString());
 					
 					if (callback != null)
 						callback.callbackOk();
@@ -174,25 +169,70 @@ public class DialogEditMain extends Dialog
 					
 				}
 			});
-	    /*
+			
 		Button buttonTestMusic = (Button)findViewById(R.id.buttonTestMusic);
-		buttonTestMusic.setOnClickListener(new Button.OnClickListener(){
+	    buttonTestMusic.setOnClickListener(new Button.OnClickListener(){
 				@Override
 				public void onClick(View p1)
 				{
+					testMusic( textViewPathToMp3.getText().toString() );
+				}
+
+				private void testMusic(String path)
+				{
+		
+					File dir = new File(path+"/"); 
+ArrayList<String> mp3 = new ArrayList<String>();
+					File[] files = dir.listFiles();
+					if (files != null )
+						for (int i=0; i<files.length; i++)
+							if (files[i].getName().endsWith("mp3"))
+								mp3.add(files[i].getName());
+							
 					
-			        File dir = new File(PATH+"/"); 
-			        File[] files = dir.listFiles();
-			        if (files != null )
-			            for (int i = 0; i < files.length; i++)
-			            	if (files[i].getName().endsWith(".mp3")){
-								MediaPlayer mediaPlayer = MediaPlayer.create(mContext, 
-										Uri.parse(PATH+ "/"+files[i].getName()));
-								mediaPlayer.start();
-			        	}	
+					if (mp3.size() == 0)
+						Toast.makeText(mContext, "No mp3 found", Toast.LENGTH_LONG).show();
+					else {
+						int index = (int) (Math.random() * mp3.size());
+						
+						if (mp != null)
+							mp.stop();
+						
+						mp = MediaPlayer.create(mContext,
+															Uri.parse(path+"/" + mp3.get(index)));
+						mp.start();
+						
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable() {
+							public void run() {
+								if (mp != null)
+									mp.stop();
+							}
+						}, 5000);
+					}
 				}
 			});
-	    */
+		
+	
+			
+		checkBoxNextGroupSignalOn = (CheckBox)findViewById(R.id.checkBoxNextGroupSignal); 
+		checkBoxNextGroupSignalOn.setChecked(Programm.isSoundNextGroupOn());
+		 
+		//spinnerNextGroup.setSelection(spinnerNextGroup.in);
+
+		countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
+		countBeforeTheEnd.setChecked(Programm.isCountBeforeTheEndOn());
+		
+		playMusic = (CheckBox)findViewById(R.id.playMusic); 
+		playMusic.setChecked(Programm.isPlayMusicOn());
+		
+		textViewPathToMp3 = (TextView)findViewById(R.id.textViewPathToMp3);
+		textViewPathToMp3.setText(Programm.getPathToMp3());
 	}
 
+	
+	protected void onDismiss(DialogInterface dialog){
+		if (mp != null)
+			mp.stop();
+	}
 }

@@ -39,6 +39,28 @@ public class Programm {
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
 
 	private static Record currentRecord = null;
+
+	public static String getPathToMp3()
+	{
+		return pathToMp3;
+	}
+
+	public static boolean isPlayMusicOn()
+	{
+		
+		return playMusic;
+	}
+
+	public static boolean isCountBeforeTheEndOn()
+	{
+	
+		return countBeforeTheEnd;
+	}
+
+	public static boolean isSoundNextGroupOn()
+	{
+		return soundNextGroupOn;
+	}
 	
 	/*
 	public static Record getNextRecord()
@@ -143,6 +165,14 @@ public class Programm {
 						main = new Record(parser.getAttributeValue(null, "name"),
 							parser.getAttributeValue(null, "text"),
 							duration);
+							
+						soundNextName = parser.getAttributeValue(null, "soundNextName");
+						soundNextGroupUri = parser.getAttributeValue(null, "soundNextGroupUri");
+						soundNextGroupOn = Boolean.parseBoolean( parser.getAttributeValue(null, "soundNextGroupOn"));
+						countBeforeTheEnd = Boolean.parseBoolean( parser.getAttributeValue(null, "countBeforeTheEnd"));
+						pathToMp3 = parser.getAttributeValue(null, "pathToMp3");
+						playMusic = Boolean.parseBoolean( parser.getAttributeValue(null, "playMusic"));
+						
 						
 					}
 						else if(parser.getName().equals("children")){
@@ -235,7 +265,7 @@ public class Programm {
 					 +" soundNextName=\""+soundNextName+"\""
 					 +" soundNextGroupUri=\""+soundNextGroupUri+"\""
 					 +" countBeforeTheEnd=\""+countBeforeTheEnd+"\""
-					 +" countBeforeTheEnd=\""+countBeforeTheEnd+"\""
+					 +" pathToMp3=\""+pathToMp3+"\""
 					 +" playMusic=\""+playMusic+"\""
 					 +">"+"\n");
 			writer.write("</main>"+"\n");
