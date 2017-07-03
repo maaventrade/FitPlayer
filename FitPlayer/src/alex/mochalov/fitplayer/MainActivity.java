@@ -6,14 +6,11 @@ import alex.mochalov.programms.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.*;
 import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
 import android.view.*;
+import android.widget.*;
 
 public class MainActivity extends Activity implements OnInitListener{
 
@@ -167,6 +164,7 @@ public class MainActivity extends Activity implements OnInitListener{
 		case R.id.action_settings:
 			return true;
 		
+		
 		default:	
 			return super.onOptionsItemSelected(item);
 		}
@@ -181,6 +179,18 @@ public class MainActivity extends Activity implements OnInitListener{
 	    	  
 	      }
 	}
+
+	@Override
+	public void onBackPressed()
+	{
+		if (fragmentEditor != null &&
+		fragmentEditor.isVIsible()){
+			Toast.makeText(mContext, "yes", Toast.LENGTH_LONG).show();
+		}
+		else
+			super.onBackPressed();
+	}
+
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

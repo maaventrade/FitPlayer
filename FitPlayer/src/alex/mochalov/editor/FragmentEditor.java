@@ -21,11 +21,13 @@ public class FragmentEditor extends Fragment
 	AdapterEditorExp adapter; 
 	ListView listViewRecords;
 
-	private String fileName;
+	
 	
 	private Record selectedRecord = null;
 	
 	private DialogEditMain dialogEditMain;
+	
+	private boolean mVisible;
 
 	public FragmentEditor(Activity context){
 		super();
@@ -34,6 +36,11 @@ public class FragmentEditor extends Fragment
 
 	public FragmentEditor(){
 		super();
+	}
+
+	public boolean isVIsible()
+	{
+		return mVisible;
 	}
 	
 	public void setParams(Activity context){
@@ -47,10 +54,10 @@ public class FragmentEditor extends Fragment
         rootView = inflater.inflate(R.layout.fragment_editor, container, false);
         
 		Bundle args = getArguments();
-		fileName = args.getString("name", "");
+		Utils.setFileName(args.getString("name", ""));
 		//textViewFileName.setText(fileName);
         
-        Programm.loadXML(mContext, fileName);
+        Programm.loadXML(mContext, Utils.getFileName());
 
         //Edit programm Header
 		final TextView nameMain = (TextView)rootView.findViewById(R.id.TextViewName);
@@ -88,7 +95,7 @@ public class FragmentEditor extends Fragment
 		//listViewRecords.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
         
-       //Создаем адаптер и передаем context и список с данными
+       //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ context пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         adapter = new AdapterEditorExp(mContext, Programm.getGroups(), Programm.getChilds());
         adapter.callback = new AdapterEditorExp.MyCallback() {
 			
@@ -134,7 +141,7 @@ public class FragmentEditor extends Fragment
 			
 		});
         	
-        
+        mVisible = true;
 		return rootView;
 	}
 
@@ -145,8 +152,16 @@ public class FragmentEditor extends Fragment
 
 	@Override
     public void onPause() {
+		
         super.onPause();
     }	
+	
+	@Override
+    public void onDestroyView() {
+		mVisible = false;
+        super.onDestroyView();
+    }	
+	
 	
 	
 	@Override
@@ -184,7 +199,7 @@ public class FragmentEditor extends Fragment
 				}
 				return true;
 			case R.id.action_save:
-				Programm.save(mContext, fileName);
+				Programm.save(mContext, Utils.getFileName());
 				return true;
 			default:	
 				return super.onOptionsItemSelected(item);
@@ -219,5 +234,6 @@ public class FragmentEditor extends Fragment
 	        }
 	    }
 	};
+	
 
 }

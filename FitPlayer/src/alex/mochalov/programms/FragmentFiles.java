@@ -1,19 +1,21 @@
 package alex.mochalov.programms;
 import alex.mochalov.fitplayer.*;
+import alex.mochalov.record.*;
 import android.app.*;
-import android.graphics.Color;
-import android.graphics.drawable.*;
+import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
-
 import java.util.*;
+import android.text.*;
 
 public class FragmentFiles extends Fragment
 {
 	private Activity mContext;
 	//Fragment thisFragment;
 	private View rootView;
+	
+	private ArrayList<String> programms;
 	
 	private ListView listViewFiles;
 	private AdapterFiles adapter;
@@ -49,7 +51,7 @@ public class FragmentFiles extends Fragment
 		listViewFiles = (ListView)rootView.findViewById(R.id.ListViewFiles); 
 		listViewFiles.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		final ArrayList<String> programms = new ArrayList<String>();
+		programms = new ArrayList<String>();
 		Utils.readFilesList(programms);
 
 		adapter = new AdapterFiles(mContext, programms);
@@ -69,8 +71,6 @@ public class FragmentFiles extends Fragment
 			public void onAdd(String text)
 			{
 				
-				Toast.makeText(mContext, "adddd", Toast.LENGTH_LONG).show();
-				mContext.getActionBar().show();
 			}
 		};
 		
@@ -78,9 +78,9 @@ public class FragmentFiles extends Fragment
 		
 		listViewFiles.setOnItemClickListener( new ListView.OnItemClickListener(){
 				@Override
-				public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
+				public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
 				{
-					selectedString = (String) p1.getItemAtPosition(index);
+					selectedString = (String) adapter.getItemAtPosition(index);
 					/*
 					if (Utils.action.equals("edit") &&
 						listener != null){
@@ -107,7 +107,17 @@ public class FragmentFiles extends Fragment
 		
 		switch (id){
 		case R.id.action_delete:
-			//fr.start();
+		
+				if (selectedString != null){
+
+					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+					builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+					    .setNegativeButton("No", dialogClickListener).show();
+
+				}
+
+			
+				
 			return true;
 		case R.id.action_go:
 
@@ -115,9 +125,62 @@ public class FragmentFiles extends Fragment
 				listener.onGoSelected(selectedString);
 			
 			return true;
+		case R.id.action_add:
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setTitle(getResources().getString(R.string.action_add));
+				
+			final EditText name = new EditText(mContext);
+			name.setInputType(InputType.TYPE_CLASS_TEXT);
+			builder.setView(name);
+			
+				builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(DialogInterface p1, int p2)
+						{
+							Programm.clear();
+							Utils.setFileName(name.getText()+".xml");
+							Programm.save(mContext, Utils.getFileName());
+							
+							programms.add(Utils.getFileName());
+							
+							//listViewFiles.setSelection(programms.size()-1);
+							listViewFiles.setItemChecked(programms.size()-1, false);
+							
+							adapter.notifyDataSetChanged();
+						}
+					});
+				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(DialogInterface dialog, int p2)
+						{
+								dialog.cancel();
+						}
+					});
+			builder.show();
+			return true;
 		default:	
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+				case DialogInterface.BUTTON_POSITIVE:
+
+					Utils.deleteFile(selectedString);
+					programms.remove(selectedString);
+					
+					selectedString = null;
+					adapter.notifyDataSetChanged();
+					break;
+
+				case DialogInterface.BUTTON_NEGATIVE:
+					break;
+	        }
+	    }
+	};
+	
 	
 }

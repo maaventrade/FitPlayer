@@ -15,13 +15,13 @@ public class Record {
 	private String mText;
 	private long mDuration;
 	private ArrayList<Record> modifications;
+	private boolean mRest;
 
-	private int mIndex = -1;
-
-	public Record(String name, String text, int duration) {
+	public Record(String name, String text, Boolean rest, int duration) {
 		mName = name;
 		mText = text;
 		mDuration = duration;
+		mRest = rest;
 
 		modifications = new ArrayList<Record>();
 	}
@@ -48,6 +48,13 @@ public class Record {
 		return mName;
 	}
 
+	public boolean isRest() {
+		return mRest;
+	}
+
+	public void setRest(boolean rest) {
+		mRest = rest;
+	}
 	
 	public long getDuration() {
 		return mDuration;
@@ -86,6 +93,4 @@ public class Record {
 	public void setDuration(long duration) {
 		mDuration = duration;
 	}
-
-	
 }

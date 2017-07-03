@@ -26,10 +26,6 @@ public class FragmentPlayer extends Fragment
 	private TextView textViewText;
 	private BImageView bImageView;
 	
-	private MediaPlayer mediaPlayer;
-	private String path;
-	ArrayList<String> mp3 = new ArrayList<String>();
-
     AdapterPlayer adapter; 
 	ListView listViewRecords;
 
@@ -131,41 +127,20 @@ public class FragmentPlayer extends Fragment
 		state = State.isStopped;
 		setButtonImage();
 		
-		path = Programm.getPathToMp3();
-		
-		File dir = new File(path+"/"); 
-		File[] files = dir.listFiles();
-		
-		Toast.makeText(mContext, path+"/", Toast.LENGTH_LONG).show();
-		
-		
-		if (files != null )
-			for (int i=0; i<files.length; i++)
-				if (files[i].getName().endsWith("mp3"))
-					mp3.add(files[i].getName());
+		Media.loadMediaFiles(mContext);
 		
 		
 		TtsUtils.callback = new TtsUtils.MyCallback() {
 			@Override
-			public void speakingDone() {
+			public void speakingDone(String param) {
 				Record record = records.get(mIndex);
 				
-		    	// Start music
-		    	if (Programm.isPlayMusicOn() && mp3.size() > 0){
-		    		if (restartMusic){
-						if (mediaPlayer != null)
-							mediaPlayer.stop();
-						int index = (int) (Math.random() * mp3.size());
-						mediaPlayer = MediaPlayer.create(mContext,
-												Uri.parse(path+"/" + mp3.get(index)));
-						restartMusic = false;
-		    		}
-					mediaPlayer.start();
+				if (param.equals("name")){
+					TtsUtils.speak(record.getText(), "text", false, record.isRest());
+				} else if (param.equals("text")){
+					timerHandler.postDelayed(timerRunnable, 0); 
+					Media.restart(mContext, restartMusic);
 				}
-				
-				TtsUtils.speak(record.getText(), mediaPlayer, false);
-				
-		        timerHandler.postDelayed(timerRunnable, 0); 
 				
 			}
 		}; 
@@ -190,10 +165,8 @@ public class FragmentPlayer extends Fragment
     public void onPause() {
         super.onPause();
         
-        if (mediaPlayer != null){
-        	mediaPlayer.stop();
-        	mediaPlayer = null;
-        }
+		Media.stop();
+        
         timerHandler.removeCallbacks(timerRunnable);
     }	
 	
@@ -275,16 +248,14 @@ public class FragmentPlayer extends Fragment
     	
     	// Speak the Name
     	// When the even SpeakingDone arises we will start the timer and music   
-		TtsUtils.speak(record.getName(), mediaPlayer, true);
+		TtsUtils.speak(record.getName(), "name", true, record.isRest());
 
 	}
 	
 	private void reStart(){
 		
-    	if (Programm.isPlayMusicOn() && mp3.size() > 0)
-    		if (mediaPlayer != null)
-    			mediaPlayer.start();
-		
+		Media.start();
+    	
 		state = State.isRunning;
 		setButtonImage();
 
@@ -314,8 +285,7 @@ public class FragmentPlayer extends Fragment
 		} else if (state == State.isPaused){
 			reStart();
 		} else {
-			if (mediaPlayer != null)
-				mediaPlayer.pause();
+			Media.pause();
 			
 			state = State.isPaused;
 			setButtonImage();

@@ -28,11 +28,11 @@ android:descendantFocusability="blocksDescendants"
             android:textColor="@drawable/item_text_selector1"  />
 
         <TextView
-            android:id="@+id/TextViewText"
+            android:id="@+id/TextViewDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@drawable/item_text_selector1"  />
     </LinearLayout>
 
@@ -46,14 +46,7 @@ android:descendantFocusability="blocksDescendants"
             android:layout_height="wrap_content"
             android:background="@null"
             android:src="@drawable/edit0" />
-
-        <ImageButton
-            android:id="@+id/imageButtonAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/add0" />
-
+		
         <ImageButton
             android:id="@+id/imageButtonGo"
             android:layout_width="wrap_content"

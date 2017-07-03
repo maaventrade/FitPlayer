@@ -31,14 +31,39 @@ public class Programm {
 	private static boolean soundNextGroupOn; 
 	private static String soundNextName; 
 	private static String soundNextGroupUri; 
-	private static boolean countBeforeTheEnd; 
+	private static boolean countBeforeTheEnd = true; 
 	private static boolean playMusic; 
 	private static String pathToMp3; 
+	private static Boolean stopMusicOnTheRest;
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
 
-	private static Record currentRecord = null;
+	public static void clear()
+	{
+		main = new Record("New programm");
+		soundNextGroupOn = false; 
+		soundNextName = ""; 
+		soundNextGroupUri = ""; 
+		countBeforeTheEnd = true; 
+		playMusic = false; 
+		pathToMp3 = ""; 
+		stopMusicOnTheRest = false;
+
+		listDataHeader = new ArrayList<Record>();
+		listDataChild = new HashMap<Record, List<Record>>();
+	
+	}
+
+	public static boolean isStopMusicInTheRest()
+	{
+		return stopMusicOnTheRest;
+	}
+
+	public static void setStopMusicInTheRest(boolean isChecked)
+	{
+		stopMusicOnTheRest = isChecked;
+	}
 
 	public static String getPathToMp3()
 	{
@@ -164,6 +189,7 @@ public class Programm {
 						
 						main = new Record(parser.getAttributeValue(null, "name"),
 							parser.getAttributeValue(null, "text"),
+										  Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
 							duration);
 							
 						soundNextName = parser.getAttributeValue(null, "soundNextName");
@@ -188,6 +214,7 @@ public class Programm {
 						
 						record = new Record(parser.getAttributeValue(null, "name"),
 							parser.getAttributeValue(null, "text"),
+							Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
 							duration);
 						
 						if (currentGroup != null){
@@ -294,6 +321,7 @@ public class Programm {
 						writer.write("<record name=\""
 								 +l.getName()+"\""
 								 +" text=\""+l.getText()+"\""
+								+" rest=\""+l.isRest()+"\""
 								 +" duration=\""+l.getDuration()+"\""
 								 +">"+"\n");
 						writer.write("</record>"+"\n");

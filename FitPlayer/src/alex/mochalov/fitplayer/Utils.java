@@ -1,18 +1,15 @@
 package alex.mochalov.fitplayer;
 
-import alex.mochalov.record.Record;
+import alex.mochalov.record.*;
 import android.content.*;
 import android.os.*;
 import android.util.*;
-import android.webkit.WebView;
-import android.widget.Toast;
-
+import android.webkit.*;
+import android.widget.*;
 import java.io.*;
-import java.util.ArrayList;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
+import java.text.*;
+import java.util.*;
+import org.xmlpull.v1.*;
 
 public class Utils {
 
@@ -24,6 +21,32 @@ public class Utils {
 	private static String language = "rus";
 	
 	public static String action = "";
+	
+	private static String mFileName;
+
+	public static CharSequence getFileDateTime(String selectedString, Context context)
+	{
+		File file = new File(APP_FOLDER+"/"+selectedString);
+		Date date  =  new Date(file.lastModified());
+		DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+		DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+	
+		return dateFormat.format(date)+" "+timeFormat.format(date);
+	}
+	
+	public static String getFileName(){
+		return mFileName;
+	}
+	
+	public static void setFileName(String fileName){
+		mFileName = fileName;
+	}
+
+	public static void deleteFile(String selectedString)
+	{
+		File file = new File(APP_FOLDER+"/"+selectedString);
+		file.delete();
+	}
 	
 	public static String getRecFolder(){
 		return REC_FOLDER;
@@ -146,6 +169,7 @@ public class Utils {
 						
 						record = new Record(parser.getAttributeValue(null, "name"),
 							parser.getAttributeValue(null, "text"),
+							Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
 							duration);
 						
 						if (mainFolder == null){

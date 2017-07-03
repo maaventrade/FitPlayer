@@ -63,7 +63,9 @@ public class AdapterFiles extends BaseAdapter {
 				
 		
 		TextView textViewName = (TextView)convertView.findViewById(R.id.TextViewName);
-		//TextView textViewText = (TextView)convertView.findViewById(R.id.TextViewText);
+		TextView TextViewDate = (TextView)convertView.findViewById(R.id.TextViewDate);
+		
+		
 		
 		ImageButton brnEdit = (ImageButton)convertView.findViewById(R.id.imageButtonEdit);
 		brnEdit.setOnClickListener(new OnClickListener(){
@@ -105,15 +107,9 @@ public class AdapterFiles extends BaseAdapter {
 
 				}});
 		
-		ImageButton brnAdd = (ImageButton)convertView.findViewById(R.id.imageButtonAdd); 
-		brnAdd.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-
-					listener.onAdd("ttt");
-
-				}});
+		
     	textViewName.setText(mObjects.get(position));
+		TextViewDate.setText(Utils.getFileDateTime(mObjects.get(position), mContext));
 		
 		return convertView;
 	}

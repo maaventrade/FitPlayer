@@ -27,6 +27,10 @@ public class DialogEdit extends Dialog
 	private Button btnOk;
 	private Button btnCancel;
 	
+	private CheckBox itIsTheRest;
+	
+	
+	
 	MyCallback callback = null;
 	interface MyCallback {
 		void callbackOk(); 
@@ -63,6 +67,10 @@ public class DialogEdit extends Dialog
 
 		TextView textViewStartTime = (TextView)findViewById(R.id.textViewStartTime);
 		textViewStartTime.setText(Utils.MStoString(Programm.getTimeBefore(record)));
+		
+		itIsTheRest = (CheckBox)findViewById(R.id.checkBoxItIsTheRest);
+		itIsTheRest.setChecked(record.isRest());
+		
 		
 		TextView textView3 = (TextView)findViewById(R.id.textView3);
 		duration = (EditText)findViewById(R.id.editTextDuration1);
@@ -118,6 +126,7 @@ public class DialogEdit extends Dialog
 					
 					record.setName(name.getText());
 					record.setText(text.getText());
+					record.setRest(itIsTheRest.isChecked());
 					if (! mIsGroup)
 						record.setDuration(duration.getText());
 					

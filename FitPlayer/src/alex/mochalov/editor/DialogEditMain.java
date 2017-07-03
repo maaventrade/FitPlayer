@@ -40,6 +40,7 @@ public class DialogEditMain extends Dialog
 	private CheckBox checkBoxNextGroupSignalOn;
 	private CheckBox countBeforeTheEnd;
 	private CheckBox playMusic;
+	private CheckBox stopMusicInTheRest;
 	
 	private MediaPlayer mp;
 
@@ -88,6 +89,9 @@ public class DialogEditMain extends Dialog
 			}
 		});
 		
+		stopMusicInTheRest = (CheckBox)findViewById(R.id.checkBoxStopMusicInTheRest);
+		stopMusicInTheRest.setChecked(Programm.isStopMusicInTheRest());
+		
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
 		btnOk.setOnClickListener(new Button.OnClickListener(){
 				@Override
@@ -112,6 +116,7 @@ public class DialogEditMain extends Dialog
 							
 					playMusic = (CheckBox)findViewById(R.id.playMusic); 
 					Programm.setPlayMusic(playMusic.isChecked());
+					Programm.setStopMusicInTheRest(stopMusicInTheRest.isChecked());
 					
 					Programm.setPathToMp3(textViewPathToMp3.getText().toString());
 					

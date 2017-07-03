@@ -10,6 +10,7 @@ import android.util.*;
 import android.widget.*;
 
 import java.util.*;
+import alex.mochalov.record.*;
 
 public class TtsUtils 
 {
@@ -21,14 +22,16 @@ public class TtsUtils
 	private static AudioManager am = null;
 	private static int volume_level;
 	
-	private static MediaPlayer mMediaPlayer = null;
+	
 	private static boolean pause = false;
 	
 	private static boolean mWaiting = false;
 	
+	private static String mParam;
+	
 	public static MyCallback callback = null;
 	public interface MyCallback {
-		void speakingDone(); 
+		void speakingDone(String param); 
 	} 
 
 /*
@@ -37,7 +40,7 @@ public class TtsUtils
 	volume_level,
 	0);*/
 	
-	public static void speak(String text, MediaPlayer mp, boolean waiting)
+	public static void speak(String text, String param, boolean waiting, boolean itIsRest)
 	{
 
 		//Toast.makeText(mContext,text,Toast.LENGTH_LONG).show();
@@ -50,19 +53,19 @@ public class TtsUtils
           //  0);
 		
 		mWaiting = waiting;
-		
+		mParam = param;
 		pause = false;
-		mMediaPlayer = mp;
 		
-		if (mMediaPlayer != null){
-			
-			if (mMediaPlayer.isPlaying()){
-				pause = true;
-				mMediaPlayer.pause();
+		if (Media.getMediaPlayer() != null){
+			if (Media.getMediaPlayer() .isPlaying()){
+				if(Programm.isStopMusicInTheRest() || (! itIsRest)){
+					pause = true;
+					Media.getMediaPlayer() .pause();
+				}
 			}
 			
 		}
-			
+			 
 		String[] textArray = text.split(":");
 		//Log.d("d", "text "+text+" "+textArray.length);
 		for (String s: textArray)
@@ -104,10 +107,10 @@ public class TtsUtils
             public void onDone(String utteranceId) {
             	if (mWaiting){
             		if (callback != null)
-            			callback.speakingDone();
+            			callback.speakingDone(mParam);
             	}
-            	else if (pause && mMediaPlayer != null){
-            		mMediaPlayer.start();
+            	else if (pause && Media.getMediaPlayer()  != null){
+            		Media.getMediaPlayer() .start();
             	}
             }
 
