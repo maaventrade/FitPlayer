@@ -1,12 +1,15 @@
 package alex.mochalov.programms;
 import alex.mochalov.fitplayer.*;
+import alex.mochalov.player.FragmentPlayer;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+
 import java.util.*;
+
 import android.text.*;
 
 public class FragmentFiles extends Fragment
@@ -80,18 +83,27 @@ public class FragmentFiles extends Fragment
 				@Override
 				public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
 				{
-					selectedString = (String) adapter.getItemAtPosition(index);
-					/*
-					if (Utils.action.equals("edit") &&
-						listener != null){
-							Utils.action = "";
-						Toast.makeText(mContext, selectedString, Toast.LENGTH_LONG).show();
-						listener.onGoSelected(selectedString);
-						}
-						*/
+					String selectedString1 = (String) adapter.getItemAtPosition(index);
+					if (selectedString1.equals(selectedString)){
+						FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+
+						FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+
+						Bundle args = new Bundle();
+						args.putString("name", selectedString);
+						fragmentPlayer.setArguments(args);
+
+						ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
+						ft.addToBackStack(null);
+
+						ft.commit();
+					}
+					else selectedString = selectedString1;
 				}}
 		);	
 		
+		
+		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.timers));
 		
 		return rootView;
 	}
@@ -107,23 +119,14 @@ public class FragmentFiles extends Fragment
 		
 		switch (id){
 		case R.id.action_delete:
-		
 				if (selectedString != null){
 
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-					builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+					builder.setMessage("Delete "+selectedString+". Are you sure?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();
 
 				}
 
-			
-				
-			return true;
-		case R.id.action_go:
-
-			if (listener != null && selectedString.length() > 0)
-				listener.onGoSelected(selectedString);
-			
 			return true;
 		case R.id.action_add:
 			
@@ -144,8 +147,8 @@ public class FragmentFiles extends Fragment
 							
 							programms.add(Utils.getFileName());
 							
-							//listViewFiles.setSelection(programms.size()-1);
-							listViewFiles.setItemChecked(programms.size()-1, false);
+							listViewFiles.setItemChecked(programms.size()-1, true);
+							selectedString = (String) adapter.getItem(programms.size()-1);
 							
 							adapter.notifyDataSetChanged();
 						}

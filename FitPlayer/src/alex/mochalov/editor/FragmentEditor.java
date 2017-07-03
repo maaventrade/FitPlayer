@@ -141,6 +141,8 @@ public class FragmentEditor extends Fragment
 			
 		});
         	
+		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.edit_timer));
+        
         mVisible = true;
 		return rootView;
 	}

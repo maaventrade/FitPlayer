@@ -14,16 +14,12 @@ import alex.mochalov.record.*;
 
 public class TtsUtils 
 {
+	
+	// Audio Focus - To do
 	private static TextToSpeech tts;
 	private Locale locale;
 	private static boolean  langSupported;
 	private static Context mContext;
-	
-	private static AudioManager am = null;
-	private static int volume_level;
-	
-	
-	private static boolean pause = false;
 	
 	private static boolean mWaiting = false;
 	
@@ -54,17 +50,10 @@ public class TtsUtils
 		
 		mWaiting = waiting;
 		mParam = param;
-		pause = false;
 		
-		if (Media.getMediaPlayer() != null){
-			if (Media.getMediaPlayer() .isPlaying()){
-				if(Programm.isStopMusicInTheRest() || (! itIsRest)){
-					pause = true;
-					Media.getMediaPlayer() .pause();
-				}
-			}
-			
-		}
+		if (Media.getMediaPlayer() != null)
+			if (Media.getMediaPlayer() .isPlaying())
+				Media.getMediaPlayer().setVolume(0.2f, 0.2f);
 			 
 		String[] textArray = text.split(":");
 		//Log.d("d", "text "+text+" "+textArray.length);
@@ -105,13 +94,16 @@ public class TtsUtils
 		tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onDone(String utteranceId) {
+
+            	Media.getMediaPlayer().setVolume(1f, 1f);
+
             	if (mWaiting){
             		if (callback != null)
             			callback.speakingDone(mParam);
             	}
-            	else if (pause && Media.getMediaPlayer()  != null){
-            		Media.getMediaPlayer() .start();
-            	}
+            	//else if (Media.getMediaPlayer()  != null){
+            	//	Media.getMediaPlayer().start();
+            	//}
             }
 
             @Override
@@ -123,8 +115,6 @@ public class TtsUtils
             }
         });		
 		
-		
-		am = (AudioManager) mContext.getSystemService(mContext.AUDIO_SERVICE);
 		
 		langSupported = false;
 		loadLangueges();

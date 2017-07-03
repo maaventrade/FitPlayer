@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FitPlayer</string>
+    <string name="app_name">FitTimer</string>
     <string name="timers">Timers</string>
     <string name="zero">00:00</string>
     <string name="action_settings">Settings</string>
@@ -9,7 +9,13 @@
     <string name="action_start">Start</string>
     <string name="action_pause">Pause</string>
     
+    <string name="file_name">File name</string>
+    
     <string name="action_edit">Edit</string>
+    <string name="edit_timer">Edit timer</string>
+    <string name="run">Run</string>
+    
+    
     <string name="action_add">Add</string>
     <string name="action_add_child">Add child</string>
     <string name="action_delete">Delete</string>

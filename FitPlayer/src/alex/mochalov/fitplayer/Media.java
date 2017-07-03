@@ -64,8 +64,7 @@ public class Media
 		File dir = new File(path+"/"); 
 		File[] files = dir.listFiles();
 
-		Toast.makeText(mContext, path+"/", Toast.LENGTH_LONG).show();
-
+		//Toast.makeText(mContext, path+"/", Toast.LENGTH_LONG).show();
 
 		if (files != null )
 			for (int i=0; i<files.length; i++)

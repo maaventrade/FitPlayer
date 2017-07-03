@@ -10,6 +10,7 @@ import android.os.*;
 import android.view.*;
 import android.view.animation.*;
 import android.widget.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class FragmentPlayer extends Fragment
 {
 	public static final String TAG_FRAGMENT_PLAYER = "TAG_FRAGMENT_PLAYER";
 	
-	Context mContext;
+	private Activity mContext;
 	//Fragment thisFragment;
 	private View rootView;
 
@@ -34,12 +35,13 @@ public class FragmentPlayer extends Fragment
 	
 	private ArrayList<Record> records;
 	private int mIndex;
-	long restOfTime = 0;
+	private long restOfTime = 0;
 	
 	private boolean restartMusic = true;
 	
+	private boolean[] counter = {false, false, false};
 
-	public FragmentPlayer(Context context){
+	public FragmentPlayer(Activity context){
 		super();
 		mContext = context;
 	}
@@ -49,7 +51,7 @@ public class FragmentPlayer extends Fragment
 	}
 
 	
-	public void setParams(Context context){
+	public void setParams(Activity context){
 		mContext = context;
 	}
 	
@@ -67,6 +69,8 @@ public class FragmentPlayer extends Fragment
 
 		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
 							  //        WindowManager.LayoutParams.MATCH_PARENT);
+        
+        mContext.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		textViewTimer = (TextView)rootView.findViewById(R.id.TextViewTimer);
 		textViewName = (TextView)rootView.findViewById(R.id.TextViewName);
@@ -136,14 +140,16 @@ public class FragmentPlayer extends Fragment
 				Record record = records.get(mIndex);
 				
 				if (param.equals("name")){
-					TtsUtils.speak(record.getText(), "text", false, record.isRest());
+					TtsUtils.speak(record.getText(), "text", true, record.isRest());
 				} else if (param.equals("text")){
 					timerHandler.postDelayed(timerRunnable, 0); 
-					Media.restart(mContext, restartMusic);
 				}
 				
 			}
 		}; 
+		
+		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.run));
+		mContext. getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		return rootView;
 	}
@@ -187,6 +193,22 @@ public class FragmentPlayer extends Fragment
 
         	} else {
 
+        		if (Programm.isCountBeforeTheEndOn()){
+        			if (!counter[0] && restOfTime <= 3200){
+        		    	TtsUtils.speak("3", "", false, false);
+        		    	counter[0] = true;
+        			}	
+        			else if (!counter[1] && restOfTime <= 2200){
+        		    	TtsUtils.speak("2", "", false, false);
+        		    	counter[1] = true;
+        			}	
+        			else if (!counter[2] && restOfTime <= 1200){
+        		    	TtsUtils.speak("1", "", false, false);
+        		    	counter[2] = true;
+        			}	
+        				
+        		}
+        		
         		setTextViewTimer(restOfTime);
                 timerHandler.postDelayed(this, 100);
 
@@ -204,6 +226,10 @@ public class FragmentPlayer extends Fragment
 
 	private boolean getNextRecord(){
 
+		counter[0] = false;
+		counter[1] = false;
+		counter[2] = false;
+		
         if (mIndex < records.size()){
 			mIndex++;
 			
@@ -246,9 +272,11 @@ public class FragmentPlayer extends Fragment
 
     	adapter.setEnabled(false); // Lock the list of the records
     	
-    	// Speak the Name
-    	// When the even SpeakingDone arises we will start the timer and music   
-		TtsUtils.speak(record.getName(), "name", true, record.isRest());
+    	Media.restart(mContext, restartMusic);
+    	restartMusic = false;
+
+		setTextViewTimer(restOfTime);
+    	TtsUtils.speak(record.getName(), "name", true, record.isRest());
 
 	}
 	
@@ -271,7 +299,10 @@ public class FragmentPlayer extends Fragment
 		int id = item.getItemId();
 
 		switch (id){
-			case R.id.action_settings:
+			case android.R.id.home:
+				getActivity().onBackPressed();
+				return true;
+            case R.id.action_settings:
 				return true;
 			default:	
 				return super.onOptionsItemSelected(item);

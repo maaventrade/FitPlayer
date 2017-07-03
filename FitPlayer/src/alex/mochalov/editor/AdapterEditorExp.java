@@ -20,7 +20,7 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 
 	private AdapterEditorExp adapter;
 
-	MyCallback callback = null;
+	MyCallback callback = null; 
 	interface MyCallback {
 		void callbackEdited(); 
 	} 

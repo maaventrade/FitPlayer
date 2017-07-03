@@ -96,11 +96,6 @@
 			android:text="Test"/>
 
 	</LinearLayout>
-	<CheckBox
-		android:id="@+id/checkBoxStopMusicInTheRest"
-		android:layout_height="wrap_content"
-		android:text="@string/music_rest"
-		android:layout_width="wrap_content"/>
 	
 	<CheckBox
 		android:id="@+id/countBeforeTheEnd"
