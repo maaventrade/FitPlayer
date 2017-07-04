@@ -140,7 +140,7 @@ public class FragmentPlayer extends Fragment
 				Record record = records.get(mIndex);
 				
 				if (param.equals("name")){
-					TtsUtils.speak(record.getText(), "text", true, record.isRest());
+					TtsUtils.speak(record.getText(), "text", true, true, true);
 				} else if (param.equals("text")){
 					timerHandler.postDelayed(timerRunnable, 0); 
 				}
@@ -195,15 +195,15 @@ public class FragmentPlayer extends Fragment
 
         		if (Programm.isCountBeforeTheEndOn()){
         			if (!counter[0] && restOfTime <= 3200){
-        		    	TtsUtils.speak("3", "", false, false);
+        		    	TtsUtils.speak("3", "", false, true, false);
         		    	counter[0] = true;
         			}	
         			else if (!counter[1] && restOfTime <= 2200){
-        		    	TtsUtils.speak("2", "", false, false);
+        		    	TtsUtils.speak("2", "", false, false, false);
         		    	counter[1] = true;
         			}	
         			else if (!counter[2] && restOfTime <= 1200){
-        		    	TtsUtils.speak("1", "", false, false);
+        		    	TtsUtils.speak("1", "", false, false, true);
         		    	counter[2] = true;
         			}	
         				
@@ -230,7 +230,7 @@ public class FragmentPlayer extends Fragment
 		counter[1] = false;
 		counter[2] = false;
 		
-        if (mIndex < records.size()){
+        if (mIndex < records.size()-1){
 			mIndex++;
 			
         	//int position = 0; // mainFolder.getIndex();
@@ -276,7 +276,7 @@ public class FragmentPlayer extends Fragment
     	restartMusic = false;
 
 		setTextViewTimer(restOfTime);
-    	TtsUtils.speak(record.getName(), "name", true, record.isRest());
+    	TtsUtils.speak(record.getName(), "name", true, true, true);
 
 	}
 	

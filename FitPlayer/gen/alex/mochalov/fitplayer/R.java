@@ -83,10 +83,12 @@ public final class R {
         public static final int action_add_child=0x7f0a0022;
         public static final int action_copy=0x7f0a0023;
         public static final int action_delete=0x7f0a0024;
-        public static final int action_pause=0x7f0a0027;
+        public static final int action_paste=0x7f0a0027;
+        public static final int action_pause=0x7f0a0029;
+        public static final int action_rename=0x7f0a0028;
         public static final int action_save=0x7f0a0025;
-        public static final int action_settings=0x7f0a0029;
-        public static final int action_start=0x7f0a0028;
+        public static final int action_settings=0x7f0a002b;
+        public static final int action_start=0x7f0a002a;
         public static final int buttonSelectMusicPath=0x7f0a000e;
         public static final int buttonTestMusic=0x7f0a000f;
         public static final int buttonTestSound=0x7f0a0013;
@@ -144,6 +146,7 @@ public final class R {
         public static final int action_start=0x7f070004;
         public static final int app_name=0x7f070000;
         public static final int cancel=0x7f070018;
+        public static final int copy=0x7f070021;
         public static final int count=0x7f07001c;
         public static final int duration=0x7f070015;
         public static final int edit_main=0x7f070019;
@@ -157,8 +160,10 @@ public final class R {
         public static final int name=0x7f070013;
         public static final int next_group_signal=0x7f07001d;
         public static final int ok=0x7f070017;
+        public static final int paste=0x7f070022;
         public static final int path_music=0x7f07001b;
         public static final int play_music=0x7f07001e;
+        public static final int rename=0x7f070023;
         public static final int rest=0x7f07001f;
         public static final int run=0x7f070009;
         public static final int starts_on=0x7f070016;

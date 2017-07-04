@@ -47,5 +47,7 @@
 	<string name="rest">It is the rest</string>
 	<string name="music_rest">Stop music in the rest</string>
 	
-	
+	<string name="copy">Copy</string>
+	<string name="paste">Paste</string>
+	<string name="rename">Rename</string>
 </resources>

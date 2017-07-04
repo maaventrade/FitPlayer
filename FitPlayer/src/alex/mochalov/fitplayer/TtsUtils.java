@@ -25,33 +25,25 @@ public class TtsUtils
 	
 	private static String mParam;
 	
+	private static boolean mRestoreVolume;
+	
 	public static MyCallback callback = null;
 	public interface MyCallback {
 		void speakingDone(String param); 
 	} 
 
-/*
-	am.setStreamVolume(
-	AudioManager.STREAM_MUSIC,
-	volume_level,
-	0);*/
 	
-	public static void speak(String text, String param, boolean waiting, boolean itIsRest)
+	public static void speak(String text, String param, boolean waiting,
+		boolean setLowVolume, boolean restoreVolume)
 	{
 
-		//Toast.makeText(mContext,text,Toast.LENGTH_LONG).show();
-
-		//volume_level= am.getStreamVolume(AudioManager.STREAM_MUSIC);
-		
-		//am.setStreamVolume(
-        //    AudioManager.STREAM_MUSIC,
-         //   1,// Set minimal volum
-          //  0);
-		
+	
 		mWaiting = waiting;
 		mParam = param;
+		mRestoreVolume = restoreVolume;
 		
-		if (Media.getMediaPlayer() != null)
+		if (Media.getMediaPlayer() != null &&
+			setLowVolume)
 			if (Media.getMediaPlayer() .isPlaying())
 				Media.getMediaPlayer().setVolume(0.2f, 0.2f);
 			 
@@ -95,12 +87,14 @@ public class TtsUtils
             @Override
             public void onDone(String utteranceId) {
 
-            	Media.getMediaPlayer().setVolume(1f, 1f);
+				if(mRestoreVolume)
+            		Media.getMediaPlayer().setVolume(1f, 1f);
 
             	if (mWaiting){
             		if (callback != null)
             			callback.speakingDone(mParam);
             	}
+				
             	//else if (Media.getMediaPlayer()  != null){
             	//	Media.getMediaPlayer().start();
             	//}

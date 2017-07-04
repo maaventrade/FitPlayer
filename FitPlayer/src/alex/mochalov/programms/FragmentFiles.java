@@ -23,7 +23,9 @@ public class FragmentFiles extends Fragment
 	private ListView listViewFiles;
 	private AdapterFiles adapter;
 	
-	private String selectedString = "";
+	private String selectedString = null;
+	
+	private String copyString = null;
 	
 	public interface OnStartProgrammListener {
 		public void onGoSelected(String text);
@@ -104,7 +106,8 @@ public class FragmentFiles extends Fragment
 		
 		
 		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.timers));
-		
+		;
+		mContext. getActionBar().setDisplayHomeAsUpEnabled(false);
 		return rootView;
 	}
 	
@@ -128,43 +131,85 @@ public class FragmentFiles extends Fragment
 				}
 
 			return true;
+		case R.id.action_copy:
+				if (selectedString != null){
+					copyString = selectedString;
+				}
+
+				return true;
+				
+		case R.id.action_paste:
+				if (copyString != null){
+				DialogAddPaste("paste");
+				}
+
+				return true;
+				
+		case R.id.action_rename:
+				if (selectedString != null){
+					DialogAddPaste("rename");
+				}
+
+				return true;
+			
 		case R.id.action_add:
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle(getResources().getString(R.string.action_add));
-				
-			final EditText name = new EditText(mContext);
-			name.setInputType(InputType.TYPE_CLASS_TEXT);
-			builder.setView(name);
-			
-				builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface p1, int p2)
-						{
-							Programm.clear();
-							Utils.setFileName(name.getText()+".xml");
-							Programm.save(mContext, Utils.getFileName());
-							
-							programms.add(Utils.getFileName());
-							
-							listViewFiles.setItemChecked(programms.size()-1, true);
-							selectedString = (String) adapter.getItem(programms.size()-1);
-							
-							adapter.notifyDataSetChanged();
-						}
-					});
-				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int p2)
-						{
-								dialog.cancel();
-						}
-					});
-			builder.show();
+			DialogAddPaste("add");
 			return true;
 		default:	
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void DialogAddPaste(final String p0)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(getResources().getString(R.string.action_add));
+
+		final EditText name = new EditText(mContext);
+		name.setInputType(InputType.TYPE_CLASS_TEXT);
+		builder.setView(name);
+		if(p0.equals("rename"))
+			name.setText(Utils.trimExt(selectedString));
+
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface p1, int p2)
+				{
+					String newFileName = Utils.trimExt(name.getText().toString())+".xml";
+					
+					if (p0.equals("add")){
+						Programm.clear();
+						Utils.setFileName(newFileName);
+						Programm.save(mContext, newFileName);
+					} else if (p0.equals("rename")) {
+						
+						if (!Utils.rename(mContext,selectedString, newFileName))
+							return;
+						Utils.setFileName(newFileName);
+					} else {
+						if (!Utils.copy(copyString, newFileName))
+							return;
+						Utils.setFileName(newFileName);
+					}
+					
+					programms.add(Utils.getFileName());
+					Utils.sort(programms);
+
+					selectedString = Utils.getFileName();
+					listViewFiles.setItemChecked(programms.indexOf(selectedString), true);
+
+					adapter.notifyDataSetChanged();
+				}
+			});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int p2)
+				{
+					dialog.cancel();
+				}
+			});
+		builder.show();
 	}
 	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 	    @Override

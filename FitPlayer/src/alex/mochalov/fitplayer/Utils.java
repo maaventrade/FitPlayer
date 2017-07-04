@@ -11,6 +11,13 @@ import java.text.*;
 import java.util.*;
 import org.xmlpull.v1.*;
 
+class FileNameComparator implements Comparator<String> {   
+	public int compare(String fileA, String fileB) {
+		return fileA.compareToIgnoreCase(fileB);
+	}
+}
+
+
 public class Utils {
 
 	static final String PROGRAMM_FOLDER = "fitPlayer";
@@ -23,6 +30,52 @@ public class Utils {
 	public static String action = "";
 	
 	private static String mFileName;
+
+	public static boolean rename(Context mContext, String from, String to)
+	{
+		File src = new File(APP_FOLDER+"/"+from);
+		File dst = new File(APP_FOLDER+"/"+to);
+		Toast.makeText(mContext,from,Toast.LENGTH_LONG).show();
+		Toast.makeText(mContext,to,Toast.LENGTH_LONG).show();
+		src.renameTo(dst);
+		
+		return true;
+	}
+
+	public static String trimExt(String str)
+	{
+		int i = str.lastIndexOf(".");
+		if (i > 0)
+			return str.substring(0, i);
+		else return str;
+	}
+
+	public static boolean copy(String from, String to) {
+		File src = new File(APP_FOLDER+"/"+from);
+		File dst = new File(APP_FOLDER+"/"+to);
+		
+		
+		try {
+		InputStream in = new FileInputStream(src);
+		
+	
+			OutputStream out = new FileOutputStream(dst);
+			
+				// Transfer bytes from in to out
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+			
+				out.close();
+	
+			in.close();
+		} catch(IOException e){
+			return false;
+		}
+		return true;
+	}
 
 	public static CharSequence getFileDateTime(String selectedString, Context context)
 	{
@@ -106,8 +159,18 @@ public class Utils {
 				programms.add(name);
 		}
 		
+		
+        sort(programms);
+		
 	}
 
+	
+	public static void sort(ArrayList<String> programms) {
+		
+		FileNameComparator fnc = new FileNameComparator();
+        Collections.sort(programms, fnc);
+	}
+	
 	public static Record loadXML(Context mContext, String name) {
 		Record mainFolder = null; 
 		Record currentFolder = null; 
