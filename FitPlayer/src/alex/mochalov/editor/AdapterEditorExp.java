@@ -120,20 +120,6 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 			}
 		});
 
-		ImageButton brnAdd = (ImageButton) convertView
-				.findViewById(R.id.imageButtonAdd);
-		brnAdd.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				Record newRecord = Programm.addRecord(recordF);
-				adapter.notifyDataSetChanged();
-				
-				OpenDialogEdit(newRecord, childPosition);
-
-			}
-		});
-
 		return convertView;
 
 	}

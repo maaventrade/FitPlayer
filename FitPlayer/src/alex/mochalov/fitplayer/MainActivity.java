@@ -1,8 +1,8 @@
 package alex.mochalov.fitplayer;
 
 import alex.mochalov.editor.*;
+import alex.mochalov.files.*;
 import alex.mochalov.player.*;
-import alex.mochalov.programms.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;

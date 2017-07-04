@@ -1,28 +1,40 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="alex.mochalov.fitplayer.MainActivity" >
-	<item
+
+    <item
+        android:id="@+id/action_edit"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/action_edit" 
+        android:icon="@drawable/edit44"/>
+
+    <item
         android:id="@+id/action_add"
         android:orderInCategory="2"
         android:showAsAction="always"
+        android:icon="@drawable/add"
         android:title="@string/action_add"/>
-	
+    	
 	<item
         android:id="@+id/action_copy"
         android:orderInCategory="6"
         android:showAsAction="always"
-        android:title="@string/copy"/>
+        android:icon="@drawable/copy"
+        android:title="@string/action_copy"/>
 	
 	<item
         android:id="@+id/action_paste"
         android:orderInCategory="8"
         android:showAsAction="always"
+        android:icon="@drawable/paste"
         android:title="@string/paste"/>
 	
 	<item
         android:id="@+id/action_rename"
         android:orderInCategory="10"
         android:showAsAction="always"
+        android:icon="@drawable/rename"
         android:title="@string/rename"/>
 	
 	
@@ -30,6 +42,7 @@
         android:id="@+id/action_delete"
         android:orderInCategory="15"
         android:showAsAction="always"
+        android:icon="@drawable/delete"
         android:title="@string/action_delete"/>
     
 

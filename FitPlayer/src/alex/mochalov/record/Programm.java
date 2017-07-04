@@ -362,7 +362,7 @@ public class Programm {
 	}
 
 	public static Record addRecord(Record currentRecord) {
-		Record record = new Record("New record");
+		Record record = new Record("new record");
 		
 		if (listDataHeader.indexOf(currentRecord) >= 0){
 			if (currentRecord == null){
@@ -436,12 +436,35 @@ public class Programm {
 		
 		for (Record o : listDataHeader){
 			List<Record> entry = listDataChild.get(o);
-            for (Record r : entry)
-            	if (r == record) return time;
-            	else time = time + r.getDuration();
+			if (entry != null)
+				for (Record r : entry){
+					if (r == record) return time;
+					else time = time + r.getDuration();
+				}	
+			
 		}	
 		
 		return time;
+	}
+
+	public static Record pasteRecord(Record copyRecord, Record selectedRecord) {
+
+		Record record = new Record("New record");
+		record.mName = copyRecord.mName;
+		record.setText(copyRecord.getText());
+		record.setDuration(copyRecord.getDuration());
+		record.setRest(copyRecord.isRest());
+		
+		if (listDataHeader.indexOf(selectedRecord) > 0){
+			listDataHeader.add(listDataHeader.indexOf(selectedRecord)+1, record);
+		} else {
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+				if (entry.getValue().contains(selectedRecord))
+					entry.getValue().add(entry.getValue().indexOf(selectedRecord)+1 , record);
+											
+		}
+		
+		return record;
 	}	
 }
 	

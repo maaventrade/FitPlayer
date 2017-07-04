@@ -15,14 +15,13 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 
 public class FragmentEditor extends Fragment
 {
-	Activity mContext;
+	private Activity mContext;
 	private View rootView;
 
-	AdapterEditorExp adapter; 
-	ListView listViewRecords;
+	private AdapterEditorExp adapter; 
+	private ListView listViewRecords;
 
-	
-	
+	private Record copyRecord = null;
 	private Record selectedRecord = null;
 	
 	private DialogEditMain dialogEditMain;
@@ -154,7 +153,7 @@ public class FragmentEditor extends Fragment
 
 	@Override
     public void onPause() {
-		
+		Programm.save(mContext, Utils.getFileName());
         super.onPause();
     }	
 	
@@ -165,9 +164,9 @@ public class FragmentEditor extends Fragment
     }	
 	
 	
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Record newRecord;
 		int id = item.getItemId();
 
 		switch (id){
@@ -178,11 +177,35 @@ public class FragmentEditor extends Fragment
 				return true;
 			}
 			
-			Record newRecord = Programm.copyRecord(selectedRecord);
+			copyRecord = selectedRecord;
+
+			return true;
+		case R.id.action_paste:
+
+			if (copyRecord == null || selectedRecord == null){
+				return true;
+			}
+			
+			newRecord = Programm.pasteRecord(copyRecord, selectedRecord);
 			adapter.notifyDataSetChanged();
 			
 			openDialogEdit(newRecord, false);
 			
+			
+			return true;
+		case R.id.action_add:
+
+			if (selectedRecord == null){
+				Toast.makeText(mContext, "Line not selected", Toast.LENGTH_LONG).show();
+				return true;
+			}
+			
+			newRecord = Programm.addRecord(selectedRecord);
+			adapter.notifyDataSetChanged();
+			
+			openDialogEdit(newRecord, false);
+
+			return true;
 		case R.id.action_add_child:
 				if (selectedRecord != null){
 				
@@ -195,7 +218,7 @@ public class FragmentEditor extends Fragment
 				if (selectedRecord != null){
 					
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-					builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+					builder.setMessage("Delete "+selectedRecord.getName()+".Are you sure?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();
 					
 				}
@@ -207,6 +230,7 @@ public class FragmentEditor extends Fragment
 				return super.onOptionsItemSelected(item);
 		}
 	}
+	
 	
 	private void openDialogEdit(Record record, boolean isGroup) {
 		DialogEdit dialog = new DialogEdit(mContext, record, isGroup);

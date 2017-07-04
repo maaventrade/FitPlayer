@@ -48,13 +48,6 @@ android:descendantFocusability="blocksDescendants"
             android:background="@null"
             android:src="@drawable/go" />
 
-        <ImageButton
-            android:id="@+id/imageButtonEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/edit0" />
-
     </LinearLayout>
         
     </LinearLayout>

@@ -3,25 +3,46 @@
     tools:context="alex.mochalov.fitplayer.MainActivity" >
 
     <item
+        android:id="@+id/action_add"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:icon="@drawable/add"
+        android:title="@string/action_add"/>
+
+    <item
         android:id="@+id/action_add_child"
         android:orderInCategory="4"
         android:showAsAction="always"
+        android:icon="@drawable/add_child"
         android:title="@string/action_add_child"/>
-    <item
+    	
+	<item
         android:id="@+id/action_copy"
-        android:orderInCategory="5"
-        android:showAsAction="always"
-        android:title="@string/action_copy" 
-        android:icon="@drawable/copy1"/>
-    <item
-        android:id="@+id/action_delete"
         android:orderInCategory="6"
         android:showAsAction="always"
+        android:icon="@drawable/copy"
+        android:title="@string/action_copy"/>
+	
+	<item
+        android:id="@+id/action_paste"
+        android:orderInCategory="8"
+        android:showAsAction="always"
+        android:icon="@drawable/paste"
+        android:title="@string/paste"/>
+	
+    
+    
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="16"
+        android:showAsAction="always"
+        android:icon="@drawable/delete"
         android:title="@string/action_delete"/>
     <item
         android:id="@+id/action_save"
-        android:orderInCategory="7"
+        android:orderInCategory="17"
         android:showAsAction="always"
+        android:icon="@drawable/save"
         android:title="@string/action_save"/>
 
 
