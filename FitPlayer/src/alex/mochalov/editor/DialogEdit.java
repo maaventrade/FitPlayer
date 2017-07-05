@@ -29,11 +29,12 @@ public class DialogEdit extends Dialog
 	
 	private CheckBox itIsTheRest;
 	
-	
+	private boolean newRecord = false;
 	
 	MyCallback callback = null;
 	interface MyCallback {
 		void callbackOk(); 
+		void callbackOkNew(Record newRecord); 
 	} 
 	
 	
@@ -42,7 +43,12 @@ public class DialogEdit extends Dialog
 		mContext = context;
 		dialog = this;
 		
-		record = object;
+		if (object == null){
+			record = new Record("New");
+			newRecord = true;
+		} else
+			record = object;
+			
 		mIsGroup = isGroup;
 		
 	}
@@ -51,13 +57,17 @@ public class DialogEdit extends Dialog
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.dialog_edit);
 		
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
               WindowManager.LayoutParams.MATCH_PARENT);
-
+		if (newRecord)
+			setTitle(mContext.getResources().getString(R.string.title_add)); 
+		else
+			setTitle(mContext.getResources().getString(R.string.title_edit));
+			  
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(record.getName());
 		name.requestFocus();
@@ -133,7 +143,9 @@ public class DialogEdit extends Dialog
 					Programm.summDurations(record);
 					
 					if (callback != null)
-						callback.callbackOk();
+						if (newRecord)
+							callback.callbackOkNew(record);
+						else callback.callbackOk();
 					
 					dialog.dismiss();
 				}

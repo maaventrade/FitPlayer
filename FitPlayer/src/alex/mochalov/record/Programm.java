@@ -38,6 +38,30 @@ public class Programm {
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
 
+	public static int getIndex(Record newRecord)
+	{
+		int index = -1;
+		
+		for (Record r : listDataHeader){
+			index++;
+			if (r == newRecord) 
+				return index;
+			
+			List<Record> l = listDataChild.get(r);
+			if (l != null){
+				for(Record p: l){
+					index++;
+					if (r == p) 
+						return index;
+				}
+			}
+			
+		
+		}
+		
+		return index;
+	}
+
 	public static void clear()
 	{
 		main = new Record("New programm");
@@ -323,9 +347,9 @@ public class Programm {
 			writer.write("</body>"+"\n");
 
 			writer.close();
-			Toast.makeText(mContext,
-					mContext.getResources().getString(R.string.file_saved)+" "+fileName, Toast.LENGTH_LONG)
-					.show();
+			//Toast.makeText(mContext,
+				//	mContext.getResources().getString(R.string.file_saved)+" "+fileName, Toast.LENGTH_LONG)
+					//.show();
 		} catch (IOException e) {
 			//Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
 			Toast.makeText(mContext, mContext.getResources().getString(R.string.error_saving_file) +" "+e , Toast.LENGTH_LONG).show();
@@ -361,24 +385,26 @@ public class Programm {
 		main.setDuration(duration);		
 	}
 
-	public static Record addRecord(Record currentRecord) {
-		Record record = new Record("new record");
+	public static Record addRecord(Record newRecord, Record currentRecord) {
+		if (newRecord == null) 
+			newRecord = new Record("new record");
 		
-		if (listDataHeader.indexOf(currentRecord) >= 0){
+		if (currentRecord == null)
+			listDataHeader.add(newRecord);
+		else if (listDataHeader.indexOf(currentRecord) >= 0){
 			if (currentRecord == null){
-				listDataHeader.add(record);
+				listDataHeader.add(newRecord);
 			} else {
-				listDataHeader.add(listDataHeader.indexOf(currentRecord)+1, record);
+				listDataHeader.add(listDataHeader.indexOf(currentRecord)+1, newRecord);
 			}
 		} else {
 			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
 				if (entry.getValue().contains(currentRecord))
-					entry.getValue().add(entry.getValue().indexOf(currentRecord)+1, record);
+					entry.getValue().add(entry.getValue().indexOf(currentRecord)+1, newRecord);
 											
 		}
 		
-		
-		return record;
+		return newRecord;
 	}
 
 	public static Record copyRecord(Record currentRecord) {

@@ -19,7 +19,6 @@ public class FragmentEditor extends Fragment
 	private View rootView;
 
 	private AdapterEditorExp adapter; 
-	private ListView listViewRecords;
 
 	private Record copyRecord = null;
 	private Record selectedRecord = null;
@@ -27,6 +26,8 @@ public class FragmentEditor extends Fragment
 	private DialogEditMain dialogEditMain;
 	
 	private boolean mVisible;
+	
+	private ExpandableListView listViewRecords;
 
 	public FragmentEditor(Activity context){
 		super();
@@ -90,7 +91,7 @@ public class FragmentEditor extends Fragment
 		});
 		// \Edit programm Header
 		
-        ExpandableListView listViewRecords = (ExpandableListView)rootView.findViewById(R.id.ListViewRecords);
+        listViewRecords = (ExpandableListView)rootView.findViewById(R.id.ListViewRecords);
 		//listViewRecords.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
         
@@ -195,15 +196,7 @@ public class FragmentEditor extends Fragment
 			return true;
 		case R.id.action_add:
 
-			if (selectedRecord == null){
-				Toast.makeText(mContext, "Line not selected", Toast.LENGTH_LONG).show();
-				return true;
-			}
-			
-			newRecord = Programm.addRecord(selectedRecord);
-			adapter.notifyDataSetChanged();
-			
-			openDialogEdit(newRecord, false);
+			openDialogAdd();
 
 			return true;
 		case R.id.action_add_child:
@@ -230,11 +223,44 @@ public class FragmentEditor extends Fragment
 				return super.onOptionsItemSelected(item);
 		}
 	}
+
+	private void openDialogAdd()
+	{
+		DialogEdit dialog = new DialogEdit(mContext, null, false);
+		dialog.callback = new DialogEdit.MyCallback() {
+
+			@Override
+			public void callbackOkNew(Record newRecord)
+			{
+				
+				Programm.addRecord(newRecord, selectedRecord);
+			
+				selectedRecord = newRecord;
+				listViewRecords.setItemChecked(
+					Programm.getIndex(newRecord), true);
+
+				adapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void callbackOk() {
+				adapter.notifyDataSetChanged();
+			}
+		};
+		dialog.show();
+	}
 	
 	
 	private void openDialogEdit(Record record, boolean isGroup) {
 		DialogEdit dialog = new DialogEdit(mContext, record, isGroup);
 		dialog.callback = new DialogEdit.MyCallback() {
+
+			@Override
+			public void callbackOkNew(Record newRecord)
+			{
+				
+			}
+
 			@Override
 			public void callbackOk() {
 				adapter.notifyDataSetChanged();

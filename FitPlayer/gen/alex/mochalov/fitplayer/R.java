@@ -178,6 +178,8 @@ public final class R {
         public static final int starts_on=0x7f070016;
         public static final int text=0x7f070014;
         public static final int timers=0x7f070001;
+        public static final int title_add=0x7f070024;
+        public static final int title_edit=0x7f070025;
         public static final int zero=0x7f070002;
     }
     public static final class style {

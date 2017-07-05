@@ -127,6 +127,13 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 	protected void OpenDialogEdit(Record recordF, int childPosition) {
 		DialogEdit dialog = new DialogEdit(mContext, recordF, childPosition < 0);
 		dialog.callback = new DialogEdit.MyCallback() {
+
+			@Override
+			public void callbackOkNew(Record newRecord)
+			{
+				
+			}
+
 			
 			@Override
 			public void callbackOk() {
