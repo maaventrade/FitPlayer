@@ -73,7 +73,7 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 
 	}
 
-	private View getView(int groupPosition, final int childPosition,
+	private View getView(final int groupPosition, final int childPosition,
 			boolean isLastChild, boolean isExpanded, View convertView,
 			ViewGroup parent) {
 
@@ -116,7 +116,7 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 		brnEdit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				OpenDialogEdit(recordF, childPosition);
+				OpenDialogEdit(recordF, getChildrenCount(groupPosition) > 0);
 			}
 		});
 
@@ -124,8 +124,8 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 
 	}
 
-	protected void OpenDialogEdit(Record recordF, int childPosition) {
-		DialogEdit dialog = new DialogEdit(mContext, recordF, childPosition < 0);
+	protected void OpenDialogEdit(Record recordF, boolean isGroup) {
+		DialogEdit dialog = new DialogEdit(mContext, recordF, isGroup);
 		dialog.callback = new DialogEdit.MyCallback() {
 
 			@Override

@@ -11,7 +11,7 @@ import android.view.View.*;
 import android.view.*;
 import android.text.*;
 
-public class DialogEdit extends Dialog
+public class DialogEdit extends Dialog implements android.view.View.OnClickListener
 {
 
 	private Context mContext;
@@ -26,6 +26,7 @@ public class DialogEdit extends Dialog
 	
 	private Button btnOk;
 	private Button btnCancel;
+	private ImageButton dialogeditButtonOk1;
 	
 	private CheckBox itIsTheRest;
 	
@@ -57,17 +58,19 @@ public class DialogEdit extends Dialog
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.dialog_edit);
 		
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
               WindowManager.LayoutParams.MATCH_PARENT);
+		
+		TextView title = (TextView)findViewById(R.id.textViewTitle);
 		if (newRecord)
-			setTitle(mContext.getResources().getString(R.string.title_add)); 
+			title.setText(mContext.getResources().getString(R.string.title_add));
 		else
-			setTitle(mContext.getResources().getString(R.string.title_edit));
-			  
+			title.setText(mContext.getResources().getString(R.string.title_edit));
+		
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(record.getName());
 		name.requestFocus();
@@ -127,39 +130,38 @@ public class DialogEdit extends Dialog
 			}
 		}
 		
+		dialogeditButtonOk1 = (ImageButton)findViewById(R.id.dialogeditButtonOk1);
+		dialogeditButtonOk1.setOnClickListener(this);
 		
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
-		btnOk.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-					
-					record.setName(name.getText());
-					record.setText(text.getText());
-					record.setRest(itIsTheRest.isChecked());
-					if (! mIsGroup)
-						record.setDuration(duration.getText());
-					
-					Programm.summDurations(record);
-					
-					if (callback != null)
-						if (newRecord)
-							callback.callbackOkNew(record);
-						else callback.callbackOk();
-					
-					dialog.dismiss();
-				}
-			});
+		btnOk.setOnClickListener(this);
 		
 		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
-		btnCancel.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-					
-					dialog.dismiss();
-				}
-			});
+		btnCancel.setOnClickListener(this);
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == dialogeditButtonOk1 || v == btnOk){
+			record.setName(name.getText());
+			record.setText(text.getText());
+			record.setRest(itIsTheRest.isChecked());
+			if (! mIsGroup)
+				record.setDuration(duration.getText());
+			
+			Programm.summDurations(record);
+			
+			if (callback != null)
+				if (newRecord)
+					callback.callbackOkNew(record);
+				else callback.callbackOk();
+			
+			dialog.dismiss();
+		} else {
+			dialog.dismiss();
+		}
+		
 	}	
 	
 

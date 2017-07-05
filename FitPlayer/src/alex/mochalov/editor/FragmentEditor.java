@@ -116,7 +116,11 @@ public class FragmentEditor extends Fragment
 				int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForGroup(groupPosition));
 				parent.setItemChecked(index, true);
 				
-				selectedRecord = Programm.getGroup(groupPosition);
+				Record selectedRecord1 = Programm.getGroup(groupPosition);
+
+				if (selectedRecord1 == selectedRecord)
+					openDialogEdit(selectedRecord, adapter.getChildrenCount(groupPosition) > 0);				
+				else selectedRecord = selectedRecord1;
 				
 				return false;
 			}});

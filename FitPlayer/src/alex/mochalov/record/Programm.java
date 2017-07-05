@@ -132,11 +132,15 @@ public class Programm {
 		for (Record r : listDataHeader){
 			boolean child = false;
 			List<Record> l = listDataChild.get(r);
-			if (l.size() == 0)
+			if (l != null){
+				if (l.size() == 0)
+					list.add(r);
+				else {
+					for(Record p: l)
+						list.add(p);
+				}
+			} else {
 				list.add(r);
-			else {
-				for(Record p: l)
-					list.add(p);
 			}
 		}
 		
