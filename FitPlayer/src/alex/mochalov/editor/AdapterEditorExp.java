@@ -116,7 +116,10 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 		brnEdit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				OpenDialogEdit(recordF, getChildrenCount(groupPosition) > 0);
+				if (childPosition < 0) 
+					OpenDialogEdit(recordF, getChildrenCount(groupPosition) > 0);
+				else	
+					OpenDialogEdit(recordF, false);
 			}
 		});
 

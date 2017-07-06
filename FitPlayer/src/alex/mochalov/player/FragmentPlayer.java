@@ -23,6 +23,8 @@ public class FragmentPlayer extends Fragment
 	private View rootView;
 
 	private TextView textViewTimer;
+	private TextView textViewFullTime;
+	
 	private TextView textViewName;
 	private TextView textViewText;
 	private BImageView bImageView;
@@ -35,7 +37,9 @@ public class FragmentPlayer extends Fragment
 	
 	private ArrayList<Record> records;
 	private int mIndex;
+	
 	private long restOfTime = 0;
+	private long restOfFullTime = 0;
 	
 	private boolean restartMusic = true;
 	
@@ -73,6 +77,8 @@ public class FragmentPlayer extends Fragment
         mContext.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		textViewTimer = (TextView)rootView.findViewById(R.id.TextViewTimer);
+		textViewFullTime = (TextView)rootView.findViewById(R.id.TextViewFullTime);
+		
 		textViewName = (TextView)rootView.findViewById(R.id.TextViewName);
 		textViewText = (TextView)rootView.findViewById(R.id.TextViewText);
 		
@@ -112,7 +118,9 @@ public class FragmentPlayer extends Fragment
 						restartMusic = true;
 						
 			        	listViewRecords.setItemChecked(index, true);
-			            setTextViewTimer(records.get(mIndex).getDuration());
+			            setTextViewTimer(textViewTimer, records.get(mIndex).getDuration());
+			            setTextViewTimer(textViewFullTime, Programm.getMainRecord().getDuration());
+			            
 			            setTextViewGroup(records.get(mIndex));
 
 			        }
@@ -124,7 +132,9 @@ public class FragmentPlayer extends Fragment
         if (records.size() > 0){
 			mIndex = 0;
     		listViewRecords.setItemChecked(0, true);
-        	setTextViewTimer(records.get(mIndex).getDuration());
+        	setTextViewTimer(textViewTimer, records.get(mIndex).getDuration());
+        	setTextViewTimer(textViewFullTime, Programm.getMainRecord().getDuration());
+        	
             setTextViewGroup(records.get(mIndex));
         };
 
@@ -184,6 +194,7 @@ public class FragmentPlayer extends Fragment
         public void run() {
 
         	restOfTime = restOfTime - 100;
+        	restOfFullTime = restOfFullTime - 100;
 
         	if (restOfTime <= 0){
 
@@ -209,7 +220,9 @@ public class FragmentPlayer extends Fragment
         				
         		}
         		
-        		setTextViewTimer(restOfTime);
+        		setTextViewTimer(textViewTimer, restOfTime);
+        		setTextViewTimer(textViewFullTime, restOfFullTime);
+        		
                 timerHandler.postDelayed(this, 100);
 
         	}
@@ -217,11 +230,11 @@ public class FragmentPlayer extends Fragment
         }
     };
 	
-	private void setTextViewTimer(long time){
+	private void setTextViewTimer(TextView textView, long time){
 	    int seconds = (int) ((time) / 1000);
 	    int minutes = seconds / 60;
 	    seconds = seconds % 60;
-	    textViewTimer.setText(String.format("%02d:%02d", minutes, seconds));
+	    textView.setText(String.format("%02d:%02d", minutes, seconds));
 	}
 
 	private boolean getNextRecord(){
@@ -269,13 +282,16 @@ public class FragmentPlayer extends Fragment
 		listViewRecords.smoothScrollToPositionFromTop(mIndex, 0, 500); // Move record to the top
 		
 		restOfTime = record.getDuration() + 1000; // Add a small reserve of the time
+		restOfFullTime = Programm.getMainRecord().getDuration();
 
     	adapter.setEnabled(false); // Lock the list of the records
     	
     	Media.restart(mContext, restartMusic);
     	restartMusic = false;
 
-		setTextViewTimer(restOfTime);
+		setTextViewTimer(textViewTimer, restOfTime);
+		setTextViewTimer(textViewFullTime, restOfFullTime);
+		
     	TtsUtils.speak(record.getName(), "name", true, true, true);
 
 	}
