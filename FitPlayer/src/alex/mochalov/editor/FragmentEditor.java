@@ -13,7 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
-
+    
 public class FragmentEditor extends Fragment
 {
 	private Activity mContext;
