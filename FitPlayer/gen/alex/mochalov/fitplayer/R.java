@@ -72,12 +72,11 @@ public final class R {
         public static final int item_background_selector1=0x7f02000f;
         public static final int item_text_selector=0x7f020010;
         public static final int item_text_selector1=0x7f020011;
-        public static final int ok=0x7f020012;
-        public static final int paste=0x7f020013;
-        public static final int rename=0x7f020014;
-        public static final int save=0x7f020015;
-        public static final int selector_list_item=0x7f020016;
-        public static final int stop_96=0x7f020017;
+        public static final int paste=0x7f020012;
+        public static final int rename=0x7f020013;
+        public static final int save=0x7f020014;
+        public static final int selector_list_item=0x7f020015;
+        public static final int stop_96=0x7f020016;
     }
     public static final class id {
         public static final int LayoutChild=0x7f0a0017;
@@ -92,14 +91,15 @@ public final class R {
         public static final int action_add=0x7f0a0023;
         public static final int action_add_child=0x7f0a0024;
         public static final int action_copy=0x7f0a0025;
-        public static final int action_delete=0x7f0a0027;
-        public static final int action_edit=0x7f0a0029;
-        public static final int action_paste=0x7f0a0026;
-        public static final int action_pause=0x7f0a002b;
-        public static final int action_rename=0x7f0a002a;
-        public static final int action_save=0x7f0a0028;
-        public static final int action_settings=0x7f0a002d;
-        public static final int action_start=0x7f0a002c;
+        public static final int action_cut=0x7f0a0026;
+        public static final int action_delete=0x7f0a0028;
+        public static final int action_edit=0x7f0a002a;
+        public static final int action_paste=0x7f0a0027;
+        public static final int action_pause=0x7f0a002c;
+        public static final int action_rename=0x7f0a002b;
+        public static final int action_save=0x7f0a0029;
+        public static final int action_settings=0x7f0a002e;
+        public static final int action_start=0x7f0a002d;
         public static final int buttonSelectMusicPath=0x7f0a0010;
         public static final int buttonTestMusic=0x7f0a0011;
         public static final int buttonTestSound=0x7f0a0015;
@@ -149,6 +149,7 @@ public final class R {
         public static final int action_add=0x7f07000a;
         public static final int action_add_child=0x7f07000b;
         public static final int action_copy=0x7f07000f;
+        public static final int action_cut=0x7f070024;
         public static final int action_delete=0x7f07000c;
         public static final int action_edit=0x7f070007;
         public static final int action_go=0x7f07000d;
@@ -181,8 +182,8 @@ public final class R {
         public static final int starts_on=0x7f070016;
         public static final int text=0x7f070014;
         public static final int timers=0x7f070001;
-        public static final int title_add=0x7f070024;
-        public static final int title_edit=0x7f070025;
+        public static final int title_add=0x7f070025;
+        public static final int title_edit=0x7f070026;
         public static final int zero=0x7f070002;
     }
     public static final class style {

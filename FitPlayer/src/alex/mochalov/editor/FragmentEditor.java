@@ -20,7 +20,7 @@ public class FragmentEditor extends Fragment
 
 	private AdapterEditorExp adapter; 
 
-	private Record copyRecord = null;
+	
 	private Record selectedRecord = null;
 	
 	private DialogEditMain dialogEditMain;
@@ -116,12 +116,12 @@ public class FragmentEditor extends Fragment
 				int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForGroup(groupPosition));
 				parent.setItemChecked(index, true);
 				
-				Record selectedRecord1 = Programm.getGroup(groupPosition);
-
+				selectedRecord = Programm.getGroup(groupPosition);
+/*
 				if (selectedRecord1 == selectedRecord)
 					openDialogEdit(selectedRecord, adapter.getChildrenCount(groupPosition) > 0);				
 				else selectedRecord = selectedRecord1;
-				
+				*/
 				return false;
 			}});
         
@@ -158,7 +158,12 @@ public class FragmentEditor extends Fragment
 
 	@Override
     public void onPause() {
-		Programm.save(mContext, Utils.getFileName());
+		//Programm.save(mContext, Utils.getFileName());
+		/*AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setMessage("Delete "+selectedRecord.getName()+".Are you sure?").setPositiveButton("Yes", dialogClickListener)
+			.setNegativeButton("No", dialogClickListener).show();
+		*/
+		
         super.onPause();
     }	
 	
@@ -182,19 +187,44 @@ public class FragmentEditor extends Fragment
 				return true;
 			}
 			
-			copyRecord = selectedRecord;
+			selectedRecord.copy();
 
 			return true;
+			
+		case R.id.action_cut:
+
+				if (selectedRecord == null){
+					Toast.makeText(mContext, "Line not selected", Toast.LENGTH_LONG).show();
+					return true;
+				}
+
+				selectedRecord.copy();
+				
+				Programm.deleteRecord(selectedRecord);
+	        	selectedRecord = null;
+	        	adapter.notifyDataSetChanged();
+
+				return true;
+			
 		case R.id.action_paste:
 
-			if (copyRecord == null || selectedRecord == null){
+			if (Utils.getCopyRecord() == null){
+				Toast.makeText(mContext, "Copy is null", Toast.LENGTH_LONG).show();
 				return true;
 			}
 			
-			newRecord = Programm.pasteRecord(copyRecord, selectedRecord);
+			if (selectedRecord == null){
+				return true;
+			}
+			
+			newRecord = Programm.pasteRecord(Utils.getCopyRecord(), selectedRecord);
+			selectedRecord = newRecord;
+				
+			listViewRecords.setItemChecked(
+					Programm.getIndex(newRecord), true);
 			adapter.notifyDataSetChanged();
 			
-			openDialogEdit(newRecord, false);
+			//openDialogEdit(newRecord, false);
 			
 			
 			return true;
@@ -279,9 +309,16 @@ public class FragmentEditor extends Fragment
 	    public void onClick(DialogInterface dialog, int which) {
 	        switch (which){
 	        case DialogInterface.BUTTON_POSITIVE:
+				//dialog.get
+				
+				listViewRecords.setItemChecked(
+						Programm.getIndex(selectedRecord), false);
 				
 	        	Programm.deleteRecord(selectedRecord);
 	        	selectedRecord = null;
+				
+				
+				
 	        	adapter.notifyDataSetChanged();
 	            break;
 
@@ -290,6 +327,8 @@ public class FragmentEditor extends Fragment
 	        }
 	    }
 	};
+	
+	
 	
 
 }

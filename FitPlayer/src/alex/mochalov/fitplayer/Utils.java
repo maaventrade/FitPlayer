@@ -31,6 +31,17 @@ public class Utils {
 	
 	private static String mFileName;
 
+	private static Record copyRecord = null;
+
+	public static void setCopyRecord(Record record)
+	{
+		copyRecord = new Record(record);
+	}
+	
+	public static Record getCopyRecord(){
+		return copyRecord;
+	}
+	
 	public static boolean rename(Context mContext, String from, String to)
 	{
 		File src = new File(APP_FOLDER+"/"+from);

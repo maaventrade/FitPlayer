@@ -479,13 +479,11 @@ public class Programm {
 
 	public static Record pasteRecord(Record copyRecord, Record selectedRecord) {
 
-		Record record = new Record("New record");
-		record.mName = copyRecord.mName;
-		record.setText(copyRecord.getText());
-		record.setDuration(copyRecord.getDuration());
-		record.setRest(copyRecord.isRest());
+		Record record = new Record(copyRecord);
 		
-		if (listDataHeader.indexOf(selectedRecord) > 0){
+		if (listDataHeader.indexOf(selectedRecord) >= 0){
+			Log.d("b",selectedRecord.getName());
+			Log.d("b",copyRecord.getName());
 			listDataHeader.add(listDataHeader.indexOf(selectedRecord)+1, record);
 		} else {
 			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 

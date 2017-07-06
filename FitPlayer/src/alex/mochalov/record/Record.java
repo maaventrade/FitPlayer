@@ -26,10 +26,24 @@ public class Record {
 		modifications = new ArrayList<Record>();
 	}
 	
+	public Record(Record record) {
+		mName = record.mName;
+		mText = record.mText;
+		mDuration = record.mDuration;
+		mRest = record.mRest;
+
+		//modifications = new ArrayList<Record>();
+	}
+	
 	public Record(String name) {
 		mName = name;
 		
 		modifications = new ArrayList<Record>();
+	}
+
+	public void copy()
+	{
+		Utils.setCopyRecord(this);
 	}
 
 	public void log()

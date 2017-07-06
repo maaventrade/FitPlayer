@@ -24,6 +24,14 @@
         android:title="@string/action_copy"/>
 	
 	<item
+        android:id="@+id/action_cut"
+        android:orderInCategory="5"
+        android:showAsAction="always"
+       
+        android:title="@string/action_cut"/>
+	
+	
+	<item
         android:id="@+id/action_paste"
         android:orderInCategory="8"
         android:showAsAction="always"

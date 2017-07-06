@@ -50,6 +50,7 @@
 	<string name="copy">Copy</string>
 	<string name="paste">Paste</string>
 	<string name="rename">Rename</string>
+	<string name="action_cut">Cut</string>
 	
 	<string name="title_add">Add record</string>
 	<string name="title_edit">Edit record</string>

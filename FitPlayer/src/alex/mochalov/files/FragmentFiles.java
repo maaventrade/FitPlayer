@@ -193,6 +193,10 @@ public class FragmentFiles extends Fragment
 		
 		if(p0.equals("rename"))
 			name.setText(Utils.trimExt(files.get(selectedStringIndex)));
+		else if (p0.equals("paste")){
+			builder.setTitle(getResources().getString(R.string.copy)+" "+files.get(selectedStringIndex));
+			
+		}
 
 		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
 				@Override
