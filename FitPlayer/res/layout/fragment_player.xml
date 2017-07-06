@@ -28,6 +28,14 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/huge_text" />
 
+            <TextView
+                android:id="@+id/TextViewFullTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/item_padding"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
