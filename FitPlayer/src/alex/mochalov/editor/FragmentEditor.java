@@ -1,18 +1,16 @@
 package alex.mochalov.editor;
-import java.util.ArrayList;
-
-
 import alex.mochalov.fitplayer.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
-import android.net.Uri;
 import android.os.*;
+import android.text.*;
 import android.view.*;
-import android.view.View.OnClickListener;
+import android.view.View.*;
 import android.widget.*;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ExpandableListView.*;
+
+import android.view.View.OnClickListener;
     
 public class FragmentEditor extends Fragment
 {
@@ -29,6 +27,7 @@ public class FragmentEditor extends Fragment
 	private boolean mVisible;
 	
 	private ExpandableListView listViewRecords;
+	private TextView durationMain;
 
 	public FragmentEditor(Activity context){
 		super();
@@ -62,7 +61,7 @@ public class FragmentEditor extends Fragment
 
         //Edit programm Header
 		final TextView nameMain = (TextView)rootView.findViewById(R.id.TextViewName);
-		final TextView durationMain = (TextView)rootView.findViewById(R.id.TextViewDuration);
+		durationMain = (TextView)rootView.findViewById(R.id.TextViewDuration);
 		final TextView textMain = (TextView)rootView.findViewById(R.id.TextViewText);
 		
 		nameMain.setText( Programm.getMainRecord().getName());
@@ -254,11 +253,43 @@ public class FragmentEditor extends Fragment
 			case R.id.action_save:
 				Programm.save(mContext, Utils.getFileName());
 				return true;
+			case R.id.action_set_rests_duration:
+				DialogSetRestsTime();
+				return true;
 			default:	
 				return super.onOptionsItemSelected(item);
 		}
 	}
 
+	private void DialogSetRestsTime()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(getResources().getString(R.string.action_set_rests_duration));
+
+		final EditText time = new EditText(mContext);
+		time.setInputType(InputType.TYPE_CLASS_TEXT);
+		builder.setView(time);
+
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface p1, int p2)
+				{
+					int duration = Integer.parseInt(time.getText().toString());
+					Programm.setRestsDuration(duration);
+					durationMain.setText(Utils.MStoString(Programm.getMainRecord().getDuration()));
+				}
+			});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int p2)
+				{
+					dialog.cancel();
+				}
+			});
+		builder.show();
+	}
+	
+	
 	private void openDialogAdd()
 	{
 		DialogEdit dialog = new DialogEdit(mContext, null, false);

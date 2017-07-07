@@ -38,6 +38,17 @@ public class Programm {
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
 
+	public static void setRestsDuration(int duration)
+	{
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+			for (Record r : entry.getValue())
+				if (r.isRest()){
+					r.setDuration(duration);
+					
+				}
+		summDurations(null);
+	}
+
 	public static int getIndex(Record newRecord)
 	{
 		int index = -1;
@@ -369,14 +380,14 @@ public class Programm {
 	public static void summDurations(Record record) {
 
 		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) {
-			if (entry.getValue().contains(record)){
+			if (entry.getValue().contains(record)||
+				record == null){
 	            Record group = entry.getKey();
 	            long duration = 0;
 	            
 	            for (Record r : entry.getValue() )
 	            	duration = duration + r.getDuration();
 	            group.setDuration(duration);
-	            break;
 	        }
 	    }
         //

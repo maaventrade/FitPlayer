@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
 
 	<FrameLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@color/salad"
-	    android:showDividers="end" >
-	    
-	<TextView
-	    android:id="@+id/textViewTitle"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center_vertical"
-	    android:text="Large Text"
-	    android:textAppearance="?android:attr/textAppearanceLarge"
-	    android:textColor="@color/blue" />
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/salad"
+		android:showDividers="end">
 
-	<ImageButton
-	    android:id="@+id/dialogeditButtonOk1"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="end"
-	    />
-	    	    
+		<TextView
+			android:id="@+id/textViewTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:text="Large Text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="@color/blue"/>
+
+		<ImageButton
+			android:id="@+id/dialogeditButtonOk1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end"
+			android:background="@drawable/ok"/>
+
 	</FrameLayout>
-    	
-    
+
 	<CheckBox
 		android:id="@+id/checkBoxItIsTheRest"
 		android:layout_height="wrap_content"
 		android:text="@string/rest"
-		android:layout_width="wrap_content"/>
+		android:layout_width="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:paddingTop="@dimen/item_padding"
+		android:paddingBottom="@dimen/item_padding"/>
+
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -124,7 +128,6 @@
 			android:text="@string/text"
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-		
 		<EditText
 			android:id="@+id/editTextText"
 			android:layout_width="wrap_content"
@@ -141,9 +144,7 @@
 		</EditText>
 
 	</LinearLayout>
-	
-	
-	
+
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -166,7 +167,6 @@
 			android:text="@string/cancel"/>
 
 	</LinearLayout>
-
 
 </LinearLayout>
 
