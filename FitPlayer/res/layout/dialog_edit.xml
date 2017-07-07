@@ -6,37 +6,56 @@
 	android:orientation="vertical">
 
 	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/salad"
-		android:showDividers="end">
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/salad"
+	    android:showDividers="end" >
 
-		<TextView
-			android:id="@+id/textViewTitle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-			android:text="Large Text"
-			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:textColor="@color/blue"/>
+	    <TextView
+	        android:id="@+id/textViewTitle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:text="Large Text"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:textColor="@color/blue" />
 
-		<ImageButton
-			android:id="@+id/dialogeditButtonOk1"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="end"
-			android:background="@drawable/ok"/>
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="right"
+	        android:gravity="right" >
+
+	        <Button
+	            android:id="@+id/buttonSelect"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/select" />
+
+	        <ImageButton
+	            android:id="@+id/dialogeditButtonOk1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/ok" />
+
+	    </LinearLayout>
 
 	</FrameLayout>
 
-	<CheckBox
-		android:id="@+id/checkBoxItIsTheRest"
-		android:layout_height="wrap_content"
-		android:text="@string/rest"
-		android:layout_width="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:paddingTop="@dimen/item_padding"
-		android:paddingBottom="@dimen/item_padding"/>
+	<FrameLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+		<CheckBox
+		    android:id="@+id/checkBoxItIsTheRest"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:paddingBottom="@dimen/item_padding"
+		    android:paddingTop="@dimen/item_padding"
+		    android:text="@string/rest"
+		    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	</FrameLayout>
 
 	<LinearLayout
 		android:layout_width="match_parent"

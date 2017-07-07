@@ -504,6 +504,83 @@ public class Programm {
 		}
 		
 		return record;
+	}
+
+	public static void loadXMLrecords(Context mContext,
+			ArrayList<Record> records) {
+		
+		records.clear();
+        File dir = new File(Utils.APP_FOLDER +"/"); 
+        File[] files = dir.listFiles();
+        
+        if (files != null )
+            for (int i=0; i<files.length; i++){
+            	if (files[i].getName().endsWith(".xml")){
+            		try {
+            			String name = Utils.APP_FOLDER +"/"+files[i].getName();
+            			
+            			BufferedReader reader;
+            			BufferedReader rd = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
+            			
+            			String line = rd.readLine();
+            			
+            			rd.close();
+            			
+            			if (line.toLowerCase().contains("windows-1251"))
+            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "windows-1251")); //Cp1252
+            			else if (line.toLowerCase().contains("utf-8"))
+            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "UTF-8")); 
+            			else if (line.toLowerCase().contains("utf-16"))
+            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "utf-16"));
+            			else
+            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
+
+            			XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
+            			factory.setNamespaceAware(true);         
+            			XmlPullParser parser = factory.newPullParser();
+            			
+            			parser.setInput(reader);
+            			
+            			int eventType = parser.getEventType();         
+            			while (eventType != XmlPullParser.END_DOCUMENT) {
+            				if(eventType == XmlPullParser.START_TAG) {
+            					if(parser.getName().equals("record")){
+            						
+            						int duration = 0;
+            						if (parser.getAttributeValue(null, "duration") != null)
+            						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
+            						
+            						Record record = new Record(parser.getAttributeValue(null, "name"),
+            							parser.getAttributeValue(null, "text"),
+            							Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
+            							duration);
+            						
+            						if (record.getText() != null && record.getText().length() > 0){
+                						boolean found = false;
+                						for (Record r: records)
+                							if (r.mName.equals(record.mName)){
+                								found = true;
+                								break;
+                							}
+                						
+                						if (!found)
+                							records.add(record);
+            						}
+            						
+            					}
+            				} 
+            				
+            				try {
+            					eventType = parser.next();
+            				}
+            				catch (XmlPullParserException  e) {
+            				}
+            			}
+            		} catch (Throwable t) {
+            		}
+            	}
+        	}	
+		Utils.sortR(records);
 	}	
 }
 	

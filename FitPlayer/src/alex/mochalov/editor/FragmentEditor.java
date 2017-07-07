@@ -24,7 +24,7 @@ public class FragmentEditor extends Fragment
 	
 	private DialogEditMain dialogEditMain;
 	
-	private boolean mVisible;
+	private boolean mModyfied;
 	
 	private ExpandableListView listViewRecords;
 	private TextView durationMain;
@@ -38,9 +38,14 @@ public class FragmentEditor extends Fragment
 		super();
 	}
 
-	public boolean isVIsible()
+	public boolean isModyfied()
 	{
-		return mVisible;
+		return mModyfied;
+	}
+
+	public void setModyfied()
+	{
+		mModyfied = true;
 	}
 	
 	public void setParams(Activity context){
@@ -101,6 +106,7 @@ public class FragmentEditor extends Fragment
 			
 			@Override
 			public void callbackEdited() {
+				setModyfied();
 				durationMain.setText( Utils.MStoString(Programm.getMainRecord().getDuration()));
 			}
 		};
@@ -147,7 +153,8 @@ public class FragmentEditor extends Fragment
         	
 		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.edit_timer));
         
-        mVisible = true;
+		mModyfied = false;
+		
 		return rootView;
 	}
 
@@ -169,7 +176,7 @@ public class FragmentEditor extends Fragment
 	
 	@Override
     public void onDestroyView() {
-		mVisible = false;
+//		mVIsible = false;
         super.onDestroyView();
     }	
 	
@@ -204,6 +211,7 @@ public class FragmentEditor extends Fragment
 	        	selectedRecord = null;
 	        	adapter.notifyDataSetChanged();
 
+				setModyfied();
 				return true;
 			
 		case R.id.action_paste:
@@ -226,12 +234,13 @@ public class FragmentEditor extends Fragment
 			
 			//openDialogEdit(newRecord, false);
 			
-			
+			setModyfied();
 			return true;
 		case R.id.action_add:
 
 			openDialogAdd();
 
+			setModyfied();
 			return true;
 		case R.id.action_add_child:
 				if (selectedRecord != null){
@@ -240,6 +249,7 @@ public class FragmentEditor extends Fragment
 					adapter.notifyDataSetChanged();
 					
 				}
+				setModyfied();
 				return true;
 			case R.id.action_delete:
 				if (selectedRecord != null){
@@ -249,12 +259,15 @@ public class FragmentEditor extends Fragment
 					    .setNegativeButton("No", dialogClickListener).show();
 					
 				}
+				setModyfied();
 				return true;
 			case R.id.action_save:
 				Programm.save(mContext, Utils.getFileName());
+				mModyfied = false;
 				return true;
 			case R.id.action_set_rests_duration:
 				DialogSetRestsTime();
+				setModyfied();
 				return true;
 			default:	
 				return super.onOptionsItemSelected(item);

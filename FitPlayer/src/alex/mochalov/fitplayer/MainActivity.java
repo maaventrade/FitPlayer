@@ -183,12 +183,21 @@ public class MainActivity extends Activity implements OnInitListener{
 	@Override
 	public void onBackPressed()
 	{
-		if (fragmentEditor != null &&
-		fragmentEditor.isVIsible()){
-			Toast.makeText(mContext, "yes", Toast.LENGTH_LONG).show();
-		}
-		else
-			super.onBackPressed();
+
+	    int count = getFragmentManager().getBackStackEntryCount();
+
+	    if (count == 0) {
+	        super.onBackPressed();
+	    } else {
+	    	FragmentEditor myFragment = (FragmentEditor)getFragmentManager().findFragmentByTag("TAG_FRAGMENT_EDITOR");
+	    	if (myFragment != null && myFragment.isVisible()) {
+	    		if (myFragment.isModyfied()){
+					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+					builder.setMessage("Save ?").setPositiveButton("Yes", dialogClickListener)
+					    .setNegativeButton("No", dialogClickListener).show();
+	    		}
+	    	}	    	
+	    }
 	}
 
 	
@@ -207,6 +216,20 @@ public class MainActivity extends Activity implements OnInitListener{
 		else super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+				Programm.save(mContext, Utils.getFileName());
+		        getFragmentManager().popBackStack();
+	            break;
+	        case DialogInterface.BUTTON_NEGATIVE:
+		        getFragmentManager().popBackStack();
+	            break;
+	        }
+	    }
+	};
 	
 	
 	

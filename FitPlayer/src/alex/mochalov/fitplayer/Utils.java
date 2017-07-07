@@ -6,9 +6,11 @@ import android.os.*;
 import android.util.*;
 import android.webkit.*;
 import android.widget.*;
+
 import java.io.*;
 import java.text.*;
 import java.util.*;
+
 import org.xmlpull.v1.*;
 
 class FileNameComparator implements Comparator<String> {   
@@ -17,6 +19,11 @@ class FileNameComparator implements Comparator<String> {
 	}
 }
 
+class RecordNameComparator implements Comparator<Record> {   
+	public int compare(Record a, Record b) {
+		return a.getName().compareToIgnoreCase(b.getName());
+	}
+}
 
 public class Utils {
 
@@ -298,6 +305,12 @@ public class Utils {
 		else s2 = ""+d2;
 		
 		return s1+":"+s2;
+	}
+
+	public static void sortR(ArrayList<Record> records) {
+
+		RecordNameComparator fnc = new RecordNameComparator();
+        Collections.sort(records, fnc);
 	}
 
 	

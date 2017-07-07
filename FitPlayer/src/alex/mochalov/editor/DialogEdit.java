@@ -27,6 +27,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	private Button btnOk;
 	private Button btnCancel;
 	private ImageButton dialogeditButtonOk1;
+	private Button buttonSelect;
 	
 	private CheckBox itIsTheRest;
 	
@@ -139,6 +140,9 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
 		btnCancel.setOnClickListener(this);
 		
+		buttonSelect = (Button)findViewById(R.id.buttonSelect);
+		buttonSelect.setOnClickListener(this);
+					
 	}
 
 	@Override
@@ -158,6 +162,18 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 				else callback.callbackOk();
 			
 			dialog.dismiss();
+		} else if (v == buttonSelect) {
+			DialogSelectRecord dialog = new DialogSelectRecord(mContext);
+			dialog.callback = new DialogSelectRecord.MyCallback() {
+				@Override
+				public void selected(Record record) {
+					name.setText(record.getName());
+					text.setText(record.getText());
+					itIsTheRest.setChecked(record.isRest());
+				}
+			}; 
+			dialog.show();
+			
 		} else {
 			dialog.dismiss();
 		}

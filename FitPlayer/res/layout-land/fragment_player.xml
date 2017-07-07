@@ -34,13 +34,12 @@
 
         <alex.mochalov.player.BImageView
             android:id="@+id/imageViewPlayPause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignLeft="@id/TextViewTimer"
             android:layout_alignRight="@id/TextViewTimer"
             android:layout_alignTop="@id/TextViewTimer"
-            android:scaleType="center"
-            android:src="@drawable/go_96" />
+            android:src="@drawable/go_vert" />
 
     </RelativeLayout>
 

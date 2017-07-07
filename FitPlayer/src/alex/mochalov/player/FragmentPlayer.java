@@ -4,6 +4,7 @@ import alex.mochalov.fitplayer.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
+import android.content.res.Configuration;
 import android.media.*;
 import android.net.*;
 import android.os.*;
@@ -347,12 +348,23 @@ public class FragmentPlayer extends Fragment
 		animation1.setStartOffset(1000);
 		animation1.setFillAfter(true);
 		
-		if (state == State.isStopped)
-			bImageView.setImageResource(R.drawable.go_96);
-		else if (state == State.isRunning)
-			bImageView.setImageResource(R.drawable.stop_96);
-		else if (state == State.isPaused)
-			bImageView.setImageResource(R.drawable.go_96);
+
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+			if (state == State.isStopped)
+				bImageView.setImageResource(R.drawable.go_vert);
+			else if (state == State.isRunning)
+				bImageView.setImageResource(R.drawable.stop_vert);
+			else if (state == State.isPaused)
+				bImageView.setImageResource(R.drawable.go_vert);
+		} else {
+			if (state == State.isStopped)
+				bImageView.setImageResource(R.drawable.go_hor);
+			else if (state == State.isRunning)
+				bImageView.setImageResource(R.drawable.stop_hor);
+			else if (state == State.isPaused)
+				bImageView.setImageResource(R.drawable.go_hor);
+		}
+		
 		
 		bImageView.startAnimation(animation1);					
         
