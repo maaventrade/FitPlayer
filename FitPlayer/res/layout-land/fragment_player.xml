@@ -23,15 +23,38 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="@dimen/huge_text" />
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/TextViewTimer"
+    android:paddingLeft="@dimen/item_padding" >
+        
         <TextView
             android:id="@+id/TextViewFullTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/TextViewTimer"
-            android:paddingLeft="@dimen/item_padding"
+            android:layout_weight="0.5"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <ImageView
+            android:id="@+id/imageViewSound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:src="@drawable/sound" />
+
+        <ImageView
+            android:id="@+id/imageViewRepeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="0.1"
+            android:src="@drawable/repeat" />
+        
+</LinearLayout>
+        
         <alex.mochalov.player.BImageView
             android:id="@+id/imageViewPlayPause"
             android:layout_width="match_parent"
@@ -41,6 +64,7 @@
             android:layout_alignTop="@id/TextViewTimer"
             android:src="@drawable/go_vert" />
 
+        
     </RelativeLayout>
 
     <LinearLayout
@@ -87,6 +111,33 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.9" >
             </ListView>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutExpand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/navy"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textViewNameE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/navy"
+                    android:text="Big Text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/big_text" />
+
+                <TextView
+                    android:id="@+id/textViewTextE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/navy"
+                    android:text="Big Text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/big_text" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 

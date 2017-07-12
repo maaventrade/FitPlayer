@@ -87,6 +87,7 @@ public class FragmentEditor extends Fragment
 						nameMain.setText( Programm.getMainRecord().getName());
 						durationMain.setText( Utils.MStoString(Programm.getMainRecord().getDuration()));
 						textMain.setText( Programm.getMainRecord().getText());
+						mModyfied = true;
 					}
 				};
 				

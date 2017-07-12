@@ -7,9 +7,11 @@ import android.os.*;
 import android.speech.tts.*;
 import android.speech.tts.TextToSpeech.*;
 import android.util.*;
+import android.view.View;
 import android.widget.*;
 
 import java.util.*;
+
 import alex.mochalov.record.*;
 
 public class TtsUtils 
@@ -21,8 +23,6 @@ public class TtsUtils
 	private static boolean  langSupported;
 	private static Context mContext;
 	
-	private static boolean mWaiting = false;
-	
 	private static String mParam;
 	
 	private static boolean mRestoreVolume;
@@ -33,12 +33,10 @@ public class TtsUtils
 	} 
 
 	
-	public static void speak(String text, String param, boolean waiting,
+	public static void speak(String text, String param, 
 		boolean setLowVolume, boolean restoreVolume)
 	{
 
-	
-		mWaiting = waiting;
 		mParam = param;
 		mRestoreVolume = restoreVolume;
 		
@@ -53,7 +51,6 @@ public class TtsUtils
 		{
 			//Log.d("d", "s "+s);
 
-			
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 			{
 				ttsGreater21(s);
@@ -90,10 +87,8 @@ public class TtsUtils
 				if(mRestoreVolume)
             		Media.getMediaPlayer().setVolume(1f, 1f);
 
-            	if (mWaiting){
             		if (callback != null)
             			callback.speakingDone(mParam);
-            	}
 				
             	//else if (Media.getMediaPlayer()  != null){
             	//	Media.getMediaPlayer().start();

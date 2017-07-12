@@ -110,6 +110,9 @@ public class DialogEditMain extends Dialog
 
 					countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
 					Programm.setCountBeforeTheEnd(countBeforeTheEnd.isChecked());
+					
+					CheckBox expand_text = (CheckBox)findViewById(R.id.expand_text);
+					Programm.setExpand_text(expand_text.isChecked());
 							
 					playMusic = (CheckBox)findViewById(R.id.playMusic); 
 					Programm.setPlayMusic(playMusic.isChecked());
@@ -220,11 +223,13 @@ ArrayList<String> mp3 = new ArrayList<String>();
 			
 		checkBoxNextGroupSignalOn = (CheckBox)findViewById(R.id.checkBoxNextGroupSignal); 
 		checkBoxNextGroupSignalOn.setChecked(Programm.isSoundNextGroupOn());
-		 
 		//spinnerNextGroup.setSelection(spinnerNextGroup.in);
 
 		countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
 		countBeforeTheEnd.setChecked(Programm.isCountBeforeTheEndOn());
+
+		CheckBox expand_text = (CheckBox)findViewById(R.id.expand_text); 
+		expand_text.setChecked(Programm.isExpand_text());
 		
 		playMusic = (CheckBox)findViewById(R.id.playMusic); 
 		playMusic.setChecked(Programm.isPlayMusicOn());

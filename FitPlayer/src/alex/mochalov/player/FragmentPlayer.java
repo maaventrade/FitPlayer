@@ -29,9 +29,14 @@ public class FragmentPlayer extends Fragment
 	private TextView textViewName;
 	private TextView textViewText;
 	private BImageView bImageView;
+
+	private ImageView imageViewRepeat;
+	private ImageView imageViewSound;
 	
-    AdapterPlayer adapter; 
-	ListView listViewRecords;
+	private AdapterPlayer adapter; 
+	private ListView listViewRecords;
+	private TextView textViewNameE;
+	private TextView textViewTextE;
 
 	enum State {isRunning, isPaused, isStopped};
 	private State state = State.isStopped;
@@ -47,6 +52,10 @@ public class FragmentPlayer extends Fragment
 	private boolean[] counter = {false, false, false};
 	
 	private boolean repeat = false;
+	
+	private boolean mWaiting = false;
+
+	
 
 	public FragmentPlayer(Activity context){
 		super();
@@ -85,6 +94,12 @@ public class FragmentPlayer extends Fragment
 		textViewName = (TextView)rootView.findViewById(R.id.TextViewName);
 		textViewText = (TextView)rootView.findViewById(R.id.TextViewText);
 		
+		imageViewRepeat = (ImageView)rootView.findViewById(R.id.imageViewRepeat);
+		imageViewRepeat.setVisibility(View.INVISIBLE);
+		
+		imageViewSound = (ImageView)rootView.findViewById(R.id.imageViewSound);
+		imageViewSound.setVisibility(View.INVISIBLE);
+		
 		bImageView = (BImageView)rootView.findViewById(R.id.imageViewPlayPause);
 		bImageView.callback = new BImageView.MyCallback(){
 			@Override
@@ -122,8 +137,7 @@ public class FragmentPlayer extends Fragment
 						
 			        	listViewRecords.setItemChecked(index, true);
 			            setTextViewTimer(textViewTimer, records.get(mIndex).getDuration());
-			            setTextViewTimer(textViewFullTime, Programm.getMainRecord().getDuration());
-			            
+			            setTextViewTimer(textViewFullTime, Programm.getDurationRest(records.get(mIndex)));
 			            setTextViewGroup(records.get(mIndex));
 
 			        }
@@ -131,14 +145,31 @@ public class FragmentPlayer extends Fragment
 				}}
 		);	
 
+		LinearLayout linearLayoutExpand = (LinearLayout)rootView.findViewById(R.id.linearLayoutExpand);
+		textViewNameE = (TextView)rootView.findViewById(R.id.textViewNameE);
+		textViewTextE = (TextView)rootView.findViewById(R.id.textViewTextE);
+		
+		if (Programm.isExpand_text()){
+			linearLayoutExpand.setVisibility(View.VISIBLE);
+			listViewRecords.setVisibility(View.INVISIBLE);
+		} else {
+			linearLayoutExpand.setVisibility(View.INVISIBLE);
+			listViewRecords.setVisibility(View.VISIBLE);
+		}
+		
        
         if (records.size() > 0){
 			mIndex = 0;
     		listViewRecords.setItemChecked(0, true);
         	setTextViewTimer(textViewTimer, records.get(mIndex).getDuration());
         	setTextViewTimer(textViewFullTime, Programm.getMainRecord().getDuration());
-        	
             setTextViewGroup(records.get(mIndex));
+            
+            if (Programm.isExpand_text()){
+            	textViewNameE.setText(records.get(mIndex).getName());
+            	textViewTextE.setText(records.get(mIndex).getText());
+            }
+            
         };
 
 		state = State.isStopped;
@@ -146,19 +177,35 @@ public class FragmentPlayer extends Fragment
 		
 		Media.loadMediaFiles(mContext);
 		
-		
 		TtsUtils.callback = new TtsUtils.MyCallback() {
 			@Override
 			public void speakingDone(String param) {
-				Record record = records.get(mIndex);
 				
-				if (param.equals("name")){
-					TtsUtils.speak(record.getText(), "text", true, 
-						Programm.isMusic_quieter(), true);
-				} else if (param.equals("text")){
-					timerHandler.postDelayed(timerRunnable, 0); 
-				}
+				mContext.runOnUiThread(new Runnable() {
+				     @Override
+				     public void run() {
+							imageViewSound.setVisibility(View.INVISIBLE);
+				    }
+				});				
 				
+            	if (mWaiting){
+    				Record record = records.get(mIndex);
+    				if (param.equals("name")){
+    					
+    					mContext.runOnUiThread(new Runnable() {
+    					     @Override
+    					     public void run() {
+    								imageViewSound.setVisibility(View.VISIBLE);
+    					    }
+    					});				
+    					//imageViewSound.setVisibility(View.VISIBLE);
+    					
+    					TtsUtils.speak(record.getText(), "text",  
+    						Programm.isMusic_quieter(), true);
+    				} else if (param.equals("text")){
+    					timerHandler.postDelayed(timerRunnable, 0); 
+    				}
+            	}
 			}
 		}; 
 		
@@ -209,17 +256,23 @@ public class FragmentPlayer extends Fragment
         	} else {
 
         		if (Programm.isCountBeforeTheEndOn()){
+        			mWaiting = false;
         			if (!counter[0] && restOfTime <= 3200){
-        		    	TtsUtils.speak("3", "", false, 
-							Programm.isMusic_quieter(), false);
+    					imageViewSound.setVisibility(View.VISIBLE);
+        		    	TtsUtils.speak("3", "",  
+        		    			false, false);
         		    	counter[0] = true;
         			}	
         			else if (!counter[1] && restOfTime <= 2200){
-        		    	TtsUtils.speak("2", "", false, false, false);
+    					imageViewSound.setVisibility(View.VISIBLE);
+        		    	TtsUtils.speak("2", "", 
+        		    			false, false);
         		    	counter[1] = true;
         			}	
         			else if (!counter[2] && restOfTime <= 1200){
-        		    	TtsUtils.speak("1", "", false, false, true);
+    					imageViewSound.setVisibility(View.VISIBLE);
+        		    	TtsUtils.speak("1", "", 
+        		    			false, true);
         		    	counter[2] = true;
         			}	
         				
@@ -252,22 +305,21 @@ public class FragmentPlayer extends Fragment
 			mIndex++;
 			if (repeat)
 				mIndex--;
-				
-        	//int position = 0; // mainFolder.getIndex();
+
+            if (Programm.isExpand_text()){
+            	textViewNameE.setText(records.get(mIndex).getName());
+            	textViewTextE.setText(records.get(mIndex).getText());
+            }
+			
     		listViewRecords.setItemChecked(mIndex, true);
     		listViewRecords.smoothScrollToPositionFromTop(mIndex, 0, 500);
 
     		start(records.get(mIndex));
 
-			//TtsUtils.speak(records.get(mIndex).getName()+"."+
-			//records.get(mIndex).getText());
-
             setTextViewGroup(records.get(mIndex));
             
             return true;
-
         } else {
-
         	state = State.isStopped;
         	setButtonImage();
             timerHandler.removeCallbacks(timerRunnable);
@@ -289,7 +341,7 @@ public class FragmentPlayer extends Fragment
 		listViewRecords.smoothScrollToPositionFromTop(mIndex, 0, 500); // Move record to the top
 		
 		restOfTime = record.getDuration() + 1000; // Add a small reserve of the time
-		restOfFullTime = Programm.getMainRecord().getDuration();
+		restOfFullTime = Programm.getDurationRest(record);
 
     	adapter.setEnabled(false); // Lock the list of the records
     	
@@ -299,7 +351,9 @@ public class FragmentPlayer extends Fragment
 		setTextViewTimer(textViewTimer, restOfTime);
 		setTextViewTimer(textViewFullTime, restOfFullTime);
 		
-    	TtsUtils.speak(record.getName(), "name", true, 
+		mWaiting = true;
+		imageViewSound.setVisibility(View.VISIBLE);
+    	TtsUtils.speak(record.getName(), "name", 
 			Programm.isMusic_quieter(), true);
 
 	}
@@ -331,7 +385,11 @@ public class FragmentPlayer extends Fragment
 			case R.id.action_repeat:
 				repeat = !repeat;
 			
-				Toast.makeText(mContext, "Repeat mode "+repeat, Toast.LENGTH_LONG).show();
+				if (repeat)
+					imageViewRepeat.setVisibility(View.VISIBLE);
+				else
+					imageViewRepeat.setVisibility(View.INVISIBLE);
+				
 				return true;
 			default:	
 				return super.onOptionsItemSelected(item);

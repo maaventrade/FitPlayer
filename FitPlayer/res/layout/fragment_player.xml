@@ -28,14 +28,38 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/huge_text" />
 
-            <TextView
-                android:id="@+id/TextViewFullTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/item_padding"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/TextViewTimer"
+    android:paddingLeft="@dimen/item_padding" >
+        
+        <TextView
+            android:id="@+id/TextViewFullTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <ImageView
+            android:id="@+id/imageViewSound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:src="@drawable/sound" />
+
+        <ImageView
+            android:id="@+id/imageViewRepeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="0.1"
+            android:src="@drawable/repeat" />
+        
+</LinearLayout>
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

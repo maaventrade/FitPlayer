@@ -50,7 +50,8 @@
 	<string name="rest">It is the rest</string>
 	<string name="music_rest">Stop music in the rest</string>
 	<string name="music_quieter">Make music quieter on speech</string>
-	
+	<string name="expand_text">Expand text</string>
+		
 	
 	<string name="copy">Copy</string>
 	<string name="paste">Paste</string>

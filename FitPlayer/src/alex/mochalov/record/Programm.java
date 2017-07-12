@@ -35,9 +35,21 @@ public class Programm {
 	private static boolean playMusic = false; 
 	private static String pathToMp3 = ""; 
 	private static boolean music_quieter = true;
+	private static boolean expand_text = false;
+	
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
+
+	public static void setExpand_text(boolean isChecked)
+	{
+		expand_text = isChecked;
+	}
+
+	public static boolean isExpand_text()
+	{
+		return expand_text;
+	}
 
 	public static void setMusic_quieter(boolean isChecked)
 	{
@@ -89,6 +101,7 @@ public class Programm {
 		playMusic = false; 
 		pathToMp3 = ""; 
 		music_quieter = true;
+		expand_text = false;
 
 		listDataHeader = new ArrayList<Record>();
 		listDataChild = new HashMap<Record, List<Record>>();
@@ -181,7 +194,6 @@ public class Programm {
 			
 			String name = Utils.APP_FOLDER + "/" + fileName;
 			
-			Log.d("a","start "+name);
 			BufferedReader reader;
 			BufferedReader rd = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
 			
@@ -209,14 +221,11 @@ public class Programm {
 
 				if(eventType == XmlPullParser.START_DOCUMENT) {} 
 				else if(eventType == XmlPullParser.END_TAG) {
-					Log.d("", "END "+parser.getName());
 					if(parser.getName().equals("children")){
 						currentGroup = null;
-						Log.d("", "currentGroup = null ");
 					}
 				}
 				else if(eventType == XmlPullParser.START_TAG) {
-					Log.d("", "START "+parser.getName());
 					
 					if(parser.getName() == null);
 					else if(parser.getName().equals("main")){
@@ -237,12 +246,12 @@ public class Programm {
 						pathToMp3 = parser.getAttributeValue(null, "pathToMp3");
 						playMusic = Boolean.parseBoolean( parser.getAttributeValue(null, "playMusic"));
 						music_quieter = Boolean.parseBoolean( parser.getAttributeValue(null, "music_quieter"));
+						expand_text = Boolean.parseBoolean( parser.getAttributeValue(null, "expand_text"));
 						
 					}
 						else if(parser.getName().equals("children")){
 						currentGroup = record;
 						listDataChild.put(currentGroup, new ArrayList<Record>());
-						Log.d("", "currentGroup = record "+record.getName());
 					}
 					else if(parser.getName().equals("record")){
 						
@@ -343,7 +352,9 @@ public class Programm {
 					 +" countBeforeTheEnd=\""+countBeforeTheEnd+"\""
 					 +" pathToMp3=\""+pathToMp3+"\""
 					 +" playMusic=\""+playMusic+"\""
-					+" music_quieter=\""+music_quieter+"\""
+						+" music_quieter=\""+music_quieter+"\""
+					+" expand_text=\""+expand_text+"\""
+					
 			
 					 +">"+"\n");
 			writer.write("</main>"+"\n");
@@ -505,8 +516,6 @@ public class Programm {
 		Record record = new Record(copyRecord);
 		
 		if (listDataHeader.indexOf(selectedRecord) >= 0){
-			Log.d("b",selectedRecord.getName());
-			Log.d("b",copyRecord.getName());
 			listDataHeader.add(listDataHeader.indexOf(selectedRecord)+1, record);
 		} else {
 			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
@@ -593,6 +602,32 @@ public class Programm {
             	}
         	}	
 		Utils.sortR(records);
+	}
+
+	public static long getDurationRest(Record record) {
+		long past = 0;
+		
+		for (Record r : listDataHeader){
+			
+			List<Record> l = listDataChild.get(r);
+			if (l != null){
+				for(Record p: l){
+					if (p == record)
+						return main.getDuration() - past;
+					else { 
+						past = past + p.getDuration();
+					}
+				}
+			} else {
+				if (r == record)
+					return main.getDuration() - past;
+				else { 
+					past = past + r.getDuration();
+				}
+			}
+		}
+		
+		return 0;
 	}	
 }
 	

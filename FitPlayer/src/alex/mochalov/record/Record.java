@@ -107,4 +107,6 @@ public class Record {
 	public void setDuration(long duration) {
 		mDuration = duration;
 	}
+
+	
 }
