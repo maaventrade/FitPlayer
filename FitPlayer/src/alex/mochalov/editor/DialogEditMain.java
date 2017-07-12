@@ -40,6 +40,7 @@ public class DialogEditMain extends Dialog
 	private CheckBox checkBoxNextGroupSignalOn;
 	private CheckBox countBeforeTheEnd;
 	private CheckBox playMusic;
+	private CheckBox music_quieter;
 	
 	private MediaPlayer mp;
 
@@ -114,6 +115,9 @@ public class DialogEditMain extends Dialog
 					Programm.setPlayMusic(playMusic.isChecked());
 					
 					Programm.setPathToMp3(textViewPathToMp3.getText().toString());
+					
+
+					Programm.setMusic_quieter(music_quieter.isChecked());
 					
 					if (callback != null)
 						callback.callbackOk();
@@ -227,6 +231,9 @@ ArrayList<String> mp3 = new ArrayList<String>();
 		
 		textViewPathToMp3 = (TextView)findViewById(R.id.textViewPathToMp3);
 		textViewPathToMp3.setText(Programm.getPathToMp3());
+		
+		music_quieter =  (CheckBox)findViewById(R.id.music_quieter); 
+		music_quieter.setChecked(Programm.isMusic_quieter());
 	}
 
 	

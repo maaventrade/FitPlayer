@@ -98,6 +98,12 @@
 	</LinearLayout>
 	
 	<CheckBox
+		android:id="@+id/music_quieter"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/music_quieter"/>
+	
+	<CheckBox
 		android:id="@+id/countBeforeTheEnd"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

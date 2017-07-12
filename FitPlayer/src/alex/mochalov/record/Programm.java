@@ -34,9 +34,15 @@ public class Programm {
 	private static boolean countBeforeTheEnd = true; 
 	private static boolean playMusic = false; 
 	private static String pathToMp3 = ""; 
+	private static boolean music_quieter = true;
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
+
+	public static void setMusic_quieter(boolean isChecked)
+	{
+		music_quieter = isChecked;
+	}
 
 	public static void setRestsDuration(int duration)
 	{
@@ -82,6 +88,7 @@ public class Programm {
 		countBeforeTheEnd = true; 
 		playMusic = false; 
 		pathToMp3 = ""; 
+		music_quieter = true;
 
 		listDataHeader = new ArrayList<Record>();
 		listDataChild = new HashMap<Record, List<Record>>();
@@ -95,10 +102,14 @@ public class Programm {
 
 	public static boolean isPlayMusicOn()
 	{
-		
 		return playMusic;
 	}
 
+	public static boolean isMusic_quieter()
+	{
+		return music_quieter;
+	}
+	
 	public static boolean isCountBeforeTheEndOn()
 	{
 	
@@ -225,7 +236,7 @@ public class Programm {
 						countBeforeTheEnd = Boolean.parseBoolean( parser.getAttributeValue(null, "countBeforeTheEnd"));
 						pathToMp3 = parser.getAttributeValue(null, "pathToMp3");
 						playMusic = Boolean.parseBoolean( parser.getAttributeValue(null, "playMusic"));
-						
+						music_quieter = Boolean.parseBoolean( parser.getAttributeValue(null, "music_quieter"));
 						
 					}
 						else if(parser.getName().equals("children")){
@@ -332,7 +343,8 @@ public class Programm {
 					 +" countBeforeTheEnd=\""+countBeforeTheEnd+"\""
 					 +" pathToMp3=\""+pathToMp3+"\""
 					 +" playMusic=\""+playMusic+"\""
-					 
+					+" music_quieter=\""+music_quieter+"\""
+			
 					 +">"+"\n");
 			writer.write("</main>"+"\n");
 			

@@ -195,8 +195,10 @@ public class MainActivity extends Activity implements OnInitListener{
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 					builder.setMessage("Save ?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();
-	    		}
-	    	}	    	
+	    		} else
+					super.onBackPressed();
+	    	} else     	
+				super.onBackPressed();
 	    }
 	}
 

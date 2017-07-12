@@ -23,7 +23,9 @@
     <string name="action_save">Save</string>
     <string name="action_copy">Copy</string>
 	<string name="action_set_rests_duration">Set rests duration</string>
-    	
+	<string name="action_parameters">Parameters</string>
+	<string name="action_repeat">Repeat</string>
+	
     <string name="file_saved">File saved</string>
     <string name="error_saving_file">Error saving file</string>
     <string name="error_load_xml">Error loading xml</string>
@@ -47,6 +49,8 @@
 	<string name="play_music">Play music</string>
 	<string name="rest">It is the rest</string>
 	<string name="music_rest">Stop music in the rest</string>
+	<string name="music_quieter">Make music quieter on speech</string>
+	
 	
 	<string name="copy">Copy</string>
 	<string name="paste">Paste</string>

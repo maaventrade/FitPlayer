@@ -3,15 +3,15 @@
     tools:context="alex.mochalov.fitplayer.MainActivity" >
 
     <item
-        android:id="@+id/action_pause"
+        android:id="@+id/action_parameters"
         android:orderInCategory="3"
         android:showAsAction="always"
-        android:title="@string/action_pause"/>
+        android:title="@string/action_parameters"/>
 
     <item
-        android:id="@+id/action_start"
+        android:id="@+id/action_repeat"
         android:orderInCategory="10"
         android:showAsAction="always"
-        android:title="@string/action_start"/>
+        android:title="@string/action_repeat"/>
 
 </menu>

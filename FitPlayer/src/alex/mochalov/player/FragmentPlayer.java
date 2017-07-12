@@ -45,6 +45,8 @@ public class FragmentPlayer extends Fragment
 	private boolean restartMusic = true;
 	
 	private boolean[] counter = {false, false, false};
+	
+	private boolean repeat = false;
 
 	public FragmentPlayer(Activity context){
 		super();
@@ -151,7 +153,8 @@ public class FragmentPlayer extends Fragment
 				Record record = records.get(mIndex);
 				
 				if (param.equals("name")){
-					TtsUtils.speak(record.getText(), "text", true, true, true);
+					TtsUtils.speak(record.getText(), "text", true, 
+						Programm.isMusic_quieter(), true);
 				} else if (param.equals("text")){
 					timerHandler.postDelayed(timerRunnable, 0); 
 				}
@@ -207,7 +210,8 @@ public class FragmentPlayer extends Fragment
 
         		if (Programm.isCountBeforeTheEndOn()){
         			if (!counter[0] && restOfTime <= 3200){
-        		    	TtsUtils.speak("3", "", false, true, false);
+        		    	TtsUtils.speak("3", "", false, 
+							Programm.isMusic_quieter(), false);
         		    	counter[0] = true;
         			}	
         			else if (!counter[1] && restOfTime <= 2200){
@@ -246,7 +250,9 @@ public class FragmentPlayer extends Fragment
 		
         if (mIndex < records.size()-1){
 			mIndex++;
-			
+			if (repeat)
+				mIndex--;
+				
         	//int position = 0; // mainFolder.getIndex();
     		listViewRecords.setItemChecked(mIndex, true);
     		listViewRecords.smoothScrollToPositionFromTop(mIndex, 0, 500);
@@ -293,7 +299,8 @@ public class FragmentPlayer extends Fragment
 		setTextViewTimer(textViewTimer, restOfTime);
 		setTextViewTimer(textViewFullTime, restOfFullTime);
 		
-    	TtsUtils.speak(record.getName(), "name", true, true, true);
+    	TtsUtils.speak(record.getName(), "name", true, 
+			Programm.isMusic_quieter(), true);
 
 	}
 	
@@ -320,6 +327,11 @@ public class FragmentPlayer extends Fragment
 				getActivity().onBackPressed();
 				return true;
             case R.id.action_settings:
+				return true;
+			case R.id.action_repeat:
+				repeat = !repeat;
+			
+				Toast.makeText(mContext, "Repeat mode "+repeat, Toast.LENGTH_LONG).show();
 				return true;
 			default:	
 				return super.onOptionsItemSelected(item);
