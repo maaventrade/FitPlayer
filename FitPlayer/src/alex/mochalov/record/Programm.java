@@ -299,6 +299,8 @@ public class Programm {
 	}
 
 	public static void deleteRecord(Record selectedRecord) {
+		Record parent = null;
+		
 		listDataHeader.remove(selectedRecord);
 		
 		if (listDataChild.get(selectedRecord) != null)
@@ -307,11 +309,14 @@ public class Programm {
 			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
 	            for (Record r : entry.getValue())
 	            	if (r == selectedRecord){
+	            		parent = entry.getKey();
 	            		entry.getValue().remove(r);
 	            		break;
 	            	}
 			
 		}
+		
+		summDurations(parent);		
 	}
 
 	public static Record addCHildRecord(Record selectedRecord) {
@@ -331,6 +336,8 @@ public class Programm {
 	public static boolean save(Context mContext, String fileName) {
 		try {
 
+			summDurationsAll();
+			
 			File file = new File(Utils.APP_FOLDER);
 			if(!file.exists()){                          
 				file.mkdirs();                  
@@ -402,17 +409,40 @@ public class Programm {
 
 	public static void summDurations(Record record) {
 
-		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) {
-			if (entry.getValue().contains(record)||
-				record == null){
-	            Record group = entry.getKey();
-	            long duration = 0;
-	            
-	            for (Record r : entry.getValue() )
-	            	duration = duration + r.getDuration();
-	            group.setDuration(duration);
-	        }
-	    }
+		if (record != null){
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) {
+				if (entry.getValue().contains(record)||
+					record == null){
+		            Record group = entry.getKey();
+		            long duration = 0;
+		            
+		            for (Record r : entry.getValue() )
+		            	duration = duration + r.getDuration();
+		            group.setDuration(duration);
+		        }
+		    }
+		}
+        //
+        // Calculate total duration
+        //
+        long duration = 0;
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+            for (Record r : entry.getValue() )
+            	duration = duration + r.getDuration();
+		main.setDuration(duration);		
+	}
+
+	public static void summDurationsAll() {
+
+		for (Record group : listDataHeader) {
+			long duration = 0;
+			if (listDataChild.get(group) != null)
+				for (Record r : listDataChild.get(group)) 
+					duration = duration + r.getDuration();
+			
+            group.setDuration(duration);
+		}
+		
         //
         // Calculate total duration
         //

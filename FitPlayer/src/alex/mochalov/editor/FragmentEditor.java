@@ -101,7 +101,6 @@ public class FragmentEditor extends Fragment
 		//listViewRecords.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
         
-       //������� ������� � �������� context � ������ � �������
         adapter = new AdapterEditorExp(mContext, Programm.getGroups(), Programm.getChilds());
         adapter.callback = new AdapterEditorExp.MyCallback() {
 			
