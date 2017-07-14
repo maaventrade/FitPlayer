@@ -228,6 +228,9 @@ public class FragmentEditor extends Fragment
 			newRecord = Programm.pasteRecord(Utils.getCopyRecord(), selectedRecord);
 			selectedRecord = newRecord;
 				
+			Programm.summDurationsAll();
+			durationMain.setText(Utils.MStoString( Programm.getMainRecord().getDuration()));
+			
 			listViewRecords.setItemChecked(
 					Programm.getIndex(newRecord), true);
 			adapter.notifyDataSetChanged();
