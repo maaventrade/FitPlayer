@@ -450,20 +450,26 @@ public class Programm {
 
 		for (Record group : listDataHeader) {
 			long duration = 0;
-			if (listDataChild.get(group) != null)
-				for (Record r : listDataChild.get(group)) 
-					duration = duration + r.getDuration();
+			int childCount = 0; 
 			
-            group.setDuration(duration);
+			if (listDataChild.get(group) != null)
+				for (Record r : listDataChild.get(group)){ 
+					duration = duration + r.getDuration();
+					childCount++;
+				}	
+			
+			if (childCount > 0)
+				group.setDuration(duration);
 		}
 		
         //
         // Calculate total duration
         //
         long duration = 0;
+
 		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
-            for (Record r : entry.getValue() )
-            	duration = duration + r.getDuration();
+            	duration = duration + entry.getKey().getDuration();
+        
 		main.setDuration(duration);		
 	}
 
