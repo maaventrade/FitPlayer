@@ -41,6 +41,7 @@ public class DialogEditMain extends Dialog
 	private CheckBox countBeforeTheEnd;
 	private CheckBox playMusic;
 	private CheckBox music_quieter;
+
 	
 	private MediaPlayer mp;
 
@@ -239,6 +240,10 @@ ArrayList<String> mp3 = new ArrayList<String>();
 		
 		music_quieter =  (CheckBox)findViewById(R.id.music_quieter); 
 		music_quieter.setChecked(Programm.isMusic_quieter());
+		
+		CheckBox speach_descr = (CheckBox)findViewById(R.id.speach_descr); 
+		speach_descr .setChecked(Programm.isMusic_quieter());
+		
 	}
 
 	

@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/navy"
                     android:text="Big Text"
-                    android:textColor="@color/white"
+                    android:textColor="@color/yellow"
                     android:textSize="@dimen/big_text" />
 
                 <TextView

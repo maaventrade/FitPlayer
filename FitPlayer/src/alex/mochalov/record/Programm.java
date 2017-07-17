@@ -36,10 +36,21 @@ public class Programm {
 	private static String pathToMp3 = ""; 
 	private static boolean music_quieter = true;
 	private static boolean expand_text = false;
+	private static boolean speach_descr = true;
 	
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
+
+	public static void setSpeach_descr(boolean isChecked)
+	{
+		speach_descr = isChecked;
+	}
+
+	public static boolean isSpeach_descr()
+	{
+		return speach_descr;
+	}
 
 	public static void setExpand_text(boolean isChecked)
 	{
@@ -50,7 +61,9 @@ public class Programm {
 	{
 		return expand_text;
 	}
-
+	
+	
+	
 	public static void setMusic_quieter(boolean isChecked)
 	{
 		music_quieter = isChecked;
@@ -102,6 +115,7 @@ public class Programm {
 		pathToMp3 = ""; 
 		music_quieter = true;
 		expand_text = false;
+		speach_descr = true;
 
 		listDataHeader = new ArrayList<Record>();
 		listDataChild = new HashMap<Record, List<Record>>();
@@ -247,7 +261,7 @@ public class Programm {
 						playMusic = Boolean.parseBoolean( parser.getAttributeValue(null, "playMusic"));
 						music_quieter = Boolean.parseBoolean( parser.getAttributeValue(null, "music_quieter"));
 						expand_text = Boolean.parseBoolean( parser.getAttributeValue(null, "expand_text"));
-						
+						speach_descr = Boolean.parseBoolean( parser.getAttributeValue(null, "speach_descr"));
 					}
 						else if(parser.getName().equals("children")){
 						currentGroup = record;

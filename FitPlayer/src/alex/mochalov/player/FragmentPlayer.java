@@ -55,7 +55,7 @@ public class FragmentPlayer extends Fragment
 	
 	private boolean mWaiting = false;
 
-	
+	private LinearLayout linearLayoutExpand;
 
 	public FragmentPlayer(Activity context){
 		super();
@@ -140,24 +140,23 @@ public class FragmentPlayer extends Fragment
 			            setTextViewTimer(textViewFullTime, Programm.getDurationRest(records.get(mIndex)));
 			            setTextViewGroup(records.get(mIndex));
 
+						if (Programm.isExpand_text()){
+							textViewNameE.setText(records.get(mIndex).getName());
+							textViewTextE.setText(records.get(mIndex).getText());
+						}
+						
 			        }
 
 				}}
 		);	
 
-		LinearLayout linearLayoutExpand = (LinearLayout)rootView.findViewById(R.id.linearLayoutExpand);
+		linearLayoutExpand = (LinearLayout)rootView.findViewById(R.id.linearLayoutExpand);
 		textViewNameE = (TextView)rootView.findViewById(R.id.textViewNameE);
 		textViewTextE = (TextView)rootView.findViewById(R.id.textViewTextE);
 		
-		if (Programm.isExpand_text()){
-			linearLayoutExpand.setVisibility(View.VISIBLE);
-			listViewRecords.setVisibility(View.INVISIBLE);
-		} else {
-			linearLayoutExpand.setVisibility(View.INVISIBLE);
-			listViewRecords.setVisibility(View.VISIBLE);
-		}
+		linearLayoutExpand.setVisibility(View.INVISIBLE);
+		listViewRecords.setVisibility(View.VISIBLE);
 		
-       
         if (records.size() > 0){
 			mIndex = 0;
     		listViewRecords.setItemChecked(0, true);
@@ -435,6 +434,16 @@ public class FragmentPlayer extends Fragment
 				bImageView.setImageResource(R.drawable.go_hor);
 		}
 		
+		if (Programm.isExpand_text()){
+			if (state == State.isRunning){
+				linearLayoutExpand.setVisibility(View.VISIBLE);
+				listViewRecords.setVisibility(View.INVISIBLE);
+			} else {
+				linearLayoutExpand.setVisibility(View.INVISIBLE);
+				listViewRecords.setVisibility(View.VISIBLE);
+			}
+		}
+	
 		
 		bImageView.startAnimation(animation1);					
         

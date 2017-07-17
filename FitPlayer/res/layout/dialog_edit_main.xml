@@ -108,7 +108,15 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/count"/>
-
+	
+	<CheckBox
+		android:id="@+id/speach_descr"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/speach_descr"/>
+	
+	
+	
 	<CheckBox
 	    android:id="@+id/expand_text"
 	    android:layout_width="wrap_content"
