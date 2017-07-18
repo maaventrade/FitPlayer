@@ -6,6 +6,7 @@
 	android:orientation="vertical">
 
 	<LinearLayout
+		android:id="@+id/layoutName"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
@@ -32,6 +33,7 @@
 	</LinearLayout>
 
 	<LinearLayout
+		android:id="@+id/layoutText"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
@@ -60,6 +62,7 @@
 	</LinearLayout>
 
 	<LinearLayout
+		android:id="@+id/layoutMusic"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
@@ -96,62 +99,32 @@
 			android:text="Test"/>
 
 	</LinearLayout>
-	
+
 	<CheckBox
 		android:id="@+id/music_quieter"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/music_quieter"/>
-	
+
 	<CheckBox
 		android:id="@+id/countBeforeTheEnd"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/count"/>
-	
+
 	<CheckBox
 		android:id="@+id/speach_descr"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/speach_descr"/>
-	
-	
-	
+
 	<CheckBox
-	    android:id="@+id/expand_text"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/expand_text" />
-
-	<LinearLayout
-		android:layout_width="match_parent"
+		android:id="@+id/expand_text"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_weight="0.5"
-		android:orientation="horizontal">
+		android:text="@string/expand_text"/>
 
-		<CheckBox
-			android:id="@+id/checkBoxNextGroupSignal"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.5"
-			android:text="@string/next_group_signal"/>
-
-		<Spinner
-			android:id="@+id/spinnerNextGroup"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.5"
-			android:background="@android:drawable/btn_dropdown"
-			android:spinnerMode="dropdown"/>
-
-		<Button
-			android:id="@+id/buttonTestSound"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.5"
-			android:text="Test"/>
-
-	</LinearLayout>
+	
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -172,6 +145,12 @@
 			android:layout_weight="0.5"
 			android:layout_width="match_parent"
 			android:id="@+id/dialogeditButtonCancel"/>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:id="@+id/dialogeditButtonLockUnlock"
+			android:text="@string/lock"
+			android:layout_width="wrap_content"/>
 
 	</LinearLayout>
 

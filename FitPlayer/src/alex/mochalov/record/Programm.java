@@ -37,10 +37,15 @@ public class Programm {
 	private static boolean music_quieter = true;
 	private static boolean expand_text = false;
 	private static boolean speach_descr = true;
-	
+	private static boolean locked = false;
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
+
+	public static void setLock()
+	{
+		locked = !locked;
+	}
 
 	public static void setSpeach_descr(boolean isChecked)
 	{
@@ -51,7 +56,13 @@ public class Programm {
 	{
 		return speach_descr;
 	}
-
+	
+	
+	public static boolean isLocked()
+	{
+		return locked;
+	}
+	
 	public static void setExpand_text(boolean isChecked)
 	{
 		expand_text = isChecked;
@@ -116,7 +127,8 @@ public class Programm {
 		music_quieter = true;
 		expand_text = false;
 		speach_descr = true;
-
+		locked = false;
+		
 		listDataHeader = new ArrayList<Record>();
 		listDataChild = new HashMap<Record, List<Record>>();
 	
@@ -262,6 +274,8 @@ public class Programm {
 						music_quieter = Boolean.parseBoolean( parser.getAttributeValue(null, "music_quieter"));
 						expand_text = Boolean.parseBoolean( parser.getAttributeValue(null, "expand_text"));
 						speach_descr = Boolean.parseBoolean( parser.getAttributeValue(null, "speach_descr"));
+						locked = Boolean.parseBoolean( parser.getAttributeValue(null, "locked"));
+						
 					}
 						else if(parser.getName().equals("children")){
 						currentGroup = record;
@@ -375,7 +389,8 @@ public class Programm {
 					 +" playMusic=\""+playMusic+"\""
 						+" music_quieter=\""+music_quieter+"\""
 					+" expand_text=\""+expand_text+"\""
-					
+					+" locked=\""+locked+"\""
+			
 			
 					 +">"+"\n");
 			writer.write("</main>"+"\n");
@@ -469,7 +484,7 @@ public class Programm {
 
 		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
             	duration = duration + entry.getKey().getDuration();
-        
+        Log.d("a","d "+duration);
 		main.setDuration(duration);		
 	}
 
