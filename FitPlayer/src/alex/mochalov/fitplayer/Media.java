@@ -20,7 +20,8 @@ public class Media
 		if (Programm.isPlayMusicOn() && mp3.size() > 0){
 			if (restartMusic){
 				if (mediaPlayer != null){
-					mediaPlayer.stop();
+					if(mediaPlayer.isPlaying()) 
+						mediaPlayer.stop();
 					mediaPlayer = null;
 				}
 					
@@ -30,7 +31,15 @@ public class Media
 				restartMusic = false;
 			}
 			mediaPlayer.start();
+		} else {
+			if (mediaPlayer != null){
+				if(mediaPlayer.isPlaying()) 
+					mediaPlayer.stop();
+				mediaPlayer = null;
+			}
+			mediaPlayer = new MediaPlayer();
 		}
+			
 	}
 
 	public static void start()
@@ -44,14 +53,16 @@ public class Media
 	public static void stop()
 	{
 		if (mediaPlayer != null){
-        	mediaPlayer.stop();
+			if(mediaPlayer.isPlaying()) 
+				mediaPlayer.stop();
         	mediaPlayer = null;
         }
 	}
 
 	public static void pause(){
 		if (mediaPlayer != null)
-			mediaPlayer.pause();
+			if(mediaPlayer.isPlaying()) 
+				mediaPlayer.pause();
 		
 	}
 	

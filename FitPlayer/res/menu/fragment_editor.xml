@@ -27,7 +27,7 @@
         android:id="@+id/action_cut"
         android:orderInCategory="5"
         android:showAsAction="always"
-       
+        android:icon="@drawable/cut"
         android:title="@string/action_cut"/>
 	
 	

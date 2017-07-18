@@ -6,12 +6,14 @@
         android:id="@+id/action_parameters"
         android:orderInCategory="3"
         android:showAsAction="always"
+        android:icon="@drawable/tune"
         android:title="@string/action_parameters"/>
 
     <item
         android:id="@+id/action_repeat"
         android:orderInCategory="10"
         android:showAsAction="always"
+        android:icon="@drawable/repeat"
         android:title="@string/action_repeat"/>
 
 </menu>

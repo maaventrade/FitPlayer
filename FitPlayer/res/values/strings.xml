@@ -34,7 +34,7 @@
     <string name="text">Description:</string>
     <string name="duration">Duration:</string>
     <string name="starts_on">Starts on</string>
-	<string name="speach_descr">Speach description:</string>
+	<string name="speach_descr">Pronounce the exercise description</string>
     
 	<string name="ok">Ok</string>
 	<string name="cancel">Cancel</string>
@@ -58,7 +58,7 @@
 	<string name="paste">Paste</string>
 	<string name="rename">Rename</string>
 	<string name="action_cut">Cut</string>
-	<string name="select">Select from...</string>
+	<string name="select">Select</string>
 		
 	<string name="title_add">Add record</string>
 	<string name="title_edit">Edit record</string>

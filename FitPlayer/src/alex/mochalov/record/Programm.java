@@ -20,20 +20,22 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.fitplayer.Utils;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Programm {
-	
+
 	private static Record main = new Record("New programm");
-	private static boolean soundNextGroupOn = false; 
-	private static String soundNextName = ""; 
-	private static String soundNextGroupUri = ""; 
-	private static boolean countBeforeTheEnd = true; 
-	private static boolean playMusic = false; 
-	private static String pathToMp3 = ""; 
+	private static boolean soundNextGroupOn = false;
+	private static String soundNextName = "";
+	private static String soundNextGroupUri = "";
+	private static boolean countBeforeTheEnd = true;
+	private static boolean playMusic = false;
+	private static String pathToMp3 = "";
 	private static boolean music_quieter = true;
 	private static boolean expand_text = false;
 	private static boolean speach_descr = true;
@@ -42,142 +44,115 @@ public class Programm {
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
 
-	public static void setLock()
-	{
+	public static void setLock() {
 		locked = !locked;
 	}
 
-	public static void setSpeach_descr(boolean isChecked)
-	{
+	public static void setSpeach_descr(boolean isChecked) {
 		speach_descr = isChecked;
 	}
 
-	public static boolean isSpeach_descr()
-	{
+	public static boolean isSpeach_descr() {
 		return speach_descr;
 	}
-	
-	
-	public static boolean isLocked()
-	{
+
+	public static boolean isLocked() {
 		return locked;
 	}
-	
-	public static void setExpand_text(boolean isChecked)
-	{
+
+	public static void setExpand_text(boolean isChecked) {
 		expand_text = isChecked;
 	}
 
-	public static boolean isExpand_text()
-	{
+	public static boolean isExpand_text() {
 		return expand_text;
 	}
-	
-	
-	
-	public static void setMusic_quieter(boolean isChecked)
-	{
+
+	public static void setMusic_quieter(boolean isChecked) {
 		music_quieter = isChecked;
 	}
 
-	public static void setRestsDuration(int duration)
-	{
-		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+	public static void setRestsDuration(int duration) {
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
 			for (Record r : entry.getValue())
-				if (r.isRest()){
+				if (r.isRest()) {
 					r.setDuration(duration);
-					
+
 				}
 		summDurations(null);
 	}
 
-	public static int getIndex(Record newRecord)
-	{
+	public static int getIndex(Record newRecord) {
 		int index = -1;
-		
-		for (Record r : listDataHeader){
+
+		for (Record r : listDataHeader) {
 			index++;
-			if (r == newRecord) 
+			if (r == newRecord)
 				return index;
-			
+
 			List<Record> l = listDataChild.get(r);
-			if (l != null){
-				for(Record p: l){
+			if (l != null) {
+				for (Record p : l) {
 					index++;
-					if (r == p) 
+					if (r == p)
 						return index;
 				}
 			}
-			
-		
+
 		}
-		
+
 		return index;
 	}
 
-	public static void clear()
-	{
+	public static void clear() {
 		main = new Record("New programm");
-		soundNextGroupOn = false; 
-		soundNextName = ""; 
-		soundNextGroupUri = ""; 
-		countBeforeTheEnd = true; 
-		playMusic = false; 
-		pathToMp3 = ""; 
+		soundNextGroupOn = false;
+		soundNextName = "";
+		soundNextGroupUri = "";
+		countBeforeTheEnd = true;
+		playMusic = false;
+		pathToMp3 = "";
 		music_quieter = true;
 		expand_text = false;
 		speach_descr = true;
 		locked = false;
-		
+
 		listDataHeader = new ArrayList<Record>();
 		listDataChild = new HashMap<Record, List<Record>>();
-	
+
 	}
 
-	public static String getPathToMp3()
-	{
+	public static String getPathToMp3() {
 		return pathToMp3;
 	}
 
-	public static boolean isPlayMusicOn()
-	{
+	public static boolean isPlayMusicOn() {
 		return playMusic;
 	}
 
-	public static boolean isMusic_quieter()
-	{
+	public static boolean isMusic_quieter() {
 		return music_quieter;
 	}
-	
-	public static boolean isCountBeforeTheEndOn()
-	{
-	
+
+	public static boolean isCountBeforeTheEndOn() {
+
 		return countBeforeTheEnd;
 	}
 
-	public static boolean isSoundNextGroupOn()
-	{
+	public static boolean isSoundNextGroupOn() {
 		return soundNextGroupOn;
 	}
-	
+
 	/*
-	public static Record getNextRecord()
-	{
-		// TODO: Implement this method
-		return null;
-	}
-
-	public static Record getFirstRecord()
-	{
-
-		return null;
-	}
-
-	public static Record getCurrentRecord()
-	{
-		return currentRecord;
-	}	
-	*/
+	 * public static Record getNextRecord() { // TODO: Implement this method
+	 * return null; }
+	 * 
+	 * public static Record getFirstRecord() {
+	 * 
+	 * return null; }
+	 * 
+	 * public static Record getCurrentRecord() { return currentRecord; }
+	 */
 	public static ArrayList<Record> getGroups() {
 		return listDataHeader;
 	}
@@ -186,134 +161,152 @@ public class Programm {
 		return listDataChild;
 	}
 
-	public static ArrayList<Record> getList(){
-		
+	public static ArrayList<Record> getList() {
+
 		ArrayList<Record> list = new ArrayList<Record>();
-		
-		for (Record r : listDataHeader){
+
+		for (Record r : listDataHeader) {
 			boolean child = false;
 			List<Record> l = listDataChild.get(r);
-			if (l != null){
+			if (l != null) {
 				if (l.size() == 0)
 					list.add(r);
 				else {
-					for(Record p: l)
+					for (Record p : l)
 						list.add(p);
 				}
 			} else {
 				list.add(r);
 			}
 		}
-		
+
 		return list;
 	}
-	
+
 	public static boolean loadXML(Context mContext, String fileName) {
 
 		listDataHeader.clear();
 		listDataChild.clear();
-		
-		Record currentGroup = null; 
-		Record record = null; 
+
+		Record currentGroup = null;
+		Record record = null;
 
 		try {
-			
-			String name = Utils.APP_FOLDER + "/" + fileName;
-			
-			BufferedReader reader;
-			BufferedReader rd = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
-			
-			String line = rd.readLine();
-			
-			rd.close();
-			
-			if (line.toLowerCase().contains("windows-1251"))
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "windows-1251")); //Cp1252
-			else if (line.toLowerCase().contains("utf-8"))
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "UTF-8")); 
-			else if (line.toLowerCase().contains("utf-16"))
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "utf-16"));
-			else
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
 
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
-			factory.setNamespaceAware(true);         
+			String name = Utils.APP_FOLDER + "/" + fileName;
+
+			BufferedReader reader;
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					new FileInputStream(name)));
+
+			String line = rd.readLine();
+
+			rd.close();
+
+			if (line.toLowerCase().contains("windows-1251"))
+				reader = new BufferedReader(new InputStreamReader(
+						new FileInputStream(name), "windows-1251")); // Cp1252
+			else if (line.toLowerCase().contains("utf-8"))
+				reader = new BufferedReader(new InputStreamReader(
+						new FileInputStream(name), "UTF-8"));
+			else if (line.toLowerCase().contains("utf-16"))
+				reader = new BufferedReader(new InputStreamReader(
+						new FileInputStream(name), "utf-16"));
+			else
+				reader = new BufferedReader(new InputStreamReader(
+						new FileInputStream(name)));
+
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
 			XmlPullParser parser = factory.newPullParser();
-			
+
 			parser.setInput(reader);
-			
-			int eventType = parser.getEventType();         
+
+			int eventType = parser.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {
 
-				if(eventType == XmlPullParser.START_DOCUMENT) {} 
-				else if(eventType == XmlPullParser.END_TAG) {
-					if(parser.getName().equals("children")){
+				if (eventType == XmlPullParser.START_DOCUMENT) {
+				} else if (eventType == XmlPullParser.END_TAG) {
+					if (parser.getName().equals("children")) {
 						currentGroup = null;
 					}
-				}
-				else if(eventType == XmlPullParser.START_TAG) {
-					
-					if(parser.getName() == null);
-					else if(parser.getName().equals("main")){
-						
+				} else if (eventType == XmlPullParser.START_TAG) {
+
+					if (parser.getName() == null)
+						;
+					else if (parser.getName().equals("main")) {
+
 						int duration = 0;
 						if (parser.getAttributeValue(null, "duration") != null)
-						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
-						
-						main = new Record(parser.getAttributeValue(null, "name"),
-							parser.getAttributeValue(null, "text"),
-										  Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
-							duration);
-							
-						soundNextName = parser.getAttributeValue(null, "soundNextName");
-						soundNextGroupUri = parser.getAttributeValue(null, "soundNextGroupUri");
-						soundNextGroupOn = Boolean.parseBoolean( parser.getAttributeValue(null, "soundNextGroupOn"));
-						countBeforeTheEnd = Boolean.parseBoolean( parser.getAttributeValue(null, "countBeforeTheEnd"));
+							duration = Integer.parseInt(parser
+									.getAttributeValue(null, "duration"));
+
+						main = new Record(
+								parser.getAttributeValue(null, "name"),
+								parser.getAttributeValue(null, "text"),
+								Boolean.parseBoolean(parser.getAttributeValue(
+										null, "rest")), duration);
+
+						soundNextName = parser.getAttributeValue(null,
+								"soundNextName");
+						soundNextGroupUri = parser.getAttributeValue(null,
+								"soundNextGroupUri");
+						soundNextGroupOn = Boolean.parseBoolean(parser
+								.getAttributeValue(null, "soundNextGroupOn"));
+						countBeforeTheEnd = Boolean.parseBoolean(parser
+								.getAttributeValue(null, "countBeforeTheEnd"));
 						pathToMp3 = parser.getAttributeValue(null, "pathToMp3");
-						playMusic = Boolean.parseBoolean( parser.getAttributeValue(null, "playMusic"));
-						music_quieter = Boolean.parseBoolean( parser.getAttributeValue(null, "music_quieter"));
-						expand_text = Boolean.parseBoolean( parser.getAttributeValue(null, "expand_text"));
-						speach_descr = Boolean.parseBoolean( parser.getAttributeValue(null, "speach_descr"));
-						locked = Boolean.parseBoolean( parser.getAttributeValue(null, "locked"));
-						
-					}
-						else if(parser.getName().equals("children")){
+						playMusic = Boolean.parseBoolean(parser
+								.getAttributeValue(null, "playMusic"));
+						music_quieter = Boolean.parseBoolean(parser
+								.getAttributeValue(null, "music_quieter"));
+						expand_text = Boolean.parseBoolean(parser
+								.getAttributeValue(null, "expand_text"));
+						speach_descr = Boolean.parseBoolean(parser
+								.getAttributeValue(null, "speach_descr"));
+						locked = Boolean.parseBoolean(parser.getAttributeValue(
+								null, "locked"));
+
+					} else if (parser.getName().equals("children")) {
 						currentGroup = record;
-						listDataChild.put(currentGroup, new ArrayList<Record>());
-					}
-					else if(parser.getName().equals("record")){
-						
+						listDataChild
+								.put(currentGroup, new ArrayList<Record>());
+					} else if (parser.getName().equals("record")) {
+
 						int duration = 0;
 						if (parser.getAttributeValue(null, "duration") != null)
-						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
-						
-						record = new Record(parser.getAttributeValue(null, "name"),
-							parser.getAttributeValue(null, "text"),
-							Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
-							duration);
-						
-						if (currentGroup != null){
+							duration = Integer.parseInt(parser
+									.getAttributeValue(null, "duration"));
+
+						record = new Record(parser.getAttributeValue(null,
+								"name"),
+								parser.getAttributeValue(null, "text"),
+								Boolean.parseBoolean(parser.getAttributeValue(
+										null, "rest")), duration);
+
+						if (currentGroup != null) {
 							listDataChild.get(currentGroup).add(record);
 						} else {
 							listDataHeader.add(record);
 						}
-						
+
 					}
-				} 
-				
+				}
+
 				try {
 					eventType = parser.next();
-				}
-				catch (XmlPullParserException  e) {
+				} catch (XmlPullParserException e) {
 				}
 			}
-			
-					
+
 		} catch (Throwable t) {
-			Toast.makeText(mContext, mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString(), Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					mContext,
+					mContext.getResources().getString(R.string.error_load_xml)
+							+ ". " + t.toString(), Toast.LENGTH_LONG).show();
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -328,36 +321,36 @@ public class Programm {
 
 	public static void deleteRecord(Record selectedRecord) {
 		Record parent = null;
-		
+
 		listDataHeader.remove(selectedRecord);
-		
+
 		if (listDataChild.get(selectedRecord) != null)
 			listDataChild.remove(selectedRecord);
 		else {
-			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
-	            for (Record r : entry.getValue())
-	            	if (r == selectedRecord){
-	            		parent = entry.getKey();
-	            		entry.getValue().remove(r);
-	            		break;
-	            	}
-			
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
+				for (Record r : entry.getValue())
+					if (r == selectedRecord) {
+						parent = entry.getKey();
+						entry.getValue().remove(r);
+						break;
+					}
+
 		}
-		
-		summDurations(parent);		
+
+		summDurations(parent);
 	}
 
 	public static Record addCHildRecord(Record selectedRecord) {
 		Record record = new Record("New record");
-		
-		if (listDataChild.get(selectedRecord) == null){
+
+		if (listDataChild.get(selectedRecord) == null) {
 			ArrayList<Record> newArray = new ArrayList<Record>();
 			newArray.add(record);
 			listDataChild.put(selectedRecord, newArray);
 		} else {
 			listDataChild.get(selectedRecord).add(record);
 		}
-		
+
 		return null;
 	}
 
@@ -365,68 +358,67 @@ public class Programm {
 		try {
 
 			summDurationsAll();
-			
+
 			File file = new File(Utils.APP_FOLDER);
-			if(!file.exists()){                          
-				file.mkdirs();                  
+			if (!file.exists()) {
+				file.mkdirs();
 			}
 			file = new File(Utils.APP_FOLDER, fileName);
-			
-			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 
-			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>"+"\n");
-			writer.write("<body>"+"\n");
+			Writer writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(file), "UTF-8"));
 
-			writer.write("<main name=\""
-					 +main.getName()+"\""
-					 +" text=\""+main.getText()+"\""
-					 +" duration=\""+main.getDuration()+"\""
-					 +" soundNextGroupOn=\""+soundNextGroupOn+"\""
-					 +" soundNextName=\""+soundNextName+"\""
-					 +" soundNextGroupUri=\""+soundNextGroupUri+"\""
-					 +" countBeforeTheEnd=\""+countBeforeTheEnd+"\""
-					 +" pathToMp3=\""+pathToMp3+"\""
-					 +" playMusic=\""+playMusic+"\""
-						+" music_quieter=\""+music_quieter+"\""
-					+" expand_text=\""+expand_text+"\""
-					+" locked=\""+locked+"\""
-			
-			
-					 +">"+"\n");
-			writer.write("</main>"+"\n");
-			
-			for (Record r: listDataHeader){
-				writer.write("<record name=\""
-						 +r.getName()+"\""
-						 +" text=\""+r.getText()+"\""
-						 +" duration=\""+r.getDuration()+"\""
-						 +">"+"\n");
-				
-				if (listDataChild.get(r) != null){
-					writer.write("<children>"+"\n");
-					for (Record l: listDataChild.get(r)){
-						writer.write("<record name=\""
-								 +l.getName()+"\""
-								 +" text=\""+l.getText()+"\""
-								+" rest=\""+l.isRest()+"\""
-								 +" duration=\""+l.getDuration()+"\""
-								 +">"+"\n");
-						writer.write("</record>"+"\n");
+			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
+			writer.write("<body>" + "\n");
+
+			writer.write("<main name=\"" + main.getName() + "\"" + " text=\""
+					+ main.getText() + "\"" + " duration=\""
+					+ main.getDuration() + "\"" + " soundNextGroupOn=\""
+					+ soundNextGroupOn + "\"" + " soundNextName=\""
+					+ soundNextName + "\"" + " soundNextGroupUri=\""
+					+ soundNextGroupUri + "\"" + " countBeforeTheEnd=\""
+					+ countBeforeTheEnd + "\"" + " pathToMp3=\"" + pathToMp3
+					+ "\"" + " playMusic=\"" + playMusic + "\""
+					+ " music_quieter=\"" + music_quieter + "\""
+					+ " expand_text=\"" + expand_text + "\""
+					+ " speach_descr=\"" + speach_descr + "\""					
+					+ " locked=\""+ locked + "\""
+					+ ">" + "\n");
+			writer.write("</main>" + "\n");
+
+			for (Record r : listDataHeader) {
+				writer.write("<record name=\"" + r.getName() + "\""
+						+ " text=\"" + r.getText() + "\"" + " duration=\""
+						+ r.getDuration() + "\"" + ">" + "\n");
+
+				if (listDataChild.get(r) != null) {
+					writer.write("<children>" + "\n");
+					for (Record l : listDataChild.get(r)) {
+						writer.write("<record name=\"" + l.getName() + "\""
+								+ " text=\"" + l.getText() + "\"" + " rest=\""
+								+ l.isRest() + "\"" + " duration=\""
+								+ l.getDuration() + "\"" + ">" + "\n");
+						writer.write("</record>" + "\n");
 					}
-					writer.write("</children>"+"\n");
+					writer.write("</children>" + "\n");
 				}
-				writer.write("</record>"+"\n");
+				writer.write("</record>" + "\n");
 			}
-			
-			writer.write("</body>"+"\n");
+
+			writer.write("</body>" + "\n");
 
 			writer.close();
-			//Toast.makeText(mContext,
-				//	mContext.getResources().getString(R.string.file_saved)+" "+fileName, Toast.LENGTH_LONG)
-					//.show();
+			// Toast.makeText(mContext,
+			// mContext.getResources().getString(R.string.file_saved)+" "+fileName,
+			// Toast.LENGTH_LONG)
+			// .show();
 		} catch (IOException e) {
-			//Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
-			Toast.makeText(mContext, mContext.getResources().getString(R.string.error_saving_file) +" "+e , Toast.LENGTH_LONG).show();
+			// Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
+			Toast.makeText(
+					mContext,
+					mContext.getResources().getString(
+							R.string.error_saving_file)
+							+ " " + e, Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;
@@ -438,261 +430,315 @@ public class Programm {
 
 	public static void summDurations(Record record) {
 
-		if (record != null){
+		if (record != null) {
 			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) {
-				if (entry.getValue().contains(record)||
-					record == null){
-		            Record group = entry.getKey();
-		            long duration = 0;
-		            
-		            for (Record r : entry.getValue() )
-		            	duration = duration + r.getDuration();
-		            group.setDuration(duration);
-		        }
-		    }
+				if (entry.getValue().contains(record) || record == null) {
+					Record group = entry.getKey();
+					long duration = 0;
+
+					for (Record r : entry.getValue())
+						duration = duration + r.getDuration();
+					group.setDuration(duration);
+				}
+			}
 		}
-        //
-        // Calculate total duration
-        //
-        long duration = 0;
-		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
-            for (Record r : entry.getValue() )
-            	duration = duration + r.getDuration();
-		main.setDuration(duration);		
+		//
+		// Calculate total duration
+		//
+		long duration = 0;
+		for (Record group : listDataHeader) 
+				duration = duration + group.getDuration();
+		main.setDuration(duration);
 	}
 
 	public static void summDurationsAll() {
 
 		for (Record group : listDataHeader) {
 			long duration = 0;
-			int childCount = 0; 
-			
+			int childCount = 0;
+
 			if (listDataChild.get(group) != null)
-				for (Record r : listDataChild.get(group)){ 
+				for (Record r : listDataChild.get(group)) {
 					duration = duration + r.getDuration();
 					childCount++;
-				}	
-			
+				}
+
 			if (childCount > 0)
 				group.setDuration(duration);
 		}
-		
-        //
-        // Calculate total duration
-        //
-        long duration = 0;
-
-		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
-            	duration = duration + entry.getKey().getDuration();
-        Log.d("a","d "+duration);
-		main.setDuration(duration);		
+		//
+		// Calculate total duration
+		//
+		long duration = 0;
+		for (Record group : listDataHeader) 
+				duration = duration + group.getDuration();
+		main.setDuration(duration);
 	}
 
 	public static Record addRecord(Record newRecord, Record currentRecord) {
-		if (newRecord == null) 
+		if (newRecord == null)
 			newRecord = new Record("new record");
-		
+
 		if (currentRecord == null)
 			listDataHeader.add(newRecord);
-		else if (listDataHeader.indexOf(currentRecord) >= 0){
-			if (currentRecord == null){
+		else if (listDataHeader.indexOf(currentRecord) >= 0) {
+			if (currentRecord == null) {
 				listDataHeader.add(newRecord);
 			} else {
-				listDataHeader.add(listDataHeader.indexOf(currentRecord)+1, newRecord);
+				listDataHeader.add(listDataHeader.indexOf(currentRecord) + 1,
+						newRecord);
 			}
 		} else {
-			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
 				if (entry.getValue().contains(currentRecord))
-					entry.getValue().add(entry.getValue().indexOf(currentRecord)+1, newRecord);
-											
+					entry.getValue().add(
+							entry.getValue().indexOf(currentRecord) + 1,
+							newRecord);
+
 		}
-		
+
 		return newRecord;
 	}
 
 	public static Record copyRecord(Record currentRecord) {
-		
+
 		Record record = new Record("New record");
 		record.mName = currentRecord.mName;
 		record.setText(currentRecord.getText());
 		record.setDuration(currentRecord.getDuration());
-		
-		if (listDataHeader.indexOf(currentRecord) > 0){
+
+		if (listDataHeader.indexOf(currentRecord) > 0) {
 			listDataHeader.add(record);
 		} else {
-			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
 				if (entry.getValue().contains(currentRecord))
 					entry.getValue().add(record);
-											
+
 		}
-		
-		
+
 		return record;
 	}
 
 	public static Record getGroup(Record record) {
-		
-		for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
 			if (entry.getValue().contains(record))
 				return entry.getKey();
-		
+
 		return record;
 	}
 
 	public static void setNextGroupSignal(boolean checked, String string1,
 			String string2) {
 
-		soundNextGroupOn = checked; 
-		soundNextName = string1; 
-		soundNextGroupUri = string2; 
-		
+		soundNextGroupOn = checked;
+		soundNextName = string1;
+		soundNextGroupUri = string2;
+
 	}
 
 	public static void setCountBeforeTheEnd(boolean checked) {
-		countBeforeTheEnd = checked; 
+		countBeforeTheEnd = checked;
 	}
 
 	public static void setPlayMusic(boolean checked) {
-		playMusic = checked; 
+		playMusic = checked;
 	}
 
 	public static void setPathToMp3(String param) {
-		pathToMp3 = param; 
+		pathToMp3 = param;
 	}
 
 	public static long getTimeBefore(Record record) {
 		long time = 0;
-		
-		for (Record o : listDataHeader){
+
+		for (Record o : listDataHeader) {
 			List<Record> entry = listDataChild.get(o);
 			if (entry != null)
-				for (Record r : entry){
-					if (r == record) return time;
-					else time = time + r.getDuration();
-				}	
-			
-		}	
-		
+				for (Record r : entry) {
+					if (r == record)
+						return time;
+					else
+						time = time + r.getDuration();
+				}
+
+		}
+
 		return time;
 	}
 
 	public static Record pasteRecord(Record copyRecord, Record selectedRecord) {
 
 		Record record = new Record(copyRecord);
-		
-		if (listDataHeader.indexOf(selectedRecord) >= 0){
-			listDataHeader.add(listDataHeader.indexOf(selectedRecord)+1, record);
+
+		if (listDataHeader.indexOf(selectedRecord) >= 0) {
+			listDataHeader.add(listDataHeader.indexOf(selectedRecord) + 1,
+					record);
 		} else {
-			for (Entry<Record, List<Record>> entry : listDataChild.entrySet()) 
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
 				if (entry.getValue().contains(selectedRecord))
-					entry.getValue().add(entry.getValue().indexOf(selectedRecord)+1 , record);
-											
+					entry.getValue().add(
+							entry.getValue().indexOf(selectedRecord) + 1,
+							record);
+
 		}
-		
+
 		return record;
 	}
 
 	public static void loadXMLrecords(Context mContext,
 			ArrayList<Record> records) {
-		
-		records.clear();
-        File dir = new File(Utils.APP_FOLDER +"/"); 
-        File[] files = dir.listFiles();
-        
-        if (files != null )
-            for (int i=0; i<files.length; i++){
-            	if (files[i].getName().endsWith(".xml")){
-            		try {
-            			String name = Utils.APP_FOLDER +"/"+files[i].getName();
-            			
-            			BufferedReader reader;
-            			BufferedReader rd = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
-            			
-            			String line = rd.readLine();
-            			
-            			rd.close();
-            			
-            			if (line.toLowerCase().contains("windows-1251"))
-            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "windows-1251")); //Cp1252
-            			else if (line.toLowerCase().contains("utf-8"))
-            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "UTF-8")); 
-            			else if (line.toLowerCase().contains("utf-16"))
-            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "utf-16"));
-            			else
-            				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
 
-            			XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
-            			factory.setNamespaceAware(true);         
-            			XmlPullParser parser = factory.newPullParser();
-            			
-            			parser.setInput(reader);
-            			
-            			int eventType = parser.getEventType();         
-            			while (eventType != XmlPullParser.END_DOCUMENT) {
-            				if(eventType == XmlPullParser.START_TAG) {
-            					if(parser.getName().equals("record")){
-            						
-            						int duration = 0;
-            						if (parser.getAttributeValue(null, "duration") != null)
-            						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
-            						
-            						Record record = new Record(parser.getAttributeValue(null, "name"),
-            							parser.getAttributeValue(null, "text"),
-            							Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
-            							duration);
-            						
-            						if (record.getText() != null && record.getText().length() > 0){
-                						boolean found = false;
-                						for (Record r: records)
-                							if (r.mName.equals(record.mName)){
-                								found = true;
-                								break;
-                							}
-                						
-                						if (!found)
-                							records.add(record);
-            						}
-            						
-            					}
-            				} 
-            				
-            				try {
-            					eventType = parser.next();
-            				}
-            				catch (XmlPullParserException  e) {
-            				}
-            			}
-            		} catch (Throwable t) {
-            		}
-            	}
-        	}	
+		records.clear();
+		File dir = new File(Utils.APP_FOLDER + "/");
+		File[] files = dir.listFiles();
+
+		if (files != null)
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].getName().endsWith(".xml")) {
+					try {
+						String name = Utils.APP_FOLDER + "/"
+								+ files[i].getName();
+
+						BufferedReader reader;
+						BufferedReader rd = new BufferedReader(
+								new InputStreamReader(new FileInputStream(name)));
+
+						String line = rd.readLine();
+
+						rd.close();
+
+						if (line.toLowerCase().contains("windows-1251"))
+							reader = new BufferedReader(new InputStreamReader(
+									new FileInputStream(name), "windows-1251")); // Cp1252
+						else if (line.toLowerCase().contains("utf-8"))
+							reader = new BufferedReader(new InputStreamReader(
+									new FileInputStream(name), "UTF-8"));
+						else if (line.toLowerCase().contains("utf-16"))
+							reader = new BufferedReader(new InputStreamReader(
+									new FileInputStream(name), "utf-16"));
+						else
+							reader = new BufferedReader(new InputStreamReader(
+									new FileInputStream(name)));
+
+						XmlPullParserFactory factory = XmlPullParserFactory
+								.newInstance();
+						factory.setNamespaceAware(true);
+						XmlPullParser parser = factory.newPullParser();
+
+						parser.setInput(reader);
+
+						int eventType = parser.getEventType();
+						while (eventType != XmlPullParser.END_DOCUMENT) {
+							if (eventType == XmlPullParser.START_TAG) {
+								if (parser.getName().equals("record")) {
+
+									int duration = 0;
+									if (parser.getAttributeValue(null,
+											"duration") != null)
+										duration = Integer.parseInt(parser
+												.getAttributeValue(null,
+														"duration"));
+
+									Record record = new Record(
+											parser.getAttributeValue(null,
+													"name"),
+											parser.getAttributeValue(null,
+													"text"),
+											Boolean.parseBoolean(parser
+													.getAttributeValue(null,
+															"rest")), duration);
+
+									if (record.getText() != null
+											&& record.getText().length() > 0) {
+										boolean found = false;
+										for (Record r : records)
+											if (r.mName.equals(record.mName)) {
+												found = true;
+												break;
+											}
+
+										if (!found)
+											records.add(record);
+									}
+
+								}
+							}
+
+							try {
+								eventType = parser.next();
+							} catch (XmlPullParserException e) {
+							}
+						}
+					} catch (Throwable t) {
+					}
+				}
+			}
 		Utils.sortR(records);
+	}
+
+	public static boolean loadXMLInfo(Context mContext, String fileName, FileData fileData) {
+
+		try {
+			String name = Utils.APP_FOLDER + "/" + fileName;
+
+			BufferedReader reader;
+			reader = new BufferedReader(new InputStreamReader(
+					new FileInputStream(name)));
+
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			XmlPullParser parser = factory.newPullParser();
+
+			parser.setInput(reader);
+
+			int eventType = parser.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+				if (eventType == XmlPullParser.START_TAG) {
+					if (parser.getName().equals("main")){
+						fileData.locked = Boolean.parseBoolean(parser.getAttributeValue(null, "locked"));
+						fileData.duration = 0;
+						if (parser.getAttributeValue(null, "duration") != null)
+							fileData.duration = Integer.parseInt(parser
+									.getAttributeValue(null, "duration"));
+						return true;
+					}
+				}
+				try {
+					eventType = parser.next();
+				} catch (XmlPullParserException e) {
+				}
+			}
+		} catch (Throwable t) {
+		}
+		
+		return false;
 	}
 
 	public static long getDurationRest(Record record) {
 		long past = 0;
-		
-		for (Record r : listDataHeader){
-			
+
+		for (Record r : listDataHeader) {
+
 			List<Record> l = listDataChild.get(r);
-			if (l != null){
-				for(Record p: l){
+			if (l != null) {
+				for (Record p : l) {
 					if (p == record)
 						return main.getDuration() - past;
-					else { 
+					else {
 						past = past + p.getDuration();
 					}
 				}
 			} else {
 				if (r == record)
 					return main.getDuration() - past;
-				else { 
+				else {
 					past = past + r.getDuration();
 				}
 			}
 		}
-		
+
 		return 0;
-	}	
-}
+	}
 	
+}

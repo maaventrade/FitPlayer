@@ -61,7 +61,8 @@ public class AdapterFiles extends BaseAdapter {
 		
 		TextView textViewName = (TextView)convertView.findViewById(R.id.TextViewName);
 		TextView TextViewDate = (TextView)convertView.findViewById(R.id.TextViewDate);
-		
+		ImageView ivLocked =  (ImageView)convertView.findViewById(R.id.ivLocked);
+		TextView tvDuration = (TextView)convertView.findViewById(R.id.tvDuration);
 		
 		ImageButton brnGo = (ImageButton)convertView.findViewById(R.id.imageButtonGo);
 		brnGo.setOnClickListener(new OnClickListener(){
@@ -85,8 +86,16 @@ public class AdapterFiles extends BaseAdapter {
 		
 		
     	textViewName.setText(mObjects.get(position));
-		TextViewDate.setText(Utils.getFileDateTime(mObjects.get(position), mContext));
-		
+    	TextViewDate.setText(Utils.getFileDateTime(mObjects.get(position), mContext));
+
+    	FileData fileData = Utils.getFileData(mContext, mObjects.get(position));
+    	tvDuration.setText(Utils.MStoString(fileData.duration));
+    	
+		if (fileData.locked)
+			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.lock));
+		else
+			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));
+
 		return convertView;
 	}
 }

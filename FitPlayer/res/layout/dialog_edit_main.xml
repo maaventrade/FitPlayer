@@ -6,6 +6,37 @@
 	android:orientation="vertical">
 
 	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="0.25"
+	    android:orientation="horizontal" >
+
+	    <Button
+	        android:id="@+id/dialogeditButtonOk"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.5"
+	        android:drawableLeft="@drawable/ok"
+	        android:selectAllOnFocus="@bool/select_all"
+	        android:text="@string/ok" />
+
+	    <Button
+	        android:id="@+id/dialogeditButtonCancel"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.5"
+	        android:text="@string/cancel" />
+
+	    <Button
+	        android:id="@+id/dialogeditButtonLockUnlock"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.5"
+	        android:text="@string/lock" />
+	</LinearLayout>
+
+    
+	<LinearLayout
 		android:id="@+id/layoutName"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -83,7 +114,7 @@
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 		<Button
-			android:id="@+id/buttonSelectMusicPath"
+			android:id="@+id/btnSelectMusicPath"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="..."
@@ -123,36 +154,6 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/expand_text"/>
-
-	
-
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="horizontal">
-
-		<Button
-			android:id="@+id/dialogeditButtonOk"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.5"
-			android:selectAllOnFocus="@bool/select_all"
-			android:text="@string/ok"/>
-
-		<Button
-			android:layout_height="wrap_content"
-			android:text="@string/cancel"
-			android:layout_weight="0.5"
-			android:layout_width="match_parent"
-			android:id="@+id/dialogeditButtonCancel"/>
-
-		<Button
-			android:layout_height="wrap_content"
-			android:id="@+id/dialogeditButtonLockUnlock"
-			android:text="@string/lock"
-			android:layout_width="wrap_content"/>
-
-	</LinearLayout>
 
 </LinearLayout>
 

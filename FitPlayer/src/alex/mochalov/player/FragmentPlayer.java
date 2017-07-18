@@ -1,5 +1,6 @@
 package alex.mochalov.player;
 
+import alex.mochalov.editor.DialogEditMain;
 import alex.mochalov.fitplayer.*;
 import alex.mochalov.record.*;
 import android.app.*;
@@ -56,6 +57,8 @@ public class FragmentPlayer extends Fragment
 	private boolean mWaiting = false;
 
 	private LinearLayout linearLayoutExpand;
+	
+	private DialogEditMain dialogEditMain;
 
 	public FragmentPlayer(Activity context){
 		super();
@@ -198,9 +201,11 @@ public class FragmentPlayer extends Fragment
     					    }
     					});				
     					//imageViewSound.setVisibility(View.VISIBLE);
-    					
-    					TtsUtils.speak(record.getText(), "text",  
-    						Programm.isMusic_quieter(), true);
+    					if (Programm.isSpeach_descr())
+        					TtsUtils.speak(record.getText(), "text",  
+            						Programm.isMusic_quieter(), true);
+    					else
+        					timerHandler.postDelayed(timerRunnable, 0); 
     				} else if (param.equals("text")){
     					timerHandler.postDelayed(timerRunnable, 0); 
     				}
@@ -217,8 +222,14 @@ public class FragmentPlayer extends Fragment
 	protected void setTextViewGroup(Record record) {
 
 		Record group = Programm.getGroup(record);
-		textViewName.setText(group.getName());
-		textViewText.setText(group.getText());
+		
+		if (record != group){
+			textViewName.setText(group.getName());
+			textViewText.setText(group.getText());
+		} else {
+			textViewName.setText("");
+			textViewText.setText("");
+		}
 		
 	}
 
@@ -380,6 +391,21 @@ public class FragmentPlayer extends Fragment
 				getActivity().onBackPressed();
 				return true;
             case R.id.action_settings:
+				return true;
+            case R.id.action_parameters:
+            	final boolean music = Programm.isPlayMusicOn();
+            	dialogEditMain = new DialogEditMain(mContext, Programm
+						.getMainRecord(), true);
+				dialogEditMain.callback = new DialogEditMain.MyCallback() {
+					@Override
+					public void callbackOk() {
+						if (music != Programm.isPlayMusicOn())
+							Media.restart(mContext, true);
+					}
+				};
+
+				dialogEditMain.show();
+            	
 				return true;
 			case R.id.action_repeat:
 				repeat = !repeat;

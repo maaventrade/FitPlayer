@@ -1,7 +1,9 @@
 package alex.mochalov.fitplayer;
 
 import alex.mochalov.record.*;
+import android.app.Activity;
 import android.content.*;
+import android.graphics.drawable.Drawable;
 import android.os.*;
 import android.util.*;
 import android.webkit.*;
@@ -189,102 +191,6 @@ public class Utils {
         Collections.sort(programms, fnc);
 	}
 	
-	public static Record loadXML(Context mContext, String name) {
-		Record mainFolder = null; 
-		Record currentFolder = null; 
-		Record record = null; 
-		//strings.clear();
-		/*
-		 * try { progressDialog.setMax(Utils.countLines(name)); } catch
-		 * (IOException e) { progressDialog.setMax(0); }
-		 * progressDialog.setProgress(0);
-		 */
-		try {
-			
-			name = APP_FOLDER + "/" + name;
-			
-			Log.d("a","start "+name);
-			BufferedReader reader;
-			BufferedReader rd = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
-			
-			String line = rd.readLine();
-			
-			rd.close();
-			
-			if (line.toLowerCase().contains("windows-1251"))
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "windows-1251")); //Cp1252
-			else if (line.toLowerCase().contains("utf-8"))
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "UTF-8")); 
-			else if (line.toLowerCase().contains("utf-16"))
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name), "utf-16"));
-			else
-				reader = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
-
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
-			factory.setNamespaceAware(true);         
-			XmlPullParser parser = factory.newPullParser();
-			
-			parser.setInput(reader);
-			
-			int eventType = parser.getEventType();         
-			while (eventType != XmlPullParser.END_DOCUMENT) {
-
-				if(eventType == XmlPullParser.START_DOCUMENT) {} 
-				else if(eventType == XmlPullParser.END_TAG) {
-					if(parser.getName() == "children")
-						currentFolder = null;
-				}
-				else if(eventType == XmlPullParser.START_TAG) {
-					//Log.d("", "START "+parser.getName());
-					
-					if(parser.getName() == null);
-					else if(parser.getName().equals("children")){
-						currentFolder = record;
-						//Log.d("","currentFolder "+currentFolder);
-					}
-					else if(parser.getName().equals("record")){
-						
-						int duration = 0;
-						if (parser.getAttributeValue(null, "duration") != null)
-						duration = Integer.parseInt(parser.getAttributeValue(null, "duration"));
-						
-						record = new Record(parser.getAttributeValue(null, "name"),
-							parser.getAttributeValue(null, "text"),
-							Boolean.parseBoolean( parser.getAttributeValue(null, "rest")),
-							duration);
-						
-						if (mainFolder == null){
-							mainFolder = record;
-							//Log.d("","mainFolder "+mainFolder);
-						}
-						
-						if (currentFolder != null){
-							//Log.d("","currentFolder add "+currentFolder);
-							//currentFolder.addRecord(record);
-						}
-						//Log.d("", "name "+parser.getAttributeValue(null, "name"));
-						//Log.d("", "text "+parser.getAttributeValue(null, "text"));
-						//Log.d("", "duration "+parser.getAttributeValue(null, "duration"));
-						//mainFolder.addRecord(parser.getAttributeValue(null, "name"),
-						//		parser.getAttributeValue(null, "text"),
-						//		Integer.parseInt(parser.getAttributeValue(null, "duration")));
-					}
-				} 
-				
-				try {
-					eventType = parser.next();
-				}
-				catch (XmlPullParserException  e) {
-				}
-			}
-			
-					
-		} catch (Throwable t) {
-			Toast.makeText(mContext, mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString(), Toast.LENGTH_LONG).show();
-		}
-		return mainFolder;
-	}
-
 	public static String MStoString(long l) {
 		int d1 = (int)(l/60000);
 		int d2 = (int)l/1000 - (int)(l/60000) * 60;
@@ -311,6 +217,13 @@ public class Utils {
 
 		RecordNameComparator fnc = new RecordNameComparator();
         Collections.sort(records, fnc);
+	}
+
+	public static FileData getFileData(Activity mContext, String string) {
+		FileData fileData = new FileData();
+		Programm.loadXMLInfo(mContext, string, fileData);
+		
+		return fileData;
 	}
 
 	

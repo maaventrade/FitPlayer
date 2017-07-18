@@ -26,7 +26,6 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	
 	private Button btnOk;
 	private Button btnCancel;
-	private ImageButton dialogeditButtonOk1;
 	private Button buttonSelect;
 	
 	private CheckBox itIsTheRest;
@@ -59,18 +58,17 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.dialog_edit);
 		
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
               WindowManager.LayoutParams.MATCH_PARENT);
 		
-		TextView title = (TextView)findViewById(R.id.textViewTitle);
 		if (newRecord)
-			title.setText(mContext.getResources().getString(R.string.title_add));
+			this.setTitle(mContext.getResources().getString(R.string.title_add));
 		else
-			title.setText(mContext.getResources().getString(R.string.title_edit));
+			this.setTitle(mContext.getResources().getString(R.string.title_edit));
 		
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(record.getName());
@@ -131,9 +129,6 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			}
 		}
 		
-		dialogeditButtonOk1 = (ImageButton)findViewById(R.id.dialogeditButtonOk1);
-		dialogeditButtonOk1.setOnClickListener(this);
-		
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
 		btnOk.setOnClickListener(this);
 		
@@ -147,7 +142,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 
 	@Override
 	public void onClick(View v) {
-		if (v == dialogeditButtonOk1 || v == btnOk){
+		if (v == btnOk){
 			record.setName(name.getText());
 			record.setText(text.getText());
 			record.setRest(itIsTheRest.isChecked());

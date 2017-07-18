@@ -22,14 +22,15 @@ public class DialogEditMain extends Dialog
 	private Dialog dialog;
 
 	private Record record;
-	private boolean mIsGroup;
+	private boolean mTune;
 	
 	private EditText name;
 	private EditText text;
 	
 	private Button btnOk;
 	private Button btnCancel;
-	private Button buttonSelectMusicPath;
+	private Button btnSelectMusicPath;
+	private Button btnLockUnlock;
 	
 	//private TextView textViewSignal;
 	/*
@@ -46,19 +47,19 @@ public class DialogEditMain extends Dialog
 	
 	private MediaPlayer mp;
 
-	MyCallback callback = null;
-	interface MyCallback {
+	public MyCallback callback = null;
+	public interface MyCallback {
 		void callbackOk(); 
 	} 
 	
 	
-	public DialogEditMain(Activity context, Record object, boolean isGroup) {
+	public DialogEditMain(Activity context, Record object, boolean tune) {
 		super(context);
 		mContext = context;
 		dialog = this;
 		
 		record = object;
-		mIsGroup = isGroup;
+		mTune = tune;
 		
 	}
 
@@ -81,8 +82,8 @@ public class DialogEditMain extends Dialog
 		text.setText(record.getText());
 
 		textViewPathToMp3 = (TextView)findViewById(R.id.textViewPathToMp3);
-		buttonSelectMusicPath = (Button)findViewById(R.id.buttonSelectMusicPath);
-		buttonSelectMusicPath.setOnClickListener(new Button.OnClickListener(){
+		btnSelectMusicPath = (Button)findViewById(R.id.btnSelectMusicPath);
+		btnSelectMusicPath.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View p1)
 			{
@@ -99,28 +100,15 @@ public class DialogEditMain extends Dialog
 					
 					record.setName(name.getText());
 					record.setText(text.getText());
-/*
-					checkBoxNextGroupSignalOn = (CheckBox)findViewById(R.id.checkBoxNextGroupSignal); 
-					spinnerNextGroup.getSelectedItem().toString();
-					
-					String id = spinnerMap.get(spinnerNextGroup.getSelectedItemPosition());
-		        	RingtoneManager.getRingtone(mContext, Uri.parse(id)).play();
-					
-					Programm.setNextGroupSignal(checkBoxNextGroupSignalOn.isChecked(), 
-								spinnerNextGroup.getSelectedItem().toString(),
-								spinnerMap.get(spinnerNextGroup.getSelectedItemPosition()));
-*/
+
 					countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
 					Programm.setCountBeforeTheEnd(countBeforeTheEnd.isChecked());
-					
 		
 					Programm.setExpand_text(expand_text.isChecked());
 							
-					//playMusic = (CheckBox)findViewById(R.id.playMusic); 
 					Programm.setPlayMusic(playMusic.isChecked());
 					
 					Programm.setPathToMp3(textViewPathToMp3.getText().toString());
-					
 
 					Programm.setMusic_quieter(music_quieter.isChecked());
 					
@@ -142,7 +130,7 @@ public class DialogEditMain extends Dialog
 				}
 			});
 		
-		Button btnLockUnlock = (Button)findViewById(R.id.dialogeditButtonLockUnlock);
+		btnLockUnlock = (Button)findViewById(R.id.dialogeditButtonLockUnlock);
 		btnLockUnlock.setOnClickListener(new Button.OnClickListener(){
 				@Override
 				public void onClick(View p1)
@@ -155,45 +143,6 @@ public class DialogEditMain extends Dialog
 				}
 			});
 			
-		/*
-		spinnerNextGroup = (Spinner)findViewById(R.id.spinnerNextGroup);
-		
-		RingtoneManager manager = new RingtoneManager(mContext);
-	    manager.setType(RingtoneManager.TYPE_NOTIFICATION); //TYPE_NOTIFICATION //TYPE_ALARM
-	    Cursor cursor = manager.getCursor();
-
-	    spinnerArray = new String[cursor.getCount()];
-	    spinnerMap = new HashMap<Integer, String>();
-	    
-	    //Map<String, String> list = new HashMap<>();
-	    int i = 0;
-	    while (cursor.moveToNext()) {
-
-	    	int currentPosition = cursor.getPosition();
-	        String notificationTitle = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
-
-	        spinnerMap.put(i, manager.getRingtoneUri(currentPosition).toString());
-	        spinnerArray[i] = notificationTitle;
-
-	        i++;
-	    }
-		
-	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, spinnerArray);
-	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    spinnerNextGroup.setAdapter(adapter);
-	    
-	    Button buttonTestSound = (Button)findViewById(R.id.buttonTestSound);
-	    buttonTestSound.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-
-					String id = spinnerMap.get(spinnerNextGroup.getSelectedItemPosition());
-		        	RingtoneManager.getRingtone(mContext, Uri.parse(id)).play();
-					
-				}
-			});
-			*/
 		Button buttonTestMusic = (Button)findViewById(R.id.buttonTestMusic);
 	    buttonTestMusic.setOnClickListener(new Button.OnClickListener(){
 				@Override
@@ -206,7 +155,7 @@ public class DialogEditMain extends Dialog
 				{
 		
 					File dir = new File(path+"/"); 
-ArrayList<String> mp3 = new ArrayList<String>();
+					ArrayList<String> mp3 = new ArrayList<String>();
 					File[] files = dir.listFiles();
 					if (files != null )
 						for (int i=0; i<files.length; i++)
@@ -238,10 +187,6 @@ ArrayList<String> mp3 = new ArrayList<String>();
 			});
 		
 	
-			
-		//checkBoxNextGroupSignalOn = (CheckBox)findViewById(R.id.checkBoxNextGroupSignal); 
-		//checkBoxNextGroupSignalOn.setChecked(Programm.isSoundNextGroupOn());
-
 		countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
 		countBeforeTheEnd.setChecked(Programm.isCountBeforeTheEndOn());
 
@@ -258,14 +203,24 @@ ArrayList<String> mp3 = new ArrayList<String>();
 		music_quieter.setChecked(Programm.isMusic_quieter());
 		
 		speach_descr = (CheckBox)findViewById(R.id.speach_descr); 
-		speach_descr .setChecked(Programm.isMusic_quieter());
+		speach_descr .setChecked(Programm.isSpeach_descr());
 		
-		lockChanged();
+		if (mTune){
+			btnLockUnlock.setVisibility(View.INVISIBLE);
+			
+			LinearLayout layoutName = (LinearLayout)findViewById(R.id.layoutName);
+			layoutName.setVisibility(View.INVISIBLE);
+			
+			LinearLayout layoutText = (LinearLayout)findViewById(R.id.layoutText);
+			layoutText.setVisibility(View.INVISIBLE);
+			
+		} else {
+			lockChanged();
+		}
 	}
 
 	private void lockChanged()
 	{
-		Button btnLockUnlock = (Button)findViewById(R.id.dialogeditButtonLockUnlock);
 		
 		if (Programm.isLocked()){
 			btnLockUnlock.setText(mContext.getResources().getString(R.string.unlock));
@@ -278,7 +233,7 @@ ArrayList<String> mp3 = new ArrayList<String>();
 			speach_descr.setEnabled(false);
 			expand_text.setEnabled(false);
 			
-			buttonSelectMusicPath.setEnabled(false);
+			btnSelectMusicPath.setEnabled(false);
 			btnOk.setEnabled(false);
 			
 		} else {
@@ -292,7 +247,7 @@ ArrayList<String> mp3 = new ArrayList<String>();
 			speach_descr.setEnabled(true);
 			expand_text.setEnabled(true);
 			
-			buttonSelectMusicPath.setEnabled(true);
+			btnSelectMusicPath.setEnabled(true);
 			btnOk.setEnabled(true);
 			
 		}
