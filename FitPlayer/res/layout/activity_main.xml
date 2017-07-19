@@ -6,7 +6,7 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:background="@color/bronze_light2"
-	tools:context="alex.mochalov.fitplayer.MainActivity">
+	tools:context="alex.mochalov.main.MainActivity">
 	
 	<FrameLayout
         android:id="@+id/frgmCont"

@@ -19,7 +19,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import alex.mochalov.fitplayer.R;
-import alex.mochalov.fitplayer.Utils;
+import alex.mochalov.main.Utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -245,7 +245,9 @@ public class Programm {
 								parser.getAttributeValue(null, "name"),
 								parser.getAttributeValue(null, "text"),
 								Boolean.parseBoolean(parser.getAttributeValue(
-										null, "rest")), duration);
+										null, "rest")), duration,
+								Boolean.parseBoolean(parser.getAttributeValue(
+												null, "weight")));
 
 						soundNextName = parser.getAttributeValue(null,
 								"soundNextName");
@@ -282,7 +284,9 @@ public class Programm {
 								"name"),
 								parser.getAttributeValue(null, "text"),
 								Boolean.parseBoolean(parser.getAttributeValue(
-										null, "rest")), duration);
+										null, "rest")), duration,
+								Boolean.parseBoolean(parser.getAttributeValue(
+										null, "weight")));
 
 						if (currentGroup != null) {
 							listDataChild.get(currentGroup).add(record);
@@ -395,9 +399,10 @@ public class Programm {
 					writer.write("<children>" + "\n");
 					for (Record l : listDataChild.get(r)) {
 						writer.write("<record name=\"" + l.getName() + "\""
-								+ " text=\"" + l.getText() + "\"" + " rest=\""
-								+ l.isRest() + "\"" + " duration=\""
-								+ l.getDuration() + "\"" + ">" + "\n");
+								+ " text=\"" + l.getText() + "\"" 
+								+ " rest=\""+ l.isRest() + "\"" 
+								+ " weight=\""+ l.isWeight() + "\"" 
+								+ " duration=\""+ l.getDuration() + "\"" + ">" + "\n");
 						writer.write("</record>" + "\n");
 					}
 					writer.write("</children>" + "\n");
@@ -647,7 +652,10 @@ public class Programm {
 													"text"),
 											Boolean.parseBoolean(parser
 													.getAttributeValue(null,
-															"rest")), duration);
+															"rest")), duration,
+											Boolean.parseBoolean(parser
+														.getAttributeValue(null,
+																"weight")));
 
 									if (record.getText() != null
 											&& record.getText().length() > 0) {

@@ -7,5 +7,6 @@
     -->
     <dimen name="activity_horizontal_margin">12dp</dimen>
     <dimen name="huge_text">160sp</dimen>
+    <dimen name="small_padding">10sp</dimen>
     
 </resources>

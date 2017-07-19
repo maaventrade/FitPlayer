@@ -37,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="12:55"
+                    android:textColor="@drawable/item_text_selector1" 
                     android:textAppearance="?android:attr/textAppearanceLarge" />
             </LinearLayout>
 

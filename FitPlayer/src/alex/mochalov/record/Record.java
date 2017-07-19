@@ -1,6 +1,6 @@
 package alex.mochalov.record;
 
-import alex.mochalov.fitplayer.*;
+import alex.mochalov.main.*;
 import android.content.*;
 import android.text.*;
 import android.util.*;
@@ -16,12 +16,14 @@ public class Record {
 	private long mDuration;
 	private ArrayList<Record> modifications;
 	private boolean mRest;
+	private boolean mWeight;
 
-	public Record(String name, String text, Boolean rest, int duration) {
+	public Record(String name, String text, Boolean rest, int duration, Boolean weight) {
 		mName = name;
 		mText = text;
 		mDuration = duration;
 		mRest = rest;
+		mWeight = weight;
 
 		modifications = new ArrayList<Record>();
 	}
@@ -31,6 +33,7 @@ public class Record {
 		mText = record.mText;
 		mDuration = record.mDuration;
 		mRest = record.mRest;
+		mWeight = record.mWeight;
 
 		//modifications = new ArrayList<Record>();
 	}
@@ -64,6 +67,14 @@ public class Record {
 
 	public boolean isRest() {
 		return mRest;
+	}
+
+	public boolean isWeight() {
+		return mWeight;
+	}
+
+	public void setWeight(boolean weight) {
+		mWeight = weight;
 	}
 
 	public void setRest(boolean rest) {

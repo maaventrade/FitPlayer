@@ -1,6 +1,7 @@
 package alex.mochalov.editor;
 
-import alex.mochalov.fitplayer.*;
+import alex.mochalov.fitplayer.R;
+import alex.mochalov.main.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.database.*;
@@ -9,13 +10,15 @@ import android.net.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+
 import java.io.*;
 import java.util.*;
+
 import android.media.projection.*;
 import android.widget.MediaController.*;
 import android.content.*;
 
-public class DialogEditMain extends Dialog
+public class DialogEditMain extends Dialog implements android.view.View.OnClickListener
 {
 
 	private Activity mContext;
@@ -28,6 +31,7 @@ public class DialogEditMain extends Dialog
 	private EditText text;
 	
 	private Button btnOk;
+	private ImageButton imgBtnOk;
 	private Button btnCancel;
 	private Button btnSelectMusicPath;
 	private Button btnLockUnlock;
@@ -67,9 +71,11 @@ public class DialogEditMain extends Dialog
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		setContentView(R.layout.dialog_edit_main);
 		
-		this.setTitle(mContext.getResources().getString(R.string.edit_main));
+		//this.setTitle(mContext.getResources().getString(R.string.edit_main));
 		
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
               WindowManager.LayoutParams.MATCH_PARENT);
@@ -78,6 +84,9 @@ public class DialogEditMain extends Dialog
 		name.setText(record.getName());
 		name.requestFocus();
 
+		TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+		tvTitle.setText(mContext.getResources().getString(R.string.edit_main));
+		
 		text = (EditText)findViewById(R.id.editTextText);
 		text.setText(record.getText());
 
@@ -92,35 +101,12 @@ public class DialogEditMain extends Dialog
 			}
 		});
 		
+		imgBtnOk = (ImageButton)findViewById(R.id.imgBtnOk);
+		imgBtnOk.setOnClickListener(this);
+		
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
-		btnOk.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
+		btnOk.setOnClickListener(this);
 					
-					record.setName(name.getText());
-					record.setText(text.getText());
-
-					countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
-					Programm.setCountBeforeTheEnd(countBeforeTheEnd.isChecked());
-		
-					Programm.setExpand_text(expand_text.isChecked());
-							
-					Programm.setPlayMusic(playMusic.isChecked());
-					
-					Programm.setPathToMp3(textViewPathToMp3.getText().toString());
-
-					Programm.setMusic_quieter(music_quieter.isChecked());
-					
-					Programm.setSpeach_descr(speach_descr.isChecked());
-					
-					if (callback != null)
-						callback.callbackOk();
-					
-					dialog.dismiss();
-				}
-			});
-		
 		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
 		btnCancel.setOnClickListener(new Button.OnClickListener(){
 				@Override
@@ -257,5 +243,32 @@ public class DialogEditMain extends Dialog
 	protected void onDismiss(DialogInterface dialog){
 		if (mp != null)
 			mp.stop();
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == btnOk || v == imgBtnOk ){
+			record.setName(name.getText());
+			record.setText(text.getText());
+
+			countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
+			Programm.setCountBeforeTheEnd(countBeforeTheEnd.isChecked());
+
+			Programm.setExpand_text(expand_text.isChecked());
+					
+			Programm.setPlayMusic(playMusic.isChecked());
+			
+			Programm.setPathToMp3(textViewPathToMp3.getText().toString());
+
+			Programm.setMusic_quieter(music_quieter.isChecked());
+			
+			Programm.setSpeach_descr(speach_descr.isChecked());
+			
+			if (callback != null)
+				callback.callbackOk();
+			
+			dialog.dismiss();
+		}
+		
 	}
 }

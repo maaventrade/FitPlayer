@@ -1,7 +1,8 @@
 package alex.mochalov.editor;
 
 import alex.mochalov.editor.*;
-import alex.mochalov.fitplayer.*;
+import alex.mochalov.fitplayer.R;
+import alex.mochalov.main.*;
 import alex.mochalov.player.FragmentPlayer;
 import alex.mochalov.record.*;
 import android.app.*;

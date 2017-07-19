@@ -3,7 +3,8 @@ package alex.mochalov.editor;
 import java.io.File;
 import java.util.ArrayList;
 
-import alex.mochalov.fitplayer.*;
+import alex.mochalov.fitplayer.R;
+import alex.mochalov.main.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
@@ -35,13 +36,15 @@ public class DialogSelectPath extends Dialog
 		mContext = context;
 		mSelectedPath = selectedPath;
 		dialog = this;
+		
+		PATH = selectedPath.getText().toString();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//this.setTitle(mContext.getResources().getString(R.string.));
+		this.setTitle(mContext.getResources().getString(R.string.select_path)+": "+PATH);
 		
 		setContentView(R.layout.dialog_select_path);
 	
@@ -70,14 +73,11 @@ public class DialogSelectPath extends Dialog
 					PATH = PATH + "/" + f;
 				}
 				
-				Log.d("","PATH "+PATH);
-				
+				dialog.setTitle(mContext.getResources().getString(R.string.select_path)+": "+PATH);
 				
 				String[] stringArray = readFiles(PATH);
-				
 				adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, 
 						stringArray);
-				
 				listViewFiles.setAdapter(adapter);
 				
 			}}

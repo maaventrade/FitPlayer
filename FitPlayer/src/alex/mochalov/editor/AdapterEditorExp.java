@@ -1,7 +1,8 @@
 package alex.mochalov.editor;
 
 import alex.mochalov.editor.DialogEdit.MyCallback;
-import alex.mochalov.fitplayer.*;
+import alex.mochalov.fitplayer.R;
+import alex.mochalov.main.*;
 import alex.mochalov.record.*;
 import android.content.*;
 import android.graphics.*;

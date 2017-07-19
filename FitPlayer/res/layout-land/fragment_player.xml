@@ -6,7 +6,7 @@
     android:orientation="horizontal"
 
     android:clickable="true"
-    tools:context="alex.mochalov.fitplayer.MainActivity" >
+    tools:context="alex.mochalov.main.MainActivity" >
 
     <RelativeLayout
         android:id="@+id/LinearLayoutHead"
@@ -42,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:layout_marginRight="@dimen/small_padding"
             android:layout_weight="0.1"
             android:src="@drawable/sound" />
 
@@ -50,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginRight="@dimen/small_padding"
             android:layout_weight="0.1"
             android:src="@drawable/repeat" />
         

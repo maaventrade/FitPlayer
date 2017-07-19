@@ -13,7 +13,7 @@
         android:id="@+id/action_repeat"
         android:orderInCategory="10"
         android:showAsAction="always"
-        android:icon="@drawable/repeat"
+        android:icon="@drawable/repeatm"
         android:title="@string/action_repeat"/>
 
 </menu>

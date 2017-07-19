@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import alex.mochalov.editor.DialogEdit.MyCallback;
-import alex.mochalov.fitplayer.*;
+import alex.mochalov.fitplayer.R;
+import alex.mochalov.main.*;
 import alex.mochalov.player.AdapterPlayer;
 import alex.mochalov.record.*;
 import android.app.*;
