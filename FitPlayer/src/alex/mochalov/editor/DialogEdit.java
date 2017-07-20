@@ -30,6 +30,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	private Button buttonSelect;
 	
 	private CheckBox itIsTheRest;
+	private CheckBox cbWeight;
 	
 	private boolean newRecord = false;
 	
@@ -84,6 +85,8 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		itIsTheRest = (CheckBox)findViewById(R.id.checkBoxItIsTheRest);
 		itIsTheRest.setChecked(record.isRest());
 		
+		cbWeight = (CheckBox)findViewById(R.id.cbWeight);
+		cbWeight.setChecked(record.isWeight());
 		
 		TextView textView3 = (TextView)findViewById(R.id.textView3);
 		duration = (EditText)findViewById(R.id.editTextDuration1);
@@ -147,6 +150,8 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			record.setName(name.getText());
 			record.setText(text.getText());
 			record.setRest(itIsTheRest.isChecked());
+			record.setWeight(cbWeight.isChecked());
+			
 			if (! mIsGroup)
 				record.setDuration(duration.getText());
 			

@@ -130,6 +130,14 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 			
 		}
 
+		ImageView imgWeight = (ImageView) convertView
+				.findViewById(R.id.imgWeight);
+		
+		if (record.isWeight())
+			imgWeight.setImageDrawable(mContext.getResources().getDrawable(R.drawable.weight));
+		else
+			imgWeight.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));
+			
 		return convertView;
 
 	}

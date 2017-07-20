@@ -42,7 +42,7 @@
             	    android:textColor="@drawable/item_text_selector1" />
 
             	<ImageView
-            	    android:id="@+id/imageView1"
+            	    android:id="@+id/imgWeight"
             	    android:layout_width="wrap_content"
             	    android:layout_height="match_parent"
             	    android:scaleType="centerInside"

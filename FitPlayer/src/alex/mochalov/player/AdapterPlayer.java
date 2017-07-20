@@ -1,22 +1,18 @@
 package alex.mochalov.player;
 
-import java.util.ArrayList;
-
-import alex.mochalov.fitplayer.R;
-
-import alex.mochalov.record.Record;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import alex.mochalov.fitplayer.*;
+import alex.mochalov.record.*;
+import android.content.*;
+import android.view.*;
+import android.widget.*;
+import java.util.*;
 
 public class AdapterPlayer extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	
 	private ArrayList<Record> objects;
+	private Context mContext;
 
 	private boolean mEnabled;
 	
@@ -26,7 +22,7 @@ public class AdapterPlayer extends BaseAdapter {
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		objects = records;
 		//records = mainFolder.getRecords(); 
-
+		mContext = context;
 		mEnabled = true;
 	}
 
@@ -68,6 +64,15 @@ public class AdapterPlayer extends BaseAdapter {
 		
     	textViewName.setText(record.getName());
     	textViewText.setText(record.getText());
+		
+		ImageView imgWeight = (ImageView) convertView
+			.findViewById(R.id.imgWeight);
+
+		if (record.isWeight())
+			imgWeight.setImageDrawable(mContext.getResources().getDrawable(R.drawable.weight));
+		else
+			imgWeight.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));
+		
 		
 		return convertView;
 	}

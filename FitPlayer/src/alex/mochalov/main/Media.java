@@ -88,6 +88,7 @@ public class Media
 			if(mediaPlayer.isPlaying()) 
 				mediaPlayer.stop();
 			mediaPlayer.release();
+			mediaPlayer = null;
         }
 	}
 
