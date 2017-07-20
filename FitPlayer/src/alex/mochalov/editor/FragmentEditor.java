@@ -163,8 +163,11 @@ public class FragmentEditor extends Fragment {
 
 		});
 
+		
+		
 		mContext.getActionBar().setTitle(
 				mContext.getResources().getString(R.string.edit_timer));
+		mContext.getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mModyfied = false;
 

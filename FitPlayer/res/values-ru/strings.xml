@@ -2,71 +2,70 @@
 <resources>
 
     <string name="app_name">FitTimer</string>
+
+    <string name="action_add">Добавить</string>
+    <string name="action_add_child">Добавить подуровень</string>
+    <string name="action_copy">Копировать</string>
+	<string name="action_cut">Вырезать</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_edit">Править</string>
+    <string name="action_go">Начать</string>
+	<string name="action_parameters">Параметры</string>
+    <string name="action_pause">Пауза</string>
+	<string name="action_repeat">Повтор</string>
+    <string name="action_save">Сохранить</string>
+	<string name="action_set_rests_duration">Установить длительность отдыха</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_start">Пуск</string>
+    
+	<string name="cancel">Отказ</string>
+	<string name="count">Отсчёт перед окончанием</string>
+	<string name="copy">Копировать</string>
+			
+    <string name="duration">Длительность:</string>
+    
+	<string name="edit_main">Редактировать параметры</string>
+    <string name="edit_timer">Редактировать таймер</string>
+    <string name="error_saving_file">Ошибка при сохранении файла</string>
+    <string name="error_load_xml">Ошибка при загрузке xml</string>
+	<string name="expand_text">Растягивать описание упражнения</string>
+    
+    <string name="file_name">Имя файла</string>
+    <string name="file_saved">Файл сохранен</string>
+    
+	<string name="lock">Блокировать</string>
 	
-    <string name="timers">Таймеры</string>
-    <string name="zero">00:00</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="action_start">Start</string>
-    <string name="action_pause">Pause</string>
-
-    <string name="file_name">File name</string>
-
-    <string name="action_edit">Edit</string>
-    <string name="edit_timer">Edit timer</string>
-    <string name="run">Run</string>
-
-
-    <string name="action_add">Add</string>
-    <string name="action_add_child">Add child</string>
-    <string name="action_delete">Delete</string>
-    <string name="action_go">Go</string>
-    <string name="action_save">Save</string>
-    <string name="action_copy">Copy</string>
-	<string name="action_set_rests_duration">Set rests duration</string>
-	<string name="action_parameters">Parameters</string>
-	<string name="action_repeat">Repeat</string>
-
-    <string name="file_saved">File saved</string>
-    <string name="error_saving_file">Error saving file</string>
-    <string name="error_load_xml">Error loading xml</string>
-
-    <string name="name">Name:</string>
-    <string name="text">Description:</string>
-    <string name="duration">Duration:</string>
-    <string name="starts_on">Starts on</string>
-	<string name="speach_descr">Pronounce the exercise description</string>
-
+    <string name="music">Музыка</string>
+	<string name="music_rest">Останавливать музуку во время отдыха</string>
+	<string name="music_quieter">Приглушать музыку при говорении</string>
+		
+    <string name="name">Имя:</string>
+	<string name="next_group_signal">Сигнал начала упражнения:</string>
+    
 	<string name="ok">Ok</string>
-	<string name="cancel">Cancel</string>
+	
+	<string name="paste">Вставить</string>
+	<string name="path_music">Путь к музыкальным файлам:</string>
+	<string name="play_music">Играть музыку</string>
+		
+	<string name="rename">Переименовать</string>
+	<string name="rest">Отдых</string>
+	<string name="run">Пуск</string>
 
-	<string name="edit_main">Edit programm parameters</string>
+	<string name="select">Выбрать</string>
+	<string name="select_path">Выбрать путь</string>
+	<string name="speach_descr">Произносить описание упражнение</string>
+    <string name="starts_on">Начало в</string>
+	
+    <string name="text">Описание:</string>
+    <string name="timers">Таймеры</string>
+	<string name="title_add">Добавить запись</string>
+	<string name="title_edit">Править запись</string>
+	
+	<string name="unlock">Разблокировать</string>
 
-	<string name="music">Misic</string>
-	<string name="path_music">Path to music:</string>
-	<string name="count">Count before the end</string>
-
-	<string name="next_group_signal">Next group signal:</string>
-
-	<string name="play_music">Play music</string>
-	<string name="rest">The rest</string>
-	<string name="music_rest">Stop music in the rest</string>
-	<string name="music_quieter">Make music quieter on speech</string>
-	<string name="expand_text">Expand text</string>
-	<string name="weight">Use weight</string>
-
-	<string name="copy">Copy</string>
-	<string name="paste">Paste</string>
-	<string name="rename">Rename</string>
-	<string name="action_cut">Cut</string>
-	<string name="select">Select</string>
-
-	<string name="title_add">Add record</string>
-	<string name="title_edit">Edit record</string>
-
-	<string name="lock">Lock</string>
-	<string name="unlock">Unlock</string>
-
-    <string name="select_path">Select path</string>
-
+	<string name="weight">Использовать груз</string>
+	
+    <string name="zero">00:00</string>
+    
 </resources>

@@ -79,6 +79,7 @@
 	    android:indicatorRight="300dp" 
 	    android:layoutDirection="rtl" 
 	    android:listSelector = "@drawable/selector_list_item"
+	    android:groupIndicator="@null"
 	    />
 	
 </LinearLayout>

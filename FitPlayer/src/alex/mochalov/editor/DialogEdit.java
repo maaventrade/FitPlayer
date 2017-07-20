@@ -26,6 +26,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	private EditText duration;
 	
 	private Button btnOk;
+	private ImageButton imgBtnOk;
 	private Button btnCancel;
 	private Button buttonSelect;
 	
@@ -60,22 +61,24 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.dialog_edit);
 		
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
               WindowManager.LayoutParams.MATCH_PARENT);
 		
-		if (newRecord)
-			this.setTitle(mContext.getResources().getString(R.string.title_add));
-		else
-			this.setTitle(mContext.getResources().getString(R.string.title_edit));
-		
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(record.getName());
 		name.requestFocus();
 
+		TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+		if (newRecord)
+			tvTitle.setText(mContext.getResources().getString(R.string.title_add));
+		else
+			tvTitle.setText(mContext.getResources().getString(R.string.title_edit));
+		
+		
 		text = (EditText)findViewById(R.id.editTextText);
 		text.setText(record.getText());
 
@@ -136,6 +139,9 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
 		btnOk.setOnClickListener(this);
 		
+		imgBtnOk = (ImageButton)findViewById(R.id.imgBtnOk);
+		imgBtnOk.setOnClickListener(this);
+		
 		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
 		btnCancel.setOnClickListener(this);
 		
@@ -146,7 +152,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 
 	@Override
 	public void onClick(View v) {
-		if (v == btnOk){
+		if (v == btnOk  || v == imgBtnOk ){
 			record.setName(name.getText());
 			record.setText(text.getText());
 			record.setRest(itIsTheRest.isChecked());

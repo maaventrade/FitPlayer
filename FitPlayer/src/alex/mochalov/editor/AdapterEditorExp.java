@@ -138,6 +138,19 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 		else
 			imgWeight.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));
 			
+		ImageView imgGroupIndicator = (ImageView) convertView.findViewById(R.id.imgGroupIndicator);
+		if ( getChildrenCount( groupPosition ) == 0 || childPosition >= 0) {
+			imgGroupIndicator.setImageResource(R.drawable.void1);
+		} 
+		else {
+			if(isExpanded){
+				imgGroupIndicator.setImageResource(R.drawable.down);
+	        }
+	        else{
+	        	imgGroupIndicator.setImageResource(R.drawable.right);
+	        }			
+		}		
+		
 		return convertView;
 
 	}
