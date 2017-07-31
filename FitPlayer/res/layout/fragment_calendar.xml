@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bronze_light3"
+    android:orientation="vertical" >
+
+	<alex.mochalov.calendar.CalendarViewInfo
+		android:id="@+id/calendarViewInfo"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="0.1"
+	    android:text="Large Text"
+	    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<FrameLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="0.9" >
+
+		<Button
+		    android:id="@+id/btnPrev"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="&lt;&lt;" />
+
+		<Button
+		    android:id="@+id/btnNext"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="right|end"
+		    android:text=">>" />
+
+	</FrameLayout>
+	
+</LinearLayout>
