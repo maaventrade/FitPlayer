@@ -1,22 +1,24 @@
 package alex.mochalov.files;
-import alex.mochalov.editor.FragmentEditor;
-import alex.mochalov.fitplayer.R;
+import alex.mochalov.calendar.*;
+import alex.mochalov.editor.*;
+import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
-import alex.mochalov.player.FragmentPlayer;
+import alex.mochalov.player.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.text.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
-
-import java.util.*;   
-
-import android.text.*;
+import java.util.*;
 
 public class FragmentFiles extends Fragment
 {
 	private String TAG_FRAGMENT_EDITOR = "TAG_FRAGMENT_EDITOR";
+	private String TAG_FRAGMENT_CALENDAR = "TAG_FRAGMENT_CALENDAR";
+	
 	
 	private Activity mContext;
 	//Fragment thisFragment;
@@ -178,6 +180,22 @@ public class FragmentFiles extends Fragment
 			
 			DialogAddPasteRename("add");
 			return true;
+		case R.id.action_calendar:
+				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+Log.d("","1");
+				FragmentCalendar fragmentCalendar = new FragmentCalendar(mContext);
+
+				//Bundle args = new Bundle();
+				//args.putString("name", files.get(selectedStringIndex));
+				Log.d("","2");
+				//fragmentEditor.setArguments(args);
+
+				ft.replace(R.id.frgmCont, fragmentCalendar, TAG_FRAGMENT_CALENDAR);
+				
+				ft.addToBackStack(null);
+
+				ft.commit(); 
+				return true;
 		default:	
 			return super.onOptionsItemSelected(item);
 		}

@@ -31,7 +31,7 @@ public class CalendarViewInfo extends View
 	
 	private final Rect textBounds = new Rect();
 	
-	
+	CalendarViewInfo thisView;
 
 	@SuppressLint("NewApi")
 	public CalendarViewInfo(Context context, 
@@ -83,7 +83,23 @@ public class CalendarViewInfo extends View
 		month = cal.get(Calendar.MONTH);
 		year = cal.get(Calendar.YEAR);
 
-		
+		thisView = this;
+		getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+				@Override
+				public void onGlobalLayout() {
+					post(new Runnable() {
+							public void run() {
+								thisView.getHeight(); //height is ready
+								cellWidth = getWidth()/7;
+								cellHeight = getHeight()/(cellsCountVert+1);
+								Log.d("y","OnGlobal "+cellWidth);
+								if (cellWidth > 0)
+									fillCells();
+								invalidate();
+							}
+						});
+				}
+			});
 	}
 
 	@Override
@@ -92,7 +108,7 @@ public class CalendarViewInfo extends View
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		cellWidth = getWidth()/7;
 		cellHeight = getHeight()/(cellsCountVert+1);
-		
+		Log.d("y","OnMes "+cellWidth);
 		if (cellWidth > 0)
 			fillCells();
 		

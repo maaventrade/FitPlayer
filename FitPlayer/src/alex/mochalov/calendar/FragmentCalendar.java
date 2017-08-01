@@ -37,8 +37,8 @@ public class FragmentCalendar extends Fragment {
 
 		rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-		Bundle args = getArguments();
-		Utils.setFileName(args.getString("name", ""));
+		//Bundle args = getArguments();
+		//Utils.setFileName(args.getString("name", ""));
 		// textViewFileName.setText(fileName);
 
 
