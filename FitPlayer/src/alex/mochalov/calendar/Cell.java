@@ -14,18 +14,15 @@ public class Cell
 	private int mMonth;
 	private int mYear;
 	
-	private String mText = "Sample OF Text IN THE CEll 12345678910123456789012345sjfhafouierowiurywe";
+	private String mText = "";
 
 	public Cell(int day, int month, int year, float i, float j, float cellWidth, float cellHeight) {
 		mRect = new RectF(i, j, i+cellWidth, j+cellHeight);
-		
 		
 		mDay = day;
 		mMonth = month;
 		mYear = year;
 		
-		//mText = "*"+day+"*";
-
 	}
 
 	public void draw(Canvas canvas, int month)
@@ -86,6 +83,10 @@ public class Cell
 	public RectF getRect()
 	{
 		return mRect;
+	}
+
+	public CharSequence getDate() {
+		return ""+mDay;
 	}
 
 

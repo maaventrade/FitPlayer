@@ -167,17 +167,18 @@ public final class R {
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int dialog_edit=0x7f030001;
-        public static final int dialog_edit_main=0x7f030002;
-        public static final int dialog_select=0x7f030003;
-        public static final int dialog_select_path=0x7f030004;
-        public static final int fragment_calendar=0x7f030005;
-        public static final int fragment_editor=0x7f030006;
-        public static final int fragment_files=0x7f030007;
-        public static final int fragment_player=0x7f030008;
-        public static final int item_editor=0x7f030009;
-        public static final int item_files=0x7f03000a;
-        public static final int item_player=0x7f03000b;
-        public static final int item_select=0x7f03000c;
+        public static final int dialog_edit_calendar=0x7f030002;
+        public static final int dialog_edit_main=0x7f030003;
+        public static final int dialog_select=0x7f030004;
+        public static final int dialog_select_path=0x7f030005;
+        public static final int fragment_calendar=0x7f030006;
+        public static final int fragment_editor=0x7f030007;
+        public static final int fragment_files=0x7f030008;
+        public static final int fragment_player=0x7f030009;
+        public static final int item_editor=0x7f03000a;
+        public static final int item_files=0x7f03000b;
+        public static final int item_player=0x7f03000c;
+        public static final int item_select=0x7f03000d;
     }
     public static final class menu {
         public static final int fragment_editor=0x7f090000;

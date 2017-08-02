@@ -382,6 +382,7 @@ public class FragmentPlayer extends Fragment {
 
 		mWaiting = true;
 		imageViewSound.setVisibility(View.VISIBLE);
+		
 		TtsUtils.speak(record.getName(), "name", Programm.isMusic_quieter(),
 				true);
 
