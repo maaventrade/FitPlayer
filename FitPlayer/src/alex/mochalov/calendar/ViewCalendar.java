@@ -10,7 +10,7 @@ import java.text.*;
 import java.util.*;
 
 
-public class CalendarViewInfo extends View
+public class ViewCalendar extends View
 {
 
 	private Context mContext;
@@ -33,10 +33,10 @@ public class CalendarViewInfo extends View
 	
 	private final Rect textBounds = new Rect();
 	
-	CalendarViewInfo thisView;
+	ViewCalendar thisView;
 
 	@SuppressLint("NewApi")
-	public CalendarViewInfo(Context context, 
+	public ViewCalendar(Context context, 
 							AttributeSet attrs, 
 							int defStyleAttr, 
 							int defStyleRes)
@@ -45,7 +45,7 @@ public class CalendarViewInfo extends View
 		init(context);
 	}
 
-	public CalendarViewInfo(Context context, 
+	public ViewCalendar(Context context, 
 							AttributeSet attrs, 
 							int defStyleAttr)
 	{
@@ -53,7 +53,7 @@ public class CalendarViewInfo extends View
 		init(context);
 	}
 	
-	public CalendarViewInfo(Context context, 
+	public ViewCalendar(Context context, 
 							AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -72,6 +72,8 @@ public class CalendarViewInfo extends View
 	
 	private void init(Context context){
 		mContext = context;
+		thisView = this;
+		
 		paintBg = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paintBg.setColor(Color.YELLOW);
 		
@@ -81,11 +83,9 @@ public class CalendarViewInfo extends View
 		Paints.paintText.setTextSize(40);
 		
 		Calendar cal = Calendar.getInstance();
-		
 		month = cal.get(Calendar.MONTH);
 		year = cal.get(Calendar.YEAR);
-
-		thisView = this;
+		
 		getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 				@Override
 				public void onGlobalLayout() {
@@ -94,7 +94,7 @@ public class CalendarViewInfo extends View
 								thisView.getHeight(); //height is ready
 								cellWidth = getWidth()/7;
 								cellHeight = getHeight()/(cellsCountVert+1);
-								Log.d("y","OnGlobal "+cellWidth);
+					
 								if (cellWidth > 0)
 									fillCells();
 								invalidate();
@@ -123,35 +123,22 @@ public class CalendarViewInfo extends View
 		
 		switch (event.getAction()){
 		case MotionEvent.ACTION_UP:
-			/*
-				for (int j = 0; j < cellsCountVert; j++)
-					for (int i = 0; i<7; i++)
-						if (cells[i][j].contains(x, y)){
-							if (cells[i][j] == selectedCell){
-								DialogEditCalendar dialog = new DialogEditCalendar(mContext, cells[i][j]);
-								dialog.show();
-							}
-							
-							break;
-						}
-						*/
-			break;
-		case MotionEvent.ACTION_DOWN:
 			
 			for (int j = 0; j < cellsCountVert; j++)
 				for (int i = 0; i<7; i++)
 					if (cells[i][j].contains(x, y)){
-						selectedCell = cells[i][j];
-						invalidate();
+						if (selectedCell == cells[i][j]){
+							DialogEditCalendar dialog = new DialogEditCalendar(mContext, cells[i][j]);
+							dialog.show();
+						} else {
+							selectedCell = cells[i][j];
+							invalidate();
+						}
 						break;
-						
 					}
 			
-		
-			//if (x < 500)
-				//shiftMonth(-1);
-			//else shiftMonth(1);
-			
+			break;
+		case MotionEvent.ACTION_DOWN:
 		}
 			
 		
@@ -283,6 +270,15 @@ public class CalendarViewInfo extends View
 		//drawWeekNumbersAndDates(canvas);
 		//drawWeekSeparators(canvas);
 		//drawSelectedDateVerticalBars(canvas);
+	}
+
+	public void init(int m) {
+		month = m - m / 12 * 12;
+		m = m + (2000 * 12);
+		year = m / 12;
+
+		fillCells();
+		invalidate();
 	}
 	
 	
