@@ -43,12 +43,12 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.dialog_edit_calendar);
 		
-		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-              WindowManager.LayoutParams.MATCH_PARENT);
+		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+          //    WindowManager.LayoutParams.MATCH_PARENT);
 		
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(mCell.getDate());

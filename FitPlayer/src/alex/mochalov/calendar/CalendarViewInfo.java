@@ -29,6 +29,8 @@ public class CalendarViewInfo extends View
 	private int month = 0;
 	private int year = 0;
 	
+	private Cell selectedCell = null;
+	
 	private final Rect textBounds = new Rect();
 	
 	CalendarViewInfo thisView;
@@ -120,10 +122,35 @@ public class CalendarViewInfo extends View
 		float y = event.getY();
 		
 		switch (event.getAction()){
+		case MotionEvent.ACTION_UP:
+			/*
+				for (int j = 0; j < cellsCountVert; j++)
+					for (int i = 0; i<7; i++)
+						if (cells[i][j].contains(x, y)){
+							if (cells[i][j] == selectedCell){
+								DialogEditCalendar dialog = new DialogEditCalendar(mContext, cells[i][j]);
+								dialog.show();
+							}
+							
+							break;
+						}
+						*/
+			break;
 		case MotionEvent.ACTION_DOWN:
-			if (x < 500)
-				shiftMonth(-1);
-			else shiftMonth(1);
+			
+			for (int j = 0; j < cellsCountVert; j++)
+				for (int i = 0; i<7; i++)
+					if (cells[i][j].contains(x, y)){
+						selectedCell = cells[i][j];
+						invalidate();
+						break;
+						
+					}
+			
+		
+			//if (x < 500)
+				//shiftMonth(-1);
+			//else shiftMonth(1);
 			
 		}
 			
@@ -220,8 +247,11 @@ public class CalendarViewInfo extends View
 		for (int i = 0; i < 7; i++)
 			for (int j = 0; j < cellsCountVert; j++){
 				if (cells[i][j] != null )
-					cells[i][j].draw(canvas, month);
+					cells[i][j].draw(canvas, month, false);
 		}
+		
+		if (selectedCell != null)
+			selectedCell.draw(canvas, month, true);
 				
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month, 1);

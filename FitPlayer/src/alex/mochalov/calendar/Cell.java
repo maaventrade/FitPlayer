@@ -25,12 +25,33 @@ public class Cell
 		
 	}
 
-	public void draw(Canvas canvas, int month)
+	
+	public boolean contains(float x, float y)
+	{
+		return mRect.contains(x, y);
+	}
+
+	public void draw(Canvas canvas, int month, boolean selected)
 	{
 
-		Paints.paintText.setColor(Color.BLACK);
-		Paints.paintText.setStyle(Paint.Style.STROKE);
-		Paints.paintText.setTextSize(40);
+		
+		if (selected){
+			Paints.paintText.setColor(Color.BLUE);
+			Paints.paintText.setStyle(Paint.Style.FILL_AND_STROKE);
+
+			canvas.drawRect(mRect, Paints.paintText);
+			
+			Paints.paintText.setColor(Color.YELLOW);
+			Paints.paintText.setStyle(Paint.Style.STROKE);
+			Paints.paintText.setTextSize(40);
+		} else {
+			Paints.paintText.setColor(Color.BLACK);
+			Paints.paintText.setStyle(Paint.Style.STROKE);
+			Paints.paintText.setTextSize(40);
+
+			canvas.drawRect(mRect, Paints.paintText);
+		}
+		
 		
 		Paints.paintSmallText.setColor(Color.BLACK);
 		Paints.paintSmallText.setStyle(Paint.Style.STROKE);
