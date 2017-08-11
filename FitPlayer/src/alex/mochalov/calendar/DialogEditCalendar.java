@@ -11,6 +11,7 @@ import android.widget.*;
 import android.view.View.*;
 import android.view.*;
 import android.text.*;
+import java.util.*;
 
 public class DialogEditCalendar extends Dialog implements android.view.View.OnClickListener
 {
@@ -25,6 +26,10 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 	private Button buttonSelect;
 
 	private Cell mCell;
+	
+	private ArrayList<Prog> programms;
+	private ListView listViewProgramms;
+	private AdapterProg adapter;
 	
 	MyCallback callback = null;
 	interface MyCallback {
@@ -43,82 +48,69 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.dialog_edit_calendar);
 		
 		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
           //    WindowManager.LayoutParams.MATCH_PARENT);
 		
-		name = (EditText)findViewById(R.id.editTextName);
-		name.setText(mCell.getDate());
-		name.requestFocus();
-
-		/*
-		TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
-		if (newRecord)
-			tvTitle.setText(mContext.getResources().getString(R.string.title_add));
-		else
-			tvTitle.setText(mContext.getResources().getString(R.string.title_edit));
+		TextView title = (TextView)findViewById(R.id.tvTitle);
+		title.setText(mCell.getDate());
 		
-		
-		text = (EditText)findViewById(R.id.editTextText);
-		text.setText(record.getText());
+		ListView listViewProgramms = (ListView)findViewById(R.id.listViewProgramms);
+		listViewProgramms.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		TextView textViewStartTime = (TextView)findViewById(R.id.textViewStartTime);
-		textViewStartTime.setText(Utils.MStoString(Programm.getTimeBefore(record)));
-		
-		itIsTheRest = (CheckBox)findViewById(R.id.checkBoxItIsTheRest);
-		itIsTheRest.setChecked(record.isRest());
-		
-		cbWeight = (CheckBox)findViewById(R.id.cbWeight);
-		cbWeight.setChecked(record.isWeight());
-		
-		TextView textView3 = (TextView)findViewById(R.id.textView3);
-		duration = (EditText)findViewById(R.id.editTextDuration1);
-		if (mIsGroup){
-			duration.setVisibility(View.INVISIBLE);
-			textView3.setVisibility(View.INVISIBLE);
-		} else {
-			duration.setVisibility(View.VISIBLE);
-			textView3.setVisibility(View.VISIBLE);
-			
-			duration = (EditText)findViewById(R.id.editTextDuration1);
-			duration.addTextChangedListener(new TextWatcher(){
+		programms = new ArrayList<Prog>();
+		//Utils.readFilesList(files);
 
-					@Override
-					public void beforeTextChanged(CharSequence s, int start, int count, int after)
-					{
-						//textView3.setText("*"+s+"* "+start+" "+after+" "+count);
-					}
+		adapter = new AdapterProg(mContext, programms);
 
-					@Override
-					public void onTextChanged(CharSequence s, int start, int before, int count)
-					{
-						String z = s.toString();
-						
-						int i = z.indexOf(":");
-						if (s.length() == 2 && start == 1){
-							duration.setText(s+":");
-							duration.setSelection(3);
-							
-						}
-					}
+		adapter.listener = new AdapterFiles.OnButtonClickListener(){
 
-					@Override
-					public void afterTextChanged(Editable p1)
-					{
-						// TODO: Implement this method
-					}
-				});
-			long l = record.getDuration();
-			if (l == 0){
-				duration.setText("");
-			} else {
-				duration.setText(Utils.MStoString(l));
+			@Override
+			public void onEdit(String text)
+			{
+				//Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
+				if (listener != null && text.length() > 0)
+					listener.onGoSelected(text);
+
 			}
-		}
+
+			@Override
+			public void onAdd(String text)
+			{
+
+			}
+		};
+
+		listViewFiles.setAdapter(adapter);
+
+		listViewFiles.setOnItemClickListener( new ListView.OnItemClickListener(){
+				@Override
+				public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
+				{
+					//String selectedString1 = (String) adapter.getItemAtPosition(index);
+					if (selectedStringIndex == index){
+						FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+
+						FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+
+						Bundle args = new Bundle();
+						args.putString("name", files.get(selectedStringIndex));
+						fragmentPlayer.setArguments(args);
+
+						ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
+						ft.addToBackStack(null);
+
+						ft.commit();
+					}
+					else selectedStringIndex = index;
+				}}
+		);	
+
 		
+		/*
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
 		btnOk.setOnClickListener(this);
 		
