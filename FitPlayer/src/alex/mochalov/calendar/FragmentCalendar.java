@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 public class FragmentCalendar extends Fragment {
 	private Activity mContext;
 	private View rootView;
+	private String[] files;
 
 	public FragmentCalendar(Activity context) {
 		super();
@@ -52,8 +53,9 @@ public class FragmentCalendar extends Fragment {
 		viewPager.setAdapter(new CustomPagerAdapter(mContext));		
 		viewPager.setCurrentItem((year - 2000) * 12 + month);
         
-		//Bundle args = getArguments();
-		//Utils.setFileName(args.getString("name", ""));
+		Bundle args = getArguments();
+		files = args.getStringArray("files");
+		
 		// textViewFileName.setText(fileName);
 
 		mContext.getActionBar().setTitle(

@@ -4,6 +4,7 @@ import android.graphics.*;
 import android.text.format.*;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Cell
@@ -106,8 +107,17 @@ public class Cell
 		return mRect;
 	}
 
-	public CharSequence getDate() {
+	public String getDate() {
 		return ""+mDay;
+	}
+	public String getDateStr() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(mYear, mMonth, mDay);
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy");
+		String text = dateFormat.format(cal.getTime());
+		
+		return text;
 	}
 
 

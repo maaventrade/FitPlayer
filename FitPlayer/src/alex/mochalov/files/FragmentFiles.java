@@ -12,6 +12,7 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+
 import java.util.*;
 
 public class FragmentFiles extends Fragment
@@ -182,14 +183,20 @@ public class FragmentFiles extends Fragment
 			return true;
 		case R.id.action_calendar:
 				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-Log.d("","1");
+
 				FragmentCalendar fragmentCalendar = new FragmentCalendar(mContext);
 
-				//Bundle args = new Bundle();
-				//args.putString("name", files.get(selectedStringIndex));
-				Log.d("","2");
-				//fragmentEditor.setArguments(args);
+				Bundle arguments = new Bundle();
 
+				Object[] objectsArray = files.toArray();
+				String[] stringsArray = new String[objectsArray.length];
+
+				for (int i = 0; i < objectsArray.length - 1; i++)
+					stringsArray[i] = objectsArray[i].toString();
+				
+				arguments.putStringArray("files", stringsArray); 
+				fragmentCalendar.setArguments(arguments);
+				
 				ft.replace(R.id.frgmCont, fragmentCalendar, TAG_FRAGMENT_CALENDAR);
 				
 				ft.addToBackStack(null);

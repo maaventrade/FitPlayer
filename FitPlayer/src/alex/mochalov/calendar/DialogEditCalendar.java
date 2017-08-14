@@ -19,11 +19,8 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 	private Context mContext;
 	private Dialog dialog;
 
-	private EditText name;
-	private Button btnOk;
-	private ImageButton imgBtnOk;
-	private Button btnCancel;
-	private Button buttonSelect;
+	private ImageButton ibOk;
+	private ImageButton ibAdd;
 
 	private Cell mCell;
 	
@@ -55,17 +52,21 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
           //    WindowManager.LayoutParams.MATCH_PARENT);
 		
+		
 		TextView title = (TextView)findViewById(R.id.tvTitle);
-		title.setText(mCell.getDate());
+		title.setText(mCell.getDateStr());
 		
 		ListView listViewProgramms = (ListView)findViewById(R.id.listViewProgramms);
 		listViewProgramms.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		programms = new ArrayList<Prog>();
+		
+		programms.add(new Prog("“ÚˆÛÍˆÛÍ"));
 		//Utils.readFilesList(files);
 
 		adapter = new AdapterProg(mContext, programms);
 
+		/*
 		adapter.listener = new AdapterFiles.OnButtonClickListener(){
 
 			@Override
@@ -83,79 +84,54 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 
 			}
 		};
+		*/
 
-		listViewFiles.setAdapter(adapter);
+		listViewProgramms.setAdapter(adapter);
 
-		listViewFiles.setOnItemClickListener( new ListView.OnItemClickListener(){
+		listViewProgramms.setOnItemClickListener( new ListView.OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
 				{
-					//String selectedString1 = (String) adapter.getItemAtPosition(index);
-					if (selectedStringIndex == index){
-						FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-
-						FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
-
-						Bundle args = new Bundle();
-						args.putString("name", files.get(selectedStringIndex));
-						fragmentPlayer.setArguments(args);
-
-						ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
-						ft.addToBackStack(null);
-
-						ft.commit();
-					}
-					else selectedStringIndex = index;
-				}}
+ 				}}
 		);	
 
 		
-		/*
-		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
-		btnOk.setOnClickListener(this);
 		
-		imgBtnOk = (ImageButton)findViewById(R.id.imgBtnOk);
-		imgBtnOk.setOnClickListener(this);
 		
-		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
-		btnCancel.setOnClickListener(this);
+		ibOk = (ImageButton)findViewById(R.id.ibOk);
+		ibOk.setOnClickListener(this);
 		
-		buttonSelect = (Button)findViewById(R.id.buttonSelect);
-		buttonSelect.setOnClickListener(this);
-		*/			
+		ibAdd = (ImageButton)findViewById(R.id.ibAdd);
+		ibAdd.setOnClickListener(this);
+		
+//		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
+//		btnCancel.setOnClickListener(this);
+		
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v == btnOk  || v == imgBtnOk ){
-			/*
-			record.setName(name.getText());
-			record.setText(text.getText());
-			record.setRest(itIsTheRest.isChecked());
-			record.setWeight(cbWeight.isChecked());
-			
-			if (! mIsGroup)
-				record.setDuration(duration.getText());
-			*/
-			//Programm.summDurations(record);
-			
+		if (v == ibOk){
 			if (callback != null)
 				callback.callbackOk();
 			
 			dialog.dismiss();
-		} else if (v == buttonSelect) {
-			/*
-			DialogSelectRecord dialog = new DialogSelectRecord(mContext);
-			dialog.callback = new DialogSelectRecord.MyCallback() {
-				@Override
-				public void selected(Record record) {
-					name.setText(record.getName());
-					text.setText(record.getText());
-					itIsTheRest.setChecked(record.isRest());
-				}
-			}; 
+		} else 
+		if (v == ibAdd){
+			
+			Dialog dialog = new Dialog(mContext);
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setTitle("Select Color Mode");
+
+			ListView modeList = new ListView(mContext);
+			String[] stringArray = new String[] { "Bright Mode", "Normal Mode" };
+			ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(mContext, 
+					android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
+			modeList.setAdapter(modeAdapter);
+
+			builder.setView(modeList);
+			dialog = builder.create();
 			dialog.show();
-			*/
 			
 		} else {
 			dialog.dismiss();
