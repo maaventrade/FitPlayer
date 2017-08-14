@@ -6,6 +6,7 @@ import android.graphics.*;
 import android.text.format.*;
 import android.util.*;
 import android.view.*;
+
 import java.text.*;
 import java.util.*;
 
@@ -280,6 +281,10 @@ public class ViewCalendar extends View
 		fillCells();
 		invalidate();
 	}
+
+	//public void setFiles(String[] files) {
+	//	mFiles = files;
+	//}
 	
 	
 }

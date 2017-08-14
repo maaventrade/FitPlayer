@@ -237,6 +237,7 @@ public final class R {
         public static final int run=0x7f070026;
         public static final int select=0x7f070027;
         public static final int select_path=0x7f070028;
+        public static final int select_programm=0x7f070033;
         public static final int speach_descr=0x7f070029;
         public static final int starts_on=0x7f07002a;
         public static final int text=0x7f07002b;

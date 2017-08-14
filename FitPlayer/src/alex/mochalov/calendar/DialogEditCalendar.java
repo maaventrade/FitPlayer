@@ -8,9 +8,12 @@ import android.content.*;
 import android.os.*;
 import android.util.*;
 import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.view.View.*;
 import android.view.*;
 import android.text.*;
+
 import java.util.*;
 
 public class DialogEditCalendar extends Dialog implements android.view.View.OnClickListener
@@ -18,6 +21,7 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 
 	private Context mContext;
 	private Dialog dialog;
+	private Dialog dialog1;
 
 	private ImageButton ibOk;
 	private ImageButton ibAdd;
@@ -27,6 +31,7 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 	private ArrayList<Prog> programms;
 	private ListView listViewProgramms;
 	private AdapterProg adapter;
+	private ArrayList mFiles = new ArrayList();
 	
 	MyCallback callback = null;
 	interface MyCallback {
@@ -39,6 +44,8 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 		mContext = context;
 		dialog = this;
 		mCell = cell;
+		
+		//mFiles = files;
 	}
 
 	@Override
@@ -61,9 +68,6 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 
 		programms = new ArrayList<Prog>();
 		
-		programms.add(new Prog("“ÚˆÛÍˆÛÍ"));
-		//Utils.readFilesList(files);
-
 		adapter = new AdapterProg(mContext, programms);
 
 		/*
@@ -119,19 +123,41 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 		} else 
 		if (v == ibAdd){
 			
-			Dialog dialog = new Dialog(mContext);
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select Color Mode");
+			builder.setTitle(mContext.getResources().getString(R.string.select_programm));
 
 			ListView modeList = new ListView(mContext);
-			String[] stringArray = new String[] { "Bright Mode", "Normal Mode" };
+			
+			modeList.setOnItemClickListener(new OnItemClickListener(){
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					programms.add(new Prog(mFiles.get(position).toString()));
+					adapter.notifyDataSetChanged();
+	                dialog1.cancel();
+				}});
+			
+			
+			Utils.readFilesList(mFiles);
+
 			ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(mContext, 
-					android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
+					android.R.layout.simple_list_item_1, android.R.id.text1, mFiles);
 			modeList.setAdapter(modeAdapter);
 
 			builder.setView(modeList);
-			dialog = builder.create();
-			dialog.show();
+			
+			builder.setNegativeButton("Cancel",
+			        new DialogInterface.OnClickListener()
+			        {
+			            public void onClick(DialogInterface dialog, int id)
+			            {
+			                dialog1.cancel();
+			            }
+			        });
+			
+			dialog1 = builder.create();
+			dialog1.show();
 			
 		} else {
 			dialog.dismiss();

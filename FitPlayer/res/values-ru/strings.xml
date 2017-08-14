@@ -68,5 +68,7 @@
 	
     <string name="zero">00:00</string>
     <string name="calendar">Календарь</string>
+
+    <string name="select_programm">Select programm</string>
     
 </resources>
