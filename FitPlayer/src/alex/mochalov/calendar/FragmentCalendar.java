@@ -41,6 +41,8 @@ public class FragmentCalendar extends Fragment {
 			Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 
+		CalendarData.loadXML(mContext);
+		
 		rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
 		ViewPager viewPager = (ViewPager)rootView. findViewById(R.id.viewPager);
@@ -84,6 +86,7 @@ public class FragmentCalendar extends Fragment {
 		 * .setNegativeButton("No", dialogClickListener).show();
 		 */
 
+		CalendarData.save(mContext);
 		super.onPause();
 	}
 

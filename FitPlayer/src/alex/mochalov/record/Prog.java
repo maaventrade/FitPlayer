@@ -11,11 +11,21 @@ public class Prog
 		mCompleted = false;
 	}
 
+	public Prog() {
+		mName = "new";
+		mCompleted = false;
+	}
+
+	public Prog(String name, boolean completed) {
+		mName = name;
+		mCompleted = completed;
+	}
+
 	public boolean isCompleted() {
 		return mCompleted;
 	}
 
-	public CharSequence getName() {
+	public String getName() {
 		return mName;
 	}
 	

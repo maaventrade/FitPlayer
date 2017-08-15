@@ -72,7 +72,7 @@ public class Cell
 					
 		y = y + bounds.height();
 					
-		draw3(canvas, mText, mRect,10 + mRect.left, y, bounds.height(), Paints.paintSmallText);
+		draw3(canvas, CalendarData.getText(this.getDate()), mRect,10 + mRect.left, y, bounds.height(), Paints.paintSmallText);
 	
 		
 	}
@@ -114,7 +114,11 @@ public class Cell
 	public Date getDate() {
 		Calendar cal = Calendar.getInstance();
 		cal.set(mYear, mMonth, mDay);
-
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		
 		return cal.getTime();
 
 	}
