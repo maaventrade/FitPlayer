@@ -107,9 +107,19 @@ public class Cell
 		return mRect;
 	}
 
-	public String getDate() {
+	public String getDay() {
 		return ""+mDay;
 	}
+	
+	public Date getDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(mYear, mMonth, mDay);
+
+		return cal.getTime();
+
+	}
+	
+	
 	public String getDateStr() {
 		Calendar cal = Calendar.getInstance();
 		cal.set(mYear, mMonth, mDay);

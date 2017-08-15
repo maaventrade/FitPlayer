@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/item_padding"
-    android:minHeight="500dp"
-    android:orientation="vertical" >
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="@dimen/item_padding"
+	android:minHeight="500dp"
+	android:orientation="vertical">
 
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@color/salad">
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-			android:layout_gravity="end"
-    android:orientation="horizontal" >
-				
-		<ImageButton
-		    android:id="@+id/ibAdd"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:src="@drawable/add" />
-
-		<ImageButton
-			android:id="@+id/ibOk"
+		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:src="@drawable/ok"/>
-	</LinearLayout>	
-		
+			android:layout_gravity="end"
+			android:orientation="horizontal">
+
+			<ImageButton
+				android:id="@+id/ibAdd"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/add"/>
+
+			<ImageButton
+				android:id="@+id/ibOk"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ok"/>
+
+		</LinearLayout>
+
 		<TextView
 			android:id="@+id/tvTitle"
 			android:layout_width="wrap_content"
@@ -52,8 +54,28 @@
 		android:id="@+id/listViewProgramms"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_weight="0.9"
-		/>
+		android:layout_weight="0.9"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<Button
+			android:id="@+id/btnOk"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/ok"
+			android:layout_weight="0.5"/>
+
+		<Button
+			android:id="@+id/btnCancel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/cancel"
+			android:layout_weight="0.5"/>
+
+	</LinearLayout>
 
 </LinearLayout>
 

@@ -164,7 +164,7 @@ public class Utils {
 	}
 
 	public static void readFilesList(ArrayList<String> programms) {
-		
+		programms.clear();
 		File file = new File(APP_FOLDER);
 		if(!file.exists()){                          
 			file.mkdirs();                  

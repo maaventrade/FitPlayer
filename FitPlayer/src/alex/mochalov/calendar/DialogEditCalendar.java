@@ -25,6 +25,8 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 
 	private ImageButton ibOk;
 	private ImageButton ibAdd;
+	private Button btnOk;
+	private Button btnCancel;
 
 	private Cell mCell;
 	
@@ -66,7 +68,7 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 		ListView listViewProgramms = (ListView)findViewById(R.id.listViewProgramms);
 		listViewProgramms.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		programms = new ArrayList<Prog>();
+		programms = CalendarData.get(mCell.getDate());
 		
 		adapter = new AdapterProg(mContext, programms);
 
@@ -108,19 +110,30 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 		ibAdd = (ImageButton)findViewById(R.id.ibAdd);
 		ibAdd.setOnClickListener(this);
 		
-//		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
-//		btnCancel.setOnClickListener(this);
+		btnOk = (Button)findViewById(R.id.btnOk);
+		btnOk.setOnClickListener(this);
+		
+		btnCancel = (Button)findViewById(R.id.btnCancel);
+		btnCancel.setOnClickListener(this);
 		
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v == ibOk){
+		if (v == btnOk){
 			if (callback != null)
 				callback.callbackOk();
 			
+			CalendarData.replace(mCell.getDate(), programms);
+				
+				
 			dialog.dismiss();
 		} else 
+		if (v == btnCancel){
+			
+			dialog.dismiss();
+		} else 
+		
 		if (v == ibAdd){
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
