@@ -32,12 +32,12 @@ public class CalendarData
 	{
 		if (hm.get(date) == null)
 			return new ArrayList<Prog>();
-		else return hm.get(date);
+		else return new ArrayList<>(hm.get(date));
 	}
 
 	public static void replace(Date date, ArrayList<Prog> programms)
 	{
-		hm.put(date, programms);
+		hm.put(date, new ArrayList<>(programms));
 	}
 
 	public static boolean save(Context mContext) {
@@ -73,7 +73,7 @@ public class CalendarData
 				
 				writer.write("</record>" + "\n");
 		        
-		        it.remove(); // avoids a ConcurrentModificationException
+		        // it.remove(); // avoids a ConcurrentModificationException
 		    }
 		    
 			writer.write("</body>" + "\n");
@@ -134,7 +134,7 @@ public class CalendarData
 				if (eventType == XmlPullParser.START_DOCUMENT) {
 				} else if (eventType == XmlPullParser.END_TAG) {
 					if (parser.getName().equals("record")) 
-						hm.put(date, prog);
+						hm.put(date, new ArrayList<>(prog));
 				} else if (eventType == XmlPullParser.START_TAG) {
 
 					if (parser.getName() == null)
@@ -186,11 +186,22 @@ public class CalendarData
 		
 		if (hm.get(date) != null)
 			for (Prog p: hm.get(date))
-				s = s + p.getName() + ",";
+				s = s + p.getName().substring(0, p.getName().lastIndexOf('.')) + ",";
 			
 		
 		
 		return s;
+	}
+
+	public static boolean isCompleted(Date date) {
+		boolean result = true;
+		
+		if (hm.get(date) != null)
+			for (Prog p: hm.get(date))
+				result = result & p.isCompleted();
+		else result = false;
+		
+		return result;
 	}
 
 }

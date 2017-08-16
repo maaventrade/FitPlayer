@@ -23,11 +23,13 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 	private Dialog dialog;
 	private Dialog dialog1;
 
-	private ImageButton ibOk;
 	private ImageButton ibAdd;
+	private ImageButton ibDelete;
 	private Button btnOk;
 	private Button btnCancel;
 
+	private int selectedStringIndex = -1;
+	
 	private Cell mCell;
 	
 	private ArrayList<Prog> programms;
@@ -98,15 +100,16 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 				@Override
 				public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
 				{
+					selectedStringIndex = index;
  				}}
 		);	
 
 		
 		
 		
-		ibOk = (ImageButton)findViewById(R.id.ibOk);
-		ibOk.setOnClickListener(this);
-		
+		ibDelete = (ImageButton)findViewById(R.id.ibDelete);
+		ibDelete.setOnClickListener(this);
+
 		ibAdd = (ImageButton)findViewById(R.id.ibAdd);
 		ibAdd.setOnClickListener(this);
 		
@@ -172,6 +175,12 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 			dialog1 = builder.create();
 			dialog1.show();
 			
+		} else if (v == ibDelete){
+			if (selectedStringIndex != -1 && selectedStringIndex < programms.size() ){
+				programms.remove(selectedStringIndex);
+				adapter.notifyDataSetChanged();
+			}
+				
 		} else {
 			dialog.dismiss();
 		}

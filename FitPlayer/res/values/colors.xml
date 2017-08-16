@@ -34,5 +34,8 @@
 	<color name= "yellow">#FFFF00</color>
 
 	<color name= "transparent">#FF000000</color>
-								
+						
+	<color name= "button">#D6CBBF</color>
+		
+			
 </resources>

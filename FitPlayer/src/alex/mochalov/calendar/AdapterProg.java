@@ -59,19 +59,24 @@ public class AdapterProg extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.item_prog, null);
 		}
 
-
 		TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
-		ImageView ivCompleted =  (ImageView)convertView.findViewById(R.id.ivCompleted);
-
+		ImageButton ibCompleted =  (ImageButton)convertView.findViewById(R.id.ibCompleted);
+		
+		ibCompleted.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				mObjects.get(position).changeCompleted();
+				notifyDataSetChanged();
+			}});
 
 		Prog prog = mObjects.get(position);
 		
 		tvName.setText(prog.getName());
 
 		if (prog.isCompleted())
-			ivCompleted.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ok));
+			ibCompleted.setImageDrawable(mContext.getResources().getDrawable(R.drawable.completed1));
 		else
-			ivCompleted.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));
+			ibCompleted.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void44));
 
 		return convertView;
 	}

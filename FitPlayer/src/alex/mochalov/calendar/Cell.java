@@ -10,6 +10,7 @@ import java.util.*;
 public class Cell
 {
 	private RectF mRect;
+	private RectF mRectCompleted;
 	
 	private int mDay;
 	private int mMonth;
@@ -19,6 +20,8 @@ public class Cell
 
 	public Cell(int day, int month, int year, float i, float j, float cellWidth, float cellHeight) {
 		mRect = new RectF(i, j, i+cellWidth, j+cellHeight);
+		
+		mRectCompleted = new RectF(mRect.right-2-44, mRect.top+2, mRect.right-2, mRect.top+2+44);
 		
 		mDay = day;
 		mMonth = month;
@@ -72,8 +75,16 @@ public class Cell
 					
 		y = y + bounds.height();
 					
+		
 		draw3(canvas, CalendarData.getText(this.getDate()), mRect,10 + mRect.left, y, bounds.height(), Paints.paintSmallText, selected);
-	
+
+		if (CalendarData.isCompleted(this.getDate()))
+			if (selected)
+				canvas.drawBitmap(Paints.bmpCompleted, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
+			else
+				canvas.drawBitmap(Paints.bmpCompleted1, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
+		else 
+			canvas.drawBitmap(Paints.bmpGo, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
 		
 	}
 

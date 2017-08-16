@@ -3,8 +3,10 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@drawable/item_background_selector1"
+	android:background="@drawable/item_background_selector2"
 	android:clickable="false"
+	android:descendantFocusability="blocksDescendants" 
+	
 	android:orientation="horizontal">
 
 		<TextView
@@ -12,17 +14,17 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_weight="0.8"
-		    android:background="@drawable/item_background_selector1"
+		    android:background="@drawable/item_background_selector2"
 		    android:text="Big Text"
 		    android:textAppearance="?android:attr/textAppearanceLarge"
-		    android:textColor="@drawable/item_text_selector1" />
-    
-		<ImageView
-		    android:id="@+id/ivCompleted"
+		    android:textColor="@drawable/item_text_selector2" />
+
+		<ImageButton
+		    android:id="@+id/ibCompleted"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_weight="0.2"
-		    android:src="@drawable/ok" />
+		    android:src="@drawable/completed1" />
 
 </LinearLayout>
 

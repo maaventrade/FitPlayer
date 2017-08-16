@@ -28,5 +28,9 @@ public class Prog
 	public String getName() {
 		return mName;
 	}
+
+	public void changeCompleted() {
+		mCompleted = !mCompleted;
+	}
 	
 }

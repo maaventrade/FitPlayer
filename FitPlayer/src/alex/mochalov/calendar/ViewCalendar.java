@@ -253,8 +253,13 @@ public class ViewCalendar extends View
 					cells[i][j].draw(canvas, month, false);
 		}
 		
-		if (selectedCell != null)
+		if (selectedCell != null){
+			canvas.save();
+			RectF rect = selectedCell.getRect();
+			canvas.scale(1.3f, 1.3f, rect.left + rect.width()/2,  rect.top + rect.height()/2);
 			selectedCell.draw(canvas, month, true);
+		    canvas.restore();			
+		}
 				
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month, 1);

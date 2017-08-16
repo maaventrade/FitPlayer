@@ -26,11 +26,11 @@
 				android:src="@drawable/add"/>
 
 			<ImageButton
-				android:id="@+id/ibOk"
+				android:id="@+id/ibDelete"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@drawable/ok"/>
-
+				android:src="@drawable/delete"/>
+			
 		</LinearLayout>
 
 		<TextView

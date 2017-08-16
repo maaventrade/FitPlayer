@@ -95,7 +95,9 @@ public class FragmentCalendar extends Fragment {
 	public void onResume() {
 		
 		super.onResume();
+		
 		CalendarData.loadXML(mContext);
+		Paints.loadBitmaps(mContext);
 	}
 	
 	@Override
