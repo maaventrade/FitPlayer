@@ -9,6 +9,7 @@ import android.view.*;
 
 import java.text.*;
 import java.util.*;
+import alex.mochalov.record.*;
 
 
 public class ViewCalendar extends View
@@ -130,6 +131,20 @@ public class ViewCalendar extends View
 					if (cells[i][j].contains(x, y)){
 						if (selectedCell == cells[i][j]){
 							DialogEditCalendar dialog = new DialogEditCalendar(mContext, cells[i][j]);
+							dialog.callback = new DialogEditCalendar.DialodEditCalendarCallback(){
+
+								@Override
+								public void callbackOk()
+								{
+									invalidate();
+								}
+
+								@Override
+								public void callbackOkNew(Record newRecord)
+								{
+									// TODO: Implement this method
+								}
+							};
 							dialog.show();
 						} else {
 							selectedCell = cells[i][j];

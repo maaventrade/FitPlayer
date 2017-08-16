@@ -35,8 +35,8 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 	private AdapterProg adapter;
 	private ArrayList mFiles = new ArrayList();
 	
-	MyCallback callback = null;
-	interface MyCallback {
+	public DialodEditCalendarCallback callback = null;
+	public interface DialodEditCalendarCallback {
 		void callbackOk(); 
 		void callbackOkNew(Record newRecord); 
 	} 

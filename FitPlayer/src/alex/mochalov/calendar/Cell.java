@@ -72,13 +72,19 @@ public class Cell
 					
 		y = y + bounds.height();
 					
-		draw3(canvas, CalendarData.getText(this.getDate()), mRect,10 + mRect.left, y, bounds.height(), Paints.paintSmallText);
+		draw3(canvas, CalendarData.getText(this.getDate()), mRect,10 + mRect.left, y, bounds.height(), Paints.paintSmallText, selected);
 	
 		
 	}
 
-	private void draw3(Canvas canvas, String mText, RectF mRect, float x, float y, float d, Paint paintSmallText)
+	private void draw3(Canvas canvas, String mText, RectF mRect, float x, float y, float d, Paint paintSmallText, boolean selected)
 	{
+		
+		if (selected)
+			Paints.paintSmallText.setColor(Color.YELLOW);
+		else
+			Paints.paintSmallText.setColor(Color.BLACK);
+			
 		float a[] = new float[mText.length()];
 		Paints.paintSmallText. getTextWidths(mText,
 				0, mText.length(), a);

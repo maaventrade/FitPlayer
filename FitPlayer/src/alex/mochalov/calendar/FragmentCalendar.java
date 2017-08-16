@@ -41,7 +41,7 @@ public class FragmentCalendar extends Fragment {
 			Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 
-		CalendarData.loadXML(mContext);
+		
 		
 		rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
@@ -90,6 +90,14 @@ public class FragmentCalendar extends Fragment {
 		super.onPause();
 	}
 
+
+	@Override
+	public void onResume() {
+		
+		super.onResume();
+		CalendarData.loadXML(mContext);
+	}
+	
 	@Override
 	public void onDestroyView() {
 		// mVIsible = false;
