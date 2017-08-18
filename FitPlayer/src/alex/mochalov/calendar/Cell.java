@@ -35,10 +35,24 @@ public class Cell
 		return mRect.contains(x, y);
 	}
 
-	public void draw(Canvas canvas, int month, boolean selected)
+	public void draw(Canvas canvas, int month, boolean selected, Date now)
 	{
-
+		Paints.paintText.setStyle(Paint.Style.FILL_AND_STROKE);
 		
+		if (this.getDate().equals(now))
+			Paints.paintText.setColor(Paints.colorBronze);
+		else
+			Paints.paintText.setColor(Color.WHITE);
+		
+		canvas.drawRect(mRect, Paints.paintText);
+		
+		Paints.paintText.setColor(Color.BLACK);
+		Paints.paintText.setStyle(Paint.Style.STROKE);
+		
+		canvas.drawRect(mRect, Paints.paintText);
+		
+		Paints.paintText.setTextSize(40);
+		/*
 		if (selected){
 			Paints.paintText.setColor(Color.BLUE);
 			Paints.paintText.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -46,25 +60,26 @@ public class Cell
 			canvas.drawRect(mRect, Paints.paintText);
 			
 			Paints.paintText.setColor(Color.YELLOW);
-			Paints.paintText.setStyle(Paint.Style.STROKE);
-			Paints.paintText.setTextSize(40);
+			
 		} else {
-			Paints.paintText.setColor(Color.BLACK);
-			Paints.paintText.setStyle(Paint.Style.STROKE);
-			Paints.paintText.setTextSize(40);
+			
+		*/
+			
 
-			canvas.drawRect(mRect, Paints.paintText);
-		}
+
+			if (mMonth != month) 
+				Paints.paintText.setColor(Color.LTGRAY);
+			else
+				Paints.paintText.setColor(Color.BLACK);
+			
+		//}
 		
 		
 		Paints.paintSmallText.setColor(Color.BLACK);
 		Paints.paintSmallText.setStyle(Paint.Style.STROKE);
 		Paints.paintSmallText.setTextSize(24);
 		
-		canvas.drawRect(mRect, Paints.paintText);
 		
-		if (mMonth != month) 
-			Paints.paintText.setColor(Color.GRAY);
 		
 		Rect bounds = Paints.getTextBounds("X", Paints.paintText);
 		float y = 10 + mRect.top + bounds.height();
@@ -75,16 +90,19 @@ public class Cell
 					
 		y = y + bounds.height();
 					
-		
-		draw3(canvas, CalendarData.getText(this.getDate()), mRect,10 + mRect.left, y, bounds.height(), Paints.paintSmallText, selected);
+		Date date = this.getDate();
+		draw3(canvas, CalendarData.getText(date), mRect,10 + mRect.left, y, bounds.height(), Paints.paintSmallText, false);
 
-		if (CalendarData.isCompleted(this.getDate()))
-			if (selected)
-				canvas.drawBitmap(Paints.bmpCompleted, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
-			else
-				canvas.drawBitmap(Paints.bmpCompleted1, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
-		else 
-			canvas.drawBitmap(Paints.bmpGo, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
+		int count = CalendarData.getProgsCount(this.getDate());
+		
+		if (date.compareTo(now) <= 0){
+			if (CalendarData.isCompleted(this.getDate()))
+				
+					canvas.drawBitmap(Paints.bmpCompleted1, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
+			else if (count > 0 && date.equals(now))
+				canvas.drawBitmap(Paints.bmpGo, Paints.bmpCompletedSrc,  mRectCompleted, Paints.paintSmallText);
+			
+		}
 		
 	}
 

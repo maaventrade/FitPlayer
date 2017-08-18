@@ -18,6 +18,9 @@ public class Paints {
 	static Bitmap bmpGo = null;
 	
 	static Rect bmpCompletedSrc;
+	
+	static int colorBronze;
+
 
 	public static Rect getTextBounds(String string, Paint paintText) {
 		Paints.paintText.getTextBounds(string, 0, string.length(), textBounds);
@@ -30,6 +33,8 @@ public class Paints {
 		bmpGo = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.go44);
 		
 		bmpCompletedSrc = new Rect(0,0, bmpCompleted.getWidth(), bmpCompleted.getHeight());
+		
+		colorBronze = mContext.getResources().getColor(R.color.salad);
 	}
 	
 }

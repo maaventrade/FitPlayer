@@ -31,6 +31,8 @@ public class ViewCalendar extends View
 	private int month = 0;
 	private int year = 0;
 	
+	private Date today;
+	
 	private Cell selectedCell = null;
 	
 	private final Rect textBounds = new Rect();
@@ -87,7 +89,15 @@ public class ViewCalendar extends View
 		Calendar cal = Calendar.getInstance();
 		month = cal.get(Calendar.MONTH);
 		year = cal.get(Calendar.YEAR);
-		
+		//Calendar cal = Calendar.getInstance();
+
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+
+		today = cal.getTime();
+	
 		getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 				@Override
 				public void onGlobalLayout() {
@@ -245,23 +255,60 @@ public class ViewCalendar extends View
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawColor(Color.YELLOW);
+		canvas.drawColor(Color.WHITE);
+		
+		
+		
+		int is = -1;
+		int js = -1;
 		
 		for (int i = 0; i < 7; i++)
 			for (int j = 0; j < cellsCountVert; j++){
 				if (cells[i][j] != null )
-					cells[i][j].draw(canvas, month, false);
+					cells[i][j].draw(canvas, month, false, today);
+				if (cells[i][j] == selectedCell){
+					is = i;
+					js = j;
+				}
 		}
 		
 		if (selectedCell != null){
+			//int x;
+			//int y;
 			canvas.save();
 			RectF rect = selectedCell.getRect();
-			canvas.scale(1.3f, 1.3f, rect.left + rect.width()/2,  rect.top + rect.height()/2);
-			selectedCell.draw(canvas, month, true);
+			
+			
+			if (is == 0 && js == 0)
+				canvas.scale(1.3f, 1.3f, rect.left,  rect.top);
+			else if (is == 0 && js == cellsCountVert-1)
+				canvas.scale(1.3f, 1.3f, rect.left,  rect.bottom);
+			else if (is == 6 && js == cellsCountVert-1)
+				canvas.scale(1.3f, 1.3f, rect.right,  rect.bottom);
+			else if (is == 6 && js == 0)
+				canvas.scale(1.3f, 1.3f, rect.right,  rect.top);
+			
+			else if (js == cellsCountVert-1)
+				canvas.scale(1.3f, 1.3f, rect.left + rect.width()/2,  rect.bottom);
+			
+			else if (is == 0)
+				canvas.scale(1.3f, 1.3f, rect.left + rect.width()/2,  rect.top);
+			
+			else if (is == 6)
+				canvas.scale(1.3f, 1.3f, rect.right,  rect.top+ rect.height()/2);
+			
+			else if (js == 0)
+				canvas.scale(1.3f, 1.3f, rect.left + rect.width()/2,  rect.top);
+			
+			else
+				canvas.scale(1.3f, 1.3f, rect.left + rect.width()/2,  rect.top + rect.height()/2);
+			
+			selectedCell.draw(canvas, month, true, today);
 		    canvas.restore();			
 		}
 				
 		Calendar cal = Calendar.getInstance();
+		
 		cal.set(year, month, 1);
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
