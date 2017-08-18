@@ -6,9 +6,11 @@ import android.graphics.*;
 import android.text.format.*;
 import android.util.*;
 import android.view.*;
+import android.widget.ImageButton;
 
 import java.text.*;
 import java.util.*;
+
 import alex.mochalov.record.*;
 
 
@@ -37,7 +39,7 @@ public class ViewCalendar extends View
 	
 	private final Rect textBounds = new Rect();
 	
-	ViewCalendar thisView;
+	private ViewCalendar thisView;
 
 	@SuppressLint("NewApi")
 	public ViewCalendar(Context context, 
@@ -114,6 +116,9 @@ public class ViewCalendar extends View
 						});
 				}
 			});
+		
+		setLayerType(View.LAYER_TYPE_SOFTWARE, Paints.paintShadow);
+
 	}
 
 	@Override
@@ -257,8 +262,6 @@ public class ViewCalendar extends View
 	public void onDraw(Canvas canvas) {
 		canvas.drawColor(Color.WHITE);
 		
-		
-		
 		int is = -1;
 		int js = -1;
 		
@@ -348,7 +351,6 @@ public class ViewCalendar extends View
 		fillCells();
 		invalidate();
 	}
-
 	//public void setFiles(String[] files) {
 	//	mFiles = files;
 	//}

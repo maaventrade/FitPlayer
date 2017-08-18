@@ -49,7 +49,12 @@ public class Cell
 		Paints.paintText.setColor(Color.BLACK);
 		Paints.paintText.setStyle(Paint.Style.STROKE);
 		
-		canvas.drawRect(mRect, Paints.paintText);
+		if (selected)
+			Paints.paintShadow.setShadowLayer(10.0f, 0.0f, 2.0f, 0xFF000000);
+		else
+			Paints.paintShadow.setShadowLayer(0.0f, 0.0f, 0.0f, 0x00000000);
+		
+		canvas.drawRect(mRect, Paints.paintShadow);
 		
 		Paints.paintText.setTextSize(40);
 		/*

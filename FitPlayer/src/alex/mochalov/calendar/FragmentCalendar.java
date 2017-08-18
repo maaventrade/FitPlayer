@@ -21,6 +21,8 @@ import android.view.View.OnClickListener;
 public class FragmentCalendar extends Fragment {
 	private Activity mContext;
 	private View rootView;
+	
+	private ImageButton ibGo;
 	//private String[] files;
 
 	public FragmentCalendar(Activity context) {
@@ -46,8 +48,6 @@ public class FragmentCalendar extends Fragment {
 		rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
 		ViewPager viewPager = (ViewPager)rootView. findViewById(R.id.viewPager);
-		
-		ViewCalendar viewCalendar = (ViewCalendar)rootView. findViewById(R.id.viewCalendar);
 		
 		Calendar cal = Calendar.getInstance();
 		
@@ -122,6 +122,7 @@ public class FragmentCalendar extends Fragment {
 	        
 	        ViewCalendar viewCalendar = (ViewCalendar)layout.findViewById(R.id.viewCalendar);
 	        viewCalendar.init(position);
+	        
 	        
 	        collection.addView(layout);
 	        return layout;

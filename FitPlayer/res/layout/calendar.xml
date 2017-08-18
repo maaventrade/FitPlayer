@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bronze_light3"
-    android:orientation="vertical" >
+    android:background="@color/bronze_light3">
     
 	<alex.mochalov.calendar.ViewCalendar
 		android:id="@+id/viewCalendar"
@@ -12,4 +11,4 @@
 	    android:text="Large Text"
 	    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</LinearLayout>
+</RelativeLayout>
