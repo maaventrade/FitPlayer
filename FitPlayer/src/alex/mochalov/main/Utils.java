@@ -229,6 +229,8 @@ public class Utils {
 	
 }
 
+private ArrayList<Record> records = new ArrayList<Record>(); 
+Programm.loadXMLrecords(mContext, records);
 
 /*
 Log.d("", "START "+parser.getName());

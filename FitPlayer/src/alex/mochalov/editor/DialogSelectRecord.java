@@ -82,4 +82,10 @@ public class DialogSelectRecord extends Dialog
 		
 	}
 
+//	@Override
+//	protected void onCancel() {
+//		Programm.save(mContext, Utils.getFileName());
+//		
+//	}
+	
 }
