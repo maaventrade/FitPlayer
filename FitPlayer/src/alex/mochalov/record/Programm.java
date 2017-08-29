@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -49,7 +50,7 @@ public class Programm {
 
 		try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(
-												new FileInputStream(file.getName())));
+												new FileInputStream(file.getPath())));
 
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);
@@ -59,22 +60,20 @@ public class Programm {
 
 			int eventType = parser.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {
-
+				
 				if (eventType == XmlPullParser.START_DOCUMENT) {
-					if (parser.getAttributeValue(null, "type").equals("fpprogramm")) return true ;
 				} else if (eventType == XmlPullParser.START_TAG) {
 					if (parser.getName().equals("body")) 
 					{
-						Log.d("v","body ");
 						if (parser.getAttributeValue(null, "type").equals("fpprogramm")) return true ;
 					}
 				} 
 				try {
 					eventType = parser.next();
 				} catch (XmlPullParserException e) {
+					return false;
 				}
 			}
-
 		} catch (Throwable t) {
 			return false;
 		}
@@ -317,14 +316,24 @@ public class Programm {
 							duration = Integer.parseInt(parser
 									.getAttributeValue(null, "duration"));
 
+						String strUUID = parser.getAttributeValue(null, "id");
+						UUID uuid;
+						if (strUUID.equals("null"))
+							uuid = null;
+						else uuid = UUID.fromString(strUUID);
+						
 						record = new Record(parser.getAttributeValue(null,
 								"name"),
 								parser.getAttributeValue(null, "text"),
-								Boolean.parseBoolean(parser.getAttributeValue(
-										null, "rest")), duration,
-								Boolean.parseBoolean(parser.getAttributeValue(
-										null, "weight")));
+								Boolean.parseBoolean(parser.getAttributeValue(null, "rest")), 
+								duration,
+								uuid, 
+								Boolean.parseBoolean(parser.getAttributeValue(null, "weight")));
 
+						//record.setID(Records.findRecord(record.getText()));
+						
+						
+						
 						if (currentGroup != null) {
 							listDataChild.get(currentGroup).add(record);
 						} else {
@@ -409,7 +418,7 @@ public class Programm {
 			Writer writer = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(file), "UTF-8"));
 
-			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"? type = \"fpprogramm\"  >" + "\n");
+			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
 			writer.write("<body type = \"fpprogramm\">" + "\n");
 
 			writer.write("<main text=\"" + main.getText()  
@@ -428,10 +437,14 @@ public class Programm {
 			writer.write("</main>" + "\n");
 
 			for (Record r : listDataHeader) {
-				writer.write("<record name=\"" + r.getName() + "\""
-						+ " text=\"" + r.getText() + "\"" + " duration=\""
+				writer.write(
+						"<record name=\"" + r.getName() + "\""
+								+ " text=\"" + r.getText() + "\"" 
+								+ " id=\"" + r.getID() + "\"" 
+						+ " duration=\""
 						+ r.getDuration() + "\"" + ">" + "\n");
-
+//				"<record name=\"" + r.getName() + "\""+ " text=\"" + r.getText() + "\""+ " id=\"" + r.getID() + "\""+ " duration=\""+ r.getDuration() + "\"" + ">" + "\n"
+				
 				if (listDataChild.get(r) != null) {
 					writer.write("<children>" + "\n");
 					for (Record l : listDataChild.get(r)) {
@@ -439,6 +452,7 @@ public class Programm {
 								+ " text=\"" + l.getText() + "\"" 
 								+ " rest=\""+ l.isRest() + "\"" 
 								+ " weight=\""+ l.isWeight() + "\"" 
+								+ " id=\""+ l.getID() + "\"" 
 								+ " duration=\""+ l.getDuration() + "\"" + ">" + "\n");
 						writer.write("</record>" + "\n");
 					}
@@ -626,100 +640,6 @@ public class Programm {
 		}
 
 		return record;
-	}
-
-	public static void loadXMLrecords(Context mContext,
-			ArrayList<Record> records) {
-
-		records.clear();
-		File dir = new File(Utils.APP_FOLDER + "/");
-		File[] files = dir.listFiles();
-
-		if (files != null)
-			for (int i = 0; i < files.length; i++) {
-				if (files[i].getName().endsWith(".xml")) {
-					try {
-						String name = Utils.APP_FOLDER + "/"
-								+ files[i].getName();
-
-						BufferedReader reader;
-						BufferedReader rd = new BufferedReader(
-								new InputStreamReader(new FileInputStream(name)));
-
-						String line = rd.readLine();
-
-						rd.close();
-
-						if (line.toLowerCase().contains("windows-1251"))
-							reader = new BufferedReader(new InputStreamReader(
-									new FileInputStream(name), "windows-1251")); // Cp1252
-						else if (line.toLowerCase().contains("utf-8"))
-							reader = new BufferedReader(new InputStreamReader(
-									new FileInputStream(name), "UTF-8"));
-						else if (line.toLowerCase().contains("utf-16"))
-							reader = new BufferedReader(new InputStreamReader(
-									new FileInputStream(name), "utf-16"));
-						else
-							reader = new BufferedReader(new InputStreamReader(
-									new FileInputStream(name)));
-
-						XmlPullParserFactory factory = XmlPullParserFactory
-								.newInstance();
-						factory.setNamespaceAware(true);
-						XmlPullParser parser = factory.newPullParser();
-
-						parser.setInput(reader);
-
-						int eventType = parser.getEventType();
-						while (eventType != XmlPullParser.END_DOCUMENT) {
-							if (eventType == XmlPullParser.START_TAG) {
-								if (parser.getName().equals("record")) {
-
-									int duration = 0;
-									if (parser.getAttributeValue(null,
-											"duration") != null)
-										duration = Integer.parseInt(parser
-												.getAttributeValue(null,
-														"duration"));
-
-									Record record = new Record(
-											parser.getAttributeValue(null,
-													"name"),
-											parser.getAttributeValue(null,
-													"text"),
-											Boolean.parseBoolean(parser
-													.getAttributeValue(null,
-															"rest")), duration,
-											Boolean.parseBoolean(parser
-														.getAttributeValue(null,
-																"weight")));
-
-									if (record.getText() != null
-											&& record.getText().length() > 0) {
-										boolean found = false;
-										for (Record r : records)
-											if (r.mName.equals(record.mName)) {
-												found = true;
-												break;
-											}
-
-										if (!found)
-											records.add(record);
-									}
-
-								}
-							}
-
-							try {
-								eventType = parser.next();
-							} catch (XmlPullParserException e) {
-							}
-						}
-					} catch (Throwable t) {
-					}
-				}
-			}
-		Utils.sortR(records);
 	}
 
 	public static boolean loadXMLInfo(Context mContext, String fileName, FileData fileData) {

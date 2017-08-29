@@ -203,9 +203,30 @@ public class FragmentFiles extends Fragment
 
 				ft.commit(); 
 				return true;
+		case R.id.action_archive:
+			archive();
+			return true;
 		default:	
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void archive() {
+		
+		DialogSelectPath dialog = new DialogSelectPath(mContext, "");
+		
+		dialog.callback = new DialogSelectPath.SelectFileCallback() {
+			@Override
+			public void callbackOk(String path) {
+				
+				Toast.makeText(mContext, 
+						Utils.archive(files, path), 
+						Toast.LENGTH_LONG).show();
+				
+			}
+		}; 
+		dialog.show(); 
+		
 	}
 
 	private void DialogAddPasteRename(final String p0)

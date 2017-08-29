@@ -26,8 +26,6 @@ public class DialogSelectRecord extends Dialog
 
 	private AdapterSelectRecord adapter;
 	
-	private ArrayList<Record> records = new ArrayList<Record>(); 
-
 	private TextView mSelectedPath;
 	
 	MyCallback callback = null;
@@ -54,9 +52,7 @@ public class DialogSelectRecord extends Dialog
 
 		ListView listViewFiles = (ListView)findViewById(R.id.ListViewSelect);
 
-		Programm.loadXMLrecords(mContext, records);
-		
-        adapter = new AdapterSelectRecord(mContext, records);
+        adapter = new AdapterSelectRecord(mContext, Records.getRecords());
 		
 		listViewFiles.setAdapter(adapter);
 		
@@ -65,7 +61,7 @@ public class DialogSelectRecord extends Dialog
 			public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
 			{
 				if (callback != null){
-					callback.selected(records.get(index));
+					callback.selected(Records.getRecords().get(index));
 					dialog.dismiss();
 				}
 			}}

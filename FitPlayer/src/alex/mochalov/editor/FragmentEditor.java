@@ -69,7 +69,7 @@ public class FragmentEditor extends Fragment {
 		final TextView textMain = (TextView) rootView
 				.findViewById(R.id.TextViewText);
 
-		nameMain.setText(Programm.getMainRecord().getName());
+		nameMain.setText( Utils.getFileName());
 		durationMain.setText(Utils.MStoString(Programm.getMainRecord()
 				.getDuration()));
 		textMain.setText(Programm.getMainRecord().getText());
@@ -86,7 +86,6 @@ public class FragmentEditor extends Fragment {
 
 					@Override
 					public void callbackOk() {
-						nameMain.setText(Programm.getMainRecord().getName());
 						durationMain.setText(Utils.MStoString(Programm
 								.getMainRecord().getDuration()));
 						textMain.setText(Programm.getMainRecord().getText());
@@ -94,9 +93,7 @@ public class FragmentEditor extends Fragment {
 						mModyfied = true;
 					}
 				};
-
 				dialogEditMain.show();
-
 			}
 		});
 		// \Edit programm Header

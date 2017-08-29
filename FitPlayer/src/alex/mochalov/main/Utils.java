@@ -12,6 +12,8 @@ import android.widget.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.xmlpull.v1.*;
 
@@ -44,13 +46,11 @@ public class Utils {
 	
 	private static Date date0 = new Date(0);
 
+
 	public static Object getDateOfTheLastFale()
 	{
-	
 		return date0;
 	}
-
-	
 
 	public static void setCopyRecord(Record record)
 	{
@@ -240,6 +240,49 @@ public class Utils {
 		Programm.loadXMLInfo(mContext, string, fileData);
 		
 		return fileData;
+	}
+
+
+
+	public static String archive(ArrayList<String> files, String path) {
+		int BUFFER = 1000;
+		
+		Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+        String formattedDate = df.format(c.getTime());
+		String zipName = path+"/"+formattedDate+".zip";
+		
+		  
+		try  { 
+			  BufferedInputStream origin = null; 
+			  FileOutputStream dest = new FileOutputStream(new File(zipName)); 
+
+			  ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest)); 
+
+			  byte data[] = new byte[BUFFER]; 
+
+			  for(int i = 0; i < files.size(); i++) { 
+				  FileInputStream fi = new FileInputStream(APP_FOLDER + "/" + files.get(i)); 
+			    
+				  origin = new BufferedInputStream(fi, BUFFER); 
+			    
+				  ZipEntry entry = new ZipEntry(files.get(i)); 
+				  
+				  out.putNextEntry(entry); 
+			    
+				  int count; 
+				  while ((count = origin.read(data, 0, BUFFER)) != -1) { 
+					  out.write(data, 0, count); 
+				  } 
+				  origin.close(); 
+			  } 
+
+			  out.close(); 
+			} catch(Exception e) { 
+				return e.toString();
+			} 
+		
+		return "Created "+zipName;
 	}
 
 	

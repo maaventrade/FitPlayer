@@ -3,6 +3,7 @@ package alex.mochalov.editor;
 import java.io.File;
 import java.util.ArrayList;
 
+import alex.mochalov.editor.DialogEditMain.MyCallback;
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.*;
 import alex.mochalov.record.*;
@@ -28,16 +29,18 @@ public class DialogSelectPath extends Dialog
 	private ArrayAdapter<String> adapter;
 	private ListView listViewFiles;
 
-	private TextView mSelectedPath;
+	public SelectFileCallback callback = null;
+	public interface SelectFileCallback {
+		void callbackOk(String path); 
+	} 
 	
-	public DialogSelectPath(Context context, TextView selectedPath) {
+	public DialogSelectPath(Context context, String path) {
 		
 		super(context);
 		mContext = context;
-		mSelectedPath = selectedPath;
 		dialog = this;
 		
-		PATH = selectedPath.getText().toString();
+		PATH = path;
 	}
 
 	@Override
@@ -88,7 +91,8 @@ public class DialogSelectPath extends Dialog
 				@Override
 				public void onClick(View p1)
 				{
-					mSelectedPath.setText(PATH);
+					if (callback != null)
+						callback.callbackOk(PATH);
 					dialog.dismiss();
 				}
 			});

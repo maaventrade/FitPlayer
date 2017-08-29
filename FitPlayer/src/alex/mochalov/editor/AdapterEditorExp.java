@@ -112,13 +112,13 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 			layoutChild.setTranslationX(50f);
 		}
 
-		ImageButton brnEdit = (ImageButton) convertView
+		ImageButton btnEdit = (ImageButton) convertView
 				.findViewById(R.id.imageButtonEdit);
 		if (Programm.isLocked()){
-			brnEdit.setVisibility(View.INVISIBLE);
+			btnEdit.setVisibility(View.INVISIBLE);
 		} else {
-			brnEdit.setVisibility(View.VISIBLE);
-			brnEdit.setOnClickListener(new OnClickListener() {
+			btnEdit.setVisibility(View.VISIBLE);
+			btnEdit.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					if (childPosition < 0) 

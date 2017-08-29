@@ -17,6 +17,8 @@ public class Record {
 	private ArrayList<Record> modifications;
 	private boolean mRest;
 	private boolean mWeight;
+	
+	private UUID UUID;  
 
 	public Record(String name, String text, Boolean rest, int duration, Boolean weight) {
 		mName = name;
@@ -24,7 +26,7 @@ public class Record {
 		mDuration = duration;
 		mRest = rest;
 		mWeight = weight;
-
+		
 		modifications = new ArrayList<Record>();
 	}
 	
@@ -34,12 +36,31 @@ public class Record {
 		mDuration = record.mDuration;
 		mRest = record.mRest;
 		mWeight = record.mWeight;
-
-		//modifications = new ArrayList<Record>();
 	}
 	
 	public Record(String name) {
 		mName = name;
+		
+		modifications = new ArrayList<Record>();
+	}
+
+	public Record(String name, String text, Boolean rest, UUID uuid, Boolean weight) {
+		mName = name;
+		mText = text;
+		UUID = uuid;
+		mRest = rest;
+		mWeight = weight;
+		
+		modifications = new ArrayList<Record>();
+	}
+
+	public Record(String name, String text, Boolean rest, int duration, UUID uuid, Boolean weight) {
+		mName = name;
+		mText = text;
+		mDuration = duration;
+		UUID = uuid;
+		mRest = rest;
+		mWeight = weight;
 		
 		modifications = new ArrayList<Record>();
 	}
@@ -117,6 +138,15 @@ public class Record {
 
 	public void setDuration(long duration) {
 		mDuration = duration;
+	}
+
+	public UUID getID() {
+		//return UUID.randomUUID();
+		return UUID;
+	}
+
+	public void setID(UUID uuid) {
+		UUID = uuid;		
 	}
 
 	

@@ -91,7 +91,8 @@ public class MainActivity extends Activity implements OnInitListener{
 			//Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
 		}
 		
-		
+		Records.loadRecords(this);
+		//Records.loadXMLrecords(this);
 		
 	}
 /*
@@ -142,6 +143,7 @@ public class MainActivity extends Activity implements OnInitListener{
 	@Override
     public void onPause() {
 		TtsUtils.destroy();
+		//Records.SaveRecords(this);
 		
         super.onPause();
     }	
@@ -159,18 +161,8 @@ public class MainActivity extends Activity implements OnInitListener{
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		
-		switch (id){
-		
-		case R.id.action_settings:
-			return true;
-		
-		
-		default:	
-			return super.onOptionsItemSelected(item);
-		}
+		return super.onOptionsItemSelected(item);
 	}
-	
 	
 
 	@Override

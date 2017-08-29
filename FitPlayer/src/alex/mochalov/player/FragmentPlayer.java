@@ -410,8 +410,6 @@ public class FragmentPlayer extends Fragment {
 		case android.R.id.home:
 			getActivity().onBackPressed();
 			return true;
-		case R.id.action_settings:
-			return true;
 		case R.id.action_parameters:
 			final boolean music = Programm.isPlayMusicOn();
 			final String musicPath = Programm.getPathToMp3();

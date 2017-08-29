@@ -70,7 +70,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(record.getName());
-		name.requestFocus();
+		name.setSelectAllOnFocus(true);
 
 		TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
 		if (newRecord)
@@ -147,7 +147,15 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		
 		buttonSelect = (Button)findViewById(R.id.buttonSelect);
 		buttonSelect.setOnClickListener(this);
-					
+	
+		name.requestFocus();
+        name.selectAll();
+/*
+		Editable text = name.getText();
+        if (text.length() > 0) {
+            text.replace(0, 1, text.subSequence(0, 1), 0, 1);
+            name.selectAll();
+        }*/		
 	}
 
 	@Override

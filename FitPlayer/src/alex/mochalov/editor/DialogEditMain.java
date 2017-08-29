@@ -27,7 +27,7 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 	private Record record;
 	private boolean mTune;
 	
-	private EditText name;
+	//private EditText name;
 	private EditText text;
 	
 	private Button btnOk;
@@ -80,9 +80,9 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
               WindowManager.LayoutParams.MATCH_PARENT);
 	
-		name = (EditText)findViewById(R.id.editTextName);
-		name.setText(record.getName());
-		name.requestFocus();
+		//name = (EditText)findViewById(R.id.editTextName);
+		//name.setText(record.getName());
+		//name.requestFocus();
 
 		TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
 		tvTitle.setText(mContext.getResources().getString(R.string.edit_main));
@@ -96,8 +96,14 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 			@Override
 			public void onClick(View p1)
 			{
-				DialogSelectPath dialog = new DialogSelectPath(mContext, textViewPathToMp3);
-				dialog.show();
+				DialogSelectPath dialog = new DialogSelectPath(mContext, textViewPathToMp3.getText().toString());
+				dialog.callback = new DialogSelectPath.SelectFileCallback() {
+					@Override
+					public void callbackOk(String path) {
+						textViewPathToMp3.setText(path);
+					}
+				}; 
+				dialog.show(); 
 			}
 		});
 		
@@ -210,7 +216,7 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 		
 		if (Programm.isLocked()){
 			btnLockUnlock.setText(mContext.getResources().getString(R.string.unlock));
-			name.setEnabled(false);
+			//name.setEnabled(false);
 			text.setEnabled(false);
 			playMusic.setEnabled(false);
 		
@@ -224,7 +230,7 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 			
 		} else {
 			btnLockUnlock.setText(mContext.getResources().getString(R.string.lock));
-			name.setEnabled(true);
+			//name.setEnabled(true);
 			text.setEnabled(true);
 			playMusic.setEnabled(true);
 			
@@ -248,7 +254,7 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 	@Override
 	public void onClick(View v) {
 		if (v == btnOk || v == imgBtnOk ){
-			record.setName(name.getText());
+			//record.setName(name.getText());
 			record.setText(text.getText());
 
 			countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
