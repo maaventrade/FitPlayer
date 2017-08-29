@@ -61,7 +61,14 @@
                     android:layout_marginLeft="@dimen/item_padding"
                     android:scaleType="centerInside"
                     android:src="@drawable/lock" />
-
+				<TextView
+                    android:id="@+id/tvInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="info"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@drawable/item_text_selector1" />
+				
             </LinearLayout>
 
         </LinearLayout>

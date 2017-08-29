@@ -41,6 +41,16 @@ public class Utils {
 	private static String mFileName;
 
 	private static Record copyRecord = null;
+	
+	private static Date date0 = new Date(0);
+
+	public static Object getDateOfTheLastFale()
+	{
+	
+		return date0;
+	}
+
+	
 
 	public static void setCopyRecord(Record record)
 	{
@@ -97,14 +107,11 @@ public class Utils {
 		return true;
 	}
 
-	public static CharSequence getFileDateTime(String selectedString, Context context)
+	public static Date getFileDateTime(String selectedString)
 	{
 		File file = new File(APP_FOLDER+"/"+selectedString);
 		Date date  =  new Date(file.lastModified());
-		DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-		DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-	
-		return dateFormat.format(date)+" "+timeFormat.format(date);
+		return date;
 	}
 	
 	public static String getFileName(){
@@ -170,19 +177,28 @@ public class Utils {
 			file.mkdirs();                  
 		}
 
+		
+		
 		File[] files = file.listFiles();
 		
 		for (int i = 0; i < files.length; i++)
 		{
 			String name = files[i].getName();
-			if (name.toLowerCase().endsWith(".xml"))
+			if (name.toLowerCase().endsWith(".xml")
+				&& Programm.isProgramm(files[i])
+				){
+				Date date  =  new Date(files[i].lastModified());
+				if (date.compareTo(date0) > 0)
+					date0 = date;
 				programms.add(name);
+			}
 		}
 		
-		
         sort(programms);
-		
+		return ;
 	}
+
+	
 
 	
 	public static void sort(ArrayList<String> programms) {
@@ -229,8 +245,8 @@ public class Utils {
 	
 }
 
-private ArrayList<Record> records = new ArrayList<Record>(); 
-Programm.loadXMLrecords(mContext, records);
+//private ArrayList<Record> records = new ArrayList<Record>(); 
+//Programm.loadXMLrecords(mContext, records);
 
 /*
 Log.d("", "START "+parser.getName());

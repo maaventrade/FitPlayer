@@ -1,23 +1,25 @@
 package alex.mochalov.files;
 
-import alex.mochalov.editor.*;
-import alex.mochalov.fitplayer.R;
+import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
-import alex.mochalov.player.FragmentPlayer;
+import alex.mochalov.player.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
+import android.graphics.*;
 import android.os.*;
+import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
-
+import java.text.*;
 import java.util.*;
 
 public class AdapterFiles extends BaseAdapter {
 	private LayoutInflater inflater;
 	
-	private Activity mContext;
+	private Activity mActivity;
+	private Context mContext;
 	
 	private Record mainFolder;
 	private ArrayList<String> mObjects;
@@ -28,8 +30,9 @@ public class AdapterFiles extends BaseAdapter {
 	}
 	public OnButtonClickListener listener;
 
-	AdapterFiles(Activity context, ArrayList<String> objects) {
+	AdapterFiles(Context context, Activity activity, ArrayList<String> objects) {
 		mContext = context;
+		mActivity = activity;
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mObjects = objects;
@@ -64,15 +67,16 @@ public class AdapterFiles extends BaseAdapter {
 		TextView TextViewDate = (TextView)convertView.findViewById(R.id.TextViewDate);
 		ImageView ivLocked =  (ImageView)convertView.findViewById(R.id.ivLocked);
 		TextView tvDuration = (TextView)convertView.findViewById(R.id.tvDuration);
+		TextView tvInfo = (TextView)convertView.findViewById(R.id.tvInfo);
 		
 		ImageButton brnGo = (ImageButton)convertView.findViewById(R.id.imageButtonGo);
 		brnGo.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
 
-					FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+					FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
 
-					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+					FragmentPlayer fragmentPlayer = new FragmentPlayer(mActivity);
 
 					Bundle args = new Bundle();
 					args.putString("name", (String)getItem(position));
@@ -87,12 +91,28 @@ public class AdapterFiles extends BaseAdapter {
 		
 		
     	textViewName.setText(mObjects.get(position));
-    	TextViewDate.setText(Utils.getFileDateTime(mObjects.get(position), mContext));
+		
+		Date date = Utils.getFileDateTime(mObjects.get(position));
+		Log.d("d","date "+date+"  "+Utils.getDateOfTheLastFale());
+		DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
+		DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
 
-    	FileData fileData = Utils.getFileData(mContext, mObjects.get(position));
+		//return ;
+		
+    	TextViewDate.setText(dateFormat.format(date)+" "+timeFormat.format(date));
+if (date.equals(Utils.getDateOfTheLastFale()))
+			textViewName.setTypeface(null, Typeface.BOLD);
+	;
+	
+		
+		
+		
+		
+    	FileData fileData = Utils.getFileData(mActivity, mObjects.get(position));
     	tvDuration.setText(Utils.MStoString(fileData.duration));
+		tvInfo.setText(fileData.getInfo());
     	
-		if (fileData.locked)
+		if (fileData.isLocked())
 			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.lock));
 		else
 			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));

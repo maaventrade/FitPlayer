@@ -66,7 +66,7 @@ public class FragmentFiles extends Fragment
 		files = new ArrayList<String>();
 		Utils.readFilesList(files);
 
-		adapter = new AdapterFiles(mContext, files);
+		adapter = new AdapterFiles(mContext, mContext, files);
 
 		adapter.listener = new AdapterFiles.OnButtonClickListener(){
 

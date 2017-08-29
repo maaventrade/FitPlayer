@@ -44,6 +44,43 @@ public class Programm {
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
 
+	public static boolean isProgramm(File file)
+	{
+
+		try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(
+												new FileInputStream(file.getName())));
+
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			XmlPullParser parser = factory.newPullParser();
+
+			parser.setInput(reader);
+
+			int eventType = parser.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+
+				if (eventType == XmlPullParser.START_DOCUMENT) {
+					if (parser.getAttributeValue(null, "type").equals("fpprogramm")) return true ;
+				} else if (eventType == XmlPullParser.START_TAG) {
+					if (parser.getName().equals("body")) 
+					{
+						Log.d("v","body ");
+						if (parser.getAttributeValue(null, "type").equals("fpprogramm")) return true ;
+					}
+				} 
+				try {
+					eventType = parser.next();
+				} catch (XmlPullParserException e) {
+				}
+			}
+
+		} catch (Throwable t) {
+			return false;
+		}
+		return false;
+	}
+
 	public static void setLock() {
 		locked = !locked;
 	}
@@ -372,11 +409,11 @@ public class Programm {
 			Writer writer = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(file), "UTF-8"));
 
-			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
-			writer.write("<body>" + "\n");
+			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"? type = \"fpprogramm\"  >" + "\n");
+			writer.write("<body type = \"fpprogramm\">" + "\n");
 
-			writer.write("<main name=\"" + main.getName() + "\"" + " text=\""
-					+ main.getText() + "\"" + " duration=\""
+			writer.write("<main text=\"" + main.getText()  
+					+ "\"" + " duration=\""
 					+ main.getDuration() + "\"" + " soundNextGroupOn=\""
 					+ soundNextGroupOn + "\"" + " soundNextName=\""
 					+ soundNextName + "\"" + " soundNextGroupUri=\""
@@ -704,7 +741,8 @@ public class Programm {
 			while (eventType != XmlPullParser.END_DOCUMENT) {
 				if (eventType == XmlPullParser.START_TAG) {
 					if (parser.getName().equals("main")){
-						fileData.locked = Boolean.parseBoolean(parser.getAttributeValue(null, "locked"));
+						fileData.setLocked(Boolean.parseBoolean(parser.getAttributeValue(null, "locked")));
+						fileData.setInfo(parser.getAttributeValue(null, "text"));
 						fileData.duration = 0;
 						if (parser.getAttributeValue(null, "duration") != null)
 							fileData.duration = Integer.parseInt(parser
