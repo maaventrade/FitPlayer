@@ -72,6 +72,8 @@ public class FragmentEditor extends Fragment {
 		nameMain.setText( Utils.getFileName());
 		durationMain.setText(Utils.MStoString(Programm.getMainRecord()
 				.getDuration()));
+				
+		
 		textMain.setText(Programm.getMainRecord().getText());
 
 		ImageButton brnEdit = (ImageButton) rootView

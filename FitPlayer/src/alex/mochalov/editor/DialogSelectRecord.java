@@ -30,7 +30,7 @@ public class DialogSelectRecord extends Dialog
 	
 	MyCallback callback = null;
 	interface MyCallback {
-		void selected(Record record); 
+		void selected(Exercise record); 
 	} 
 	
 	public DialogSelectRecord(Context context) {
@@ -52,7 +52,7 @@ public class DialogSelectRecord extends Dialog
 
 		ListView listViewFiles = (ListView)findViewById(R.id.ListViewSelect);
 
-        adapter = new AdapterSelectRecord(mContext, Records.getRecords());
+        adapter = new AdapterSelectRecord(mContext, Exercises.getRecords());
 		
 		listViewFiles.setAdapter(adapter);
 		
@@ -61,7 +61,7 @@ public class DialogSelectRecord extends Dialog
 			public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
 			{
 				if (callback != null){
-					callback.selected(Records.getRecords().get(index));
+					callback.selected(Exercises.getRecords().get(index));
 					dialog.dismiss();
 				}
 			}}

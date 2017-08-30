@@ -78,6 +78,9 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		else
 			tvTitle.setText(mContext.getResources().getString(R.string.title_edit));
 		
+		TextView tvExercise = (TextView)findViewById(R.id.tvExercise);
+		tvExercise.setText(Exercises.getText(record.getID()));
+							   
 		
 		text = (EditText)findViewById(R.id.editTextText);
 		text.setText(record.getText());
@@ -181,7 +184,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			DialogSelectRecord dialog = new DialogSelectRecord(mContext);
 			dialog.callback = new DialogSelectRecord.MyCallback() {
 				@Override
-				public void selected(Record record) {
+				public void selected(Exercise record) {
 					name.setText(record.getName());
 					text.setText(record.getText());
 					itIsTheRest.setChecked(record.isRest());

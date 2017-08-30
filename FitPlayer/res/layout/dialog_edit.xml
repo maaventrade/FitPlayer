@@ -5,28 +5,34 @@
 	android:layout_height="wrap_content"
 	android:orientation="vertical">
 
-	<FrameLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@color/salad" >
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/salad"
+		android:orientation="horizontal">
 
-	    <ImageButton
-	        android:id="@+id/imgBtnOk"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="end"
-	        android:src="@drawable/ok" />
+		<TextView
+			android:id="@+id/tvTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:text="Large Text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_weight="0.8"/>
 
-	    <TextView
-	        android:id="@+id/tvTitle"
-	        android:layout_width="wrap_content"
-	        android:layout_height="match_parent"
-	        android:layout_gravity="left|center_vertical"
-	        android:text="Large Text"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	    
-	</FrameLayout>
-    
+		<ImageButton
+			android:id="@+id/imgBtnOk"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ok"/>
+
+		<Button
+			android:id="@+id/buttonSelect"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/select"/>
+
+	</LinearLayout>
+
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -109,6 +115,14 @@
 		android:text="@string/text"
 		android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Medium Text"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:id="@+id/tvExercise"
+		android:textColor="#0759D3"/>
+
 	<EditText
 		android:id="@+id/editTextText"
 		android:layout_width="match_parent"
@@ -177,13 +191,6 @@
 				android:layout_height="match_parent"
 				android:layout_weight="0.3"
 				android:text="@string/cancel"/>
-
-			<Button
-				android:id="@+id/buttonSelect"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_weight="0.3"
-				android:text="@string/select"/>
 
 		</LinearLayout>
 

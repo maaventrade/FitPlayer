@@ -91,7 +91,7 @@ public class MainActivity extends Activity implements OnInitListener{
 			//Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
 		}
 		
-		Records.loadRecords(this);
+		Exercises.loadRecords(this);
 		//Records.loadXMLrecords(this);
 		
 	}

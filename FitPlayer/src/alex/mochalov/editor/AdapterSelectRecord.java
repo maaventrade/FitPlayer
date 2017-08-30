@@ -17,7 +17,7 @@ import java.util.*;
 public class AdapterSelectRecord extends BaseAdapter {
 
 	private LayoutInflater inflater;
-	private ArrayList<Record> objects;
+	private ArrayList<Exercise> objects;
 	
 	public interface OnButtonClickListener {
 		public void onEdit(String text);
@@ -26,7 +26,7 @@ public class AdapterSelectRecord extends BaseAdapter {
 	
 	public OnButtonClickListener listener;
 
-	AdapterSelectRecord(Context context, ArrayList<Record> obj) {
+	AdapterSelectRecord(Context context, ArrayList<Exercise> obj) {
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		objects = obj;
@@ -53,7 +53,7 @@ public class AdapterSelectRecord extends BaseAdapter {
 		if (convertView == null) { 
 			convertView = inflater.inflate(R.layout.item_select, null);
 		}
-		Record record = objects.get(position);
+		Exercise record = objects.get(position);
 				
 		TextView textViewName = (TextView)convertView.findViewById(R.id.TextViewName);
 		TextView textViewText = (TextView)convertView.findViewById(R.id.TextViewText);

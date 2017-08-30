@@ -23,8 +23,8 @@ class FileNameComparator implements Comparator<String> {
 	}
 }
 
-class RecordNameComparator implements Comparator<Record> {   
-	public int compare(Record a, Record b) {
+class RecordNameComparator implements Comparator<Exercise> {   
+	public int compare(Exercise a, Exercise b) {
 		return a.getName().compareToIgnoreCase(b.getName());
 	}
 }
@@ -229,7 +229,7 @@ public class Utils {
 		return s1+":"+s2;
 	}
 
-	public static void sortR(ArrayList<Record> records) {
+	public static void sortR(ArrayList<Exercise> records) {
 
 		RecordNameComparator fnc = new RecordNameComparator();
         Collections.sort(records, fnc);

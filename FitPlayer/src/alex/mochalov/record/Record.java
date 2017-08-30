@@ -9,18 +9,13 @@ import android.widget.*;
 import java.io.*;
 import java.util.*;
 
-public class Record {
-
-	protected String mName;
-	private String mText;
+public class Record extends Exercise{
+	
 	private long mDuration;
 	private ArrayList<Record> modifications;
-	private boolean mRest;
-	private boolean mWeight;
 	
-	private UUID UUID;  
-
 	public Record(String name, String text, Boolean rest, int duration, Boolean weight) {
+		
 		mName = name;
 		mText = text;
 		mDuration = duration;
@@ -31,6 +26,7 @@ public class Record {
 	}
 	
 	public Record(Record record) {
+		
 		mName = record.mName;
 		mText = record.mText;
 		mDuration = record.mDuration;
@@ -140,14 +136,6 @@ public class Record {
 		mDuration = duration;
 	}
 
-	public UUID getID() {
-		//return UUID.randomUUID();
-		return UUID;
-	}
-
-	public void setID(UUID uuid) {
-		UUID = uuid;		
-	}
-
+	
 	
 }
