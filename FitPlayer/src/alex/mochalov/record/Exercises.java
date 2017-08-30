@@ -252,6 +252,13 @@ public class Exercises {
 		
 		return null;
 	}
+	public static Exercise getRecordByID(UUID uuid) {
+		for (Exercise r: records)
+			if (r.getID().equals(uuid))
+				return r;
+		
+		return null;
+	}
 
 
 }

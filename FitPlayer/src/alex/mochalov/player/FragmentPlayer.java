@@ -3,6 +3,7 @@ package alex.mochalov.player;
 import alex.mochalov.editor.DialogEditMain;
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.*;
+import alex.mochalov.programm.Programm;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;

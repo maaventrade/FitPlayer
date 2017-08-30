@@ -9,26 +9,34 @@ import android.widget.*;
 import java.io.*;
 import java.util.*;
 
-public class Record extends Exercise{
+public class Record
+{
+	
+	String mName;
+	boolean mRest;
+	boolean mWeight;
 	
 	private long mDuration;
-	private ArrayList<Record> modifications;
+	private String mDetails = "";
+
+	private Exercise mExercise;
+	//private ArrayList<Record> modifications;
 	
 	public Record(String name, String text, Boolean rest, int duration, Boolean weight) {
 		
 		mName = name;
-		mText = text;
+		//mText = text;
 		mDuration = duration;
 		mRest = rest;
 		mWeight = weight;
 		
-		modifications = new ArrayList<Record>();
+		//modifications = new ArrayList<Record>();
 	}
 	
 	public Record(Record record) {
 		
 		mName = record.mName;
-		mText = record.mText;
+		mExercise = record.mExercise;
 		mDuration = record.mDuration;
 		mRest = record.mRest;
 		mWeight = record.mWeight;
@@ -37,28 +45,27 @@ public class Record extends Exercise{
 	public Record(String name) {
 		mName = name;
 		
-		modifications = new ArrayList<Record>();
+		//modifications = new ArrayList<Record>();
 	}
 
-	public Record(String name, String text, Boolean rest, UUID uuid, Boolean weight) {
+	public Record(String name, String text, Boolean rest, Boolean weight) {
 		mName = name;
-		mText = text;
-		UUID = uuid;
+		//mText = text;
 		mRest = rest;
 		mWeight = weight;
 		
-		modifications = new ArrayList<Record>();
+		//modifications = new ArrayList<Record>();
 	}
+	
 
 	public Record(String name, String text, Boolean rest, int duration, UUID uuid, Boolean weight) {
 		mName = name;
-		mText = text;
+		mExercise = Exercises.getRecordByID(uuid);
 		mDuration = duration;
-		UUID = uuid;
 		mRest = rest;
 		mWeight = weight;
 		
-		modifications = new ArrayList<Record>();
+		//modifications = new ArrayList<Record>();
 	}
 
 	public void copy()
@@ -68,50 +75,11 @@ public class Record extends Exercise{
 
 	public void log()
 	{
-//		Log.d("","name "+mName);
-//		for( Record r:children)
-//			r.log();
 	}
 	
-	public void setName(Editable text)
-	{
-		mName = text.toString();
-	}
-
-	public String getName() {
-		return mName;
-	}
-
-	public boolean isRest() {
-		return mRest;
-	}
-
-	public boolean isWeight() {
-		return mWeight;
-	}
-
-	public void setWeight(boolean weight) {
-		mWeight = weight;
-	}
-
-	public void setRest(boolean rest) {
-		mRest = rest;
-	}
 	
 	public long getDuration() {
 		return mDuration;
-	}
-
-	public String getText() {
-		return mText;
-	}
-
-	public void setText(Editable text) {
-		mText = text.toString();
-	}
-
-	public void setText(String text) {
-		mText = text;
 	}
 
 	public void setDuration(Editable text) {
@@ -136,6 +104,44 @@ public class Record extends Exercise{
 		mDuration = duration;
 	}
 
-	
+	public String getText() {
+		if (mExercise != null)
+			if (mDetails.length() > 0)
+				return mExercise.getText()+" "+mDetails;
+			else
+				return mExercise.getText();
+		else
+			return mDetails; 
+	}
+
+	public String getName() {
+		return mName;
+	}
+
+	public boolean isRest() {
+		return mRest;
+	}
+
+	public boolean isWeight() {
+		return mWeight;
+	}
+
+	public void setName(String name) {
+		mName = name;
+		
+	}
+
+	public void setRest(boolean rest) {
+		mRest = rest;
+	}
+
+	public void setWeight(boolean weight) {
+		mWeight = weight;
+	}
+
+	public Exercise getExercise() {
+		// TODO Auto-generated method stub
+		return mExercise;
+	}	
 	
 }

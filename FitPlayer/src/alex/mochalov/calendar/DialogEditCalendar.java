@@ -2,6 +2,7 @@ package alex.mochalov.calendar;
 
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.*;
+import alex.mochalov.programm.Prog;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;

@@ -4,11 +4,13 @@ import java.util.*;
 
 public class Exercise
 {
-	protected String mName;
-	protected String mText;
-	protected UUID UUID; 
-	protected boolean mRest;
-	protected boolean mWeight;
+
+	String mName;
+	boolean mRest;
+	boolean mWeight;
+	
+	private String mText;
+	private UUID UUID; 
 	
 	public Exercise(String name, String text, Boolean rest, UUID uuid, Boolean weight) {
 		mName = name;
@@ -22,6 +24,19 @@ public class Exercise
 		
 	}
 	
+	public String getText() {
+		return mText;
+	}
+	
+	
+	public UUID getID() {
+		return UUID;
+	}
+
+	public void setID(UUID uuid) {
+		UUID = uuid;		
+	}
+	
 	public String getName() {
 		return mName;
 	}
@@ -32,19 +47,5 @@ public class Exercise
 
 	public boolean isWeight() {
 		return mWeight;
-	}
-	
-	public String getText() {
-		return mText;
-	}
-	
-	public UUID getID() {
-		//return UUID.randomUUID();
-		return UUID;
-	}
-
-	public void setID(UUID uuid) {
-		UUID = uuid;		
-	}
-	
+	}	
 }

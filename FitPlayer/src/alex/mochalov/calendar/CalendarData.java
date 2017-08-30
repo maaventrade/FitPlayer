@@ -1,6 +1,7 @@
 package alex.mochalov.calendar;
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.Utils;
+import alex.mochalov.programm.Prog;
 import alex.mochalov.record.*;
 import android.content.Context;
 import android.net.ParseException;

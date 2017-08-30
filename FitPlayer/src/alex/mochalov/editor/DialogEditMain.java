@@ -2,6 +2,7 @@ package alex.mochalov.editor;
 
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.*;
+import alex.mochalov.programm.Programm;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.database.*;
@@ -255,7 +256,7 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 	public void onClick(View v) {
 		if (v == btnOk || v == imgBtnOk ){
 			//record.setName(name.getText());
-			record.setText(text.getText());
+			//record.setText(text.getText());
 
 			countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
 			Programm.setCountBeforeTheEnd(countBeforeTheEnd.isChecked());

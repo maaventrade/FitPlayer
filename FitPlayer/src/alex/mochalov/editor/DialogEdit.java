@@ -2,6 +2,7 @@ package alex.mochalov.editor;
 
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.*;
+import alex.mochalov.programm.Programm;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
@@ -79,7 +80,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			tvTitle.setText(mContext.getResources().getString(R.string.title_edit));
 		
 		TextView tvExercise = (TextView)findViewById(R.id.tvExercise);
-		tvExercise.setText(Exercises.getText(record.getID()));
+		tvExercise.setText(record.getText());
 							   
 		
 		text = (EditText)findViewById(R.id.editTextText);
@@ -164,8 +165,8 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	@Override
 	public void onClick(View v) {
 		if (v == btnOk  || v == imgBtnOk ){
-			record.setName(name.getText());
-			record.setText(text.getText());
+			record.setName(name.getText().toString());
+			//record.setText(text.getText());
 			record.setRest(itIsTheRest.isChecked());
 			record.setWeight(cbWeight.isChecked());
 			

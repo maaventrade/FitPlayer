@@ -4,6 +4,7 @@ import alex.mochalov.editor.*;
 import alex.mochalov.files.*;
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.player.*;
+import alex.mochalov.programm.Programm;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
