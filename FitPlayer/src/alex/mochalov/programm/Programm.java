@@ -319,7 +319,7 @@ public class Programm {
 
 						String strUUID = parser.getAttributeValue(null, "id");
 						UUID uuid;
-						if (strUUID.equals("null"))
+						if (strUUID == null)
 							uuid = null;
 						else uuid = UUID.fromString(strUUID);
 						
@@ -347,6 +347,11 @@ public class Programm {
 				try {
 					eventType = parser.next();
 				} catch (XmlPullParserException e) {
+					Toast.makeText(
+							mContext,
+							mContext.getResources().getString(R.string.error_load_xml)
+									+ ". " + e.toString(), Toast.LENGTH_LONG).show();
+					return false;
 				}
 			}
 
@@ -438,13 +443,13 @@ public class Programm {
 			writer.write("</main>" + "\n");
 
 			for (Record r : listDataHeader) {
-				writer.write(
-						"<record name=\"" + r.getName() + "\""
-								+ " text=\"" + r.getText() + "\"" 
-								+ " id=\"" + r.getExercise().getID() + "\"" 
-						+ " duration=\""
-						+ r.getDuration() + "\"" + ">" + "\n");
-//				"<record name=\"" + r.getName() + "\""+ " text=\"" + r.getText() + "\""+ " id=\"" + r.getID() + "\""+ " duration=\""+ r.getDuration() + "\"" + ">" + "\n"
+				
+					writer.write(
+							"<record name=\"" + r.getName() + "\""
+									+ " text=\"" + r.getText() + "\"" 
+									+ r.getIdString()   
+									+ " duration=\""
+									+ r.getDuration() + "\"" + ">" + "\n");
 				
 				if (listDataChild.get(r) != null) {
 					writer.write("<children>" + "\n");
@@ -453,7 +458,7 @@ public class Programm {
 								+ " text=\"" + l.getText() + "\"" 
 								+ " rest=\""+ l.isRest() + "\"" 
 								+ " weight=\""+ l.isWeight() + "\"" 
-								+ " id=\""+ l.getExercise().getID() + "\"" 
+								+ l.getIdString()   
 								+ " duration=\""+ l.getDuration() + "\"" + ">" + "\n");
 						writer.write("</record>" + "\n");
 					}

@@ -1,9 +1,12 @@
 package alex.mochalov.main;
 
+import alex.mochalov.files.AdapterFiles;
+import alex.mochalov.fitplayer.R;
 import alex.mochalov.programm.FileData;
 import alex.mochalov.programm.Programm;
 import alex.mochalov.record.*;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.*;
 import android.graphics.drawable.Drawable;
 import android.os.*;
@@ -15,6 +18,7 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import org.xmlpull.v1.*;
@@ -179,8 +183,6 @@ public class Utils {
 			file.mkdirs();                  
 		}
 
-		
-		
 		File[] files = file.listFiles();
 		
 		for (int i = 0; i < files.length; i++)
@@ -282,9 +284,95 @@ public class Utils {
 			  out.close(); 
 			} catch(Exception e) { 
 				return e.toString();
-			} 
-		
+			} 		
 		return "Created "+zipName;
+	}
+
+	public static boolean extract(final Activity mContext, final String path, final ArrayList<String> files, final AdapterFiles adapter) {
+		
+		final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, 
+				android.R.layout.select_dialog_singlechoice);
+		
+		try
+	    {
+			FileInputStream is = new FileInputStream(path);
+	        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(is));
+
+	        ZipEntry ze;
+
+	        while ((ze = zis.getNextEntry()) != null)
+	        	arrayAdapter.add(ze.getName());
+	    } 
+
+	    catch (FileNotFoundException e) { 
+			Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+			return false;
+	    }
+	    catch (IOException e) 
+		{ 
+			Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+			return false;
+	    }
+	
+		AlertDialog.Builder builderSingle = new AlertDialog.Builder(mContext);
+		builderSingle.setIcon(R.drawable.ic_launcher);
+		builderSingle.setTitle("Select One Name:-");
+
+		builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+		            @Override
+		            public void onClick(DialogInterface dialog, int which) {
+		                dialog.dismiss();
+		            }
+		        });
+
+		builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+		            @Override
+		            public void onClick(DialogInterface dialog, int which) {
+		                String strName = arrayAdapter.getItem(which);
+		        		try
+		        	    {
+		        			FileInputStream is = new FileInputStream(path);
+		        	        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(is));
+		        	        OutputStream out = new FileOutputStream(APP_FOLDER+"/"+strName);
+
+		        	        ZipEntry ze;
+
+		        	        while ((ze = zis.getNextEntry()) != null)
+		        	            if (ze.getName().equals(strName)){
+
+		        	            	byte[] buffer = new byte[9000];
+			                        int len;
+			                        while ((len = zis.read(buffer)) != -1) {
+			                            out.write(buffer, 0, len);
+			                        }
+			                        out.close();
+			                        break;
+			                        
+		        	            }
+		        	        is.close();
+		        	    } 
+		        	    catch (FileNotFoundException e) { 
+		        			Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+		        			return;
+		        	    }
+		        	    catch (IOException e) 
+		        		{ 
+		        			Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+		        			return;
+		        	    }
+		        		
+						Utils.readFilesList(files);
+						adapter.notifyDataSetChanged();
+						Toast.makeText(mContext, 
+						"Ok", 
+						Toast.LENGTH_LONG).show();
+		        		
+		        		
+		            }
+		        });
+		builderSingle.show();		
+		
+		return true;
 	}
 
 	

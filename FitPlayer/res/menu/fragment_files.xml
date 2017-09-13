@@ -66,4 +66,12 @@
         android:showAsAction="never"
         android:title="@string/archive_all"/>
 
+    <item
+        android:id="@+id/action_extract"
+        android:orderInCategory="140"
+        android:showAsAction="never"
+        android:title="@string/extract_from_archive"/>
+    
+    
+    
 </menu>

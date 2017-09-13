@@ -120,10 +120,11 @@ public final class R {
         public static final int action_cut=0x7f0a0043;
         public static final int action_delete=0x7f0a0045;
         public static final int action_edit=0x7f0a003f;
-        public static final int action_parameters=0x7f0a004c;
+        public static final int action_extract=0x7f0a004c;
+        public static final int action_parameters=0x7f0a004d;
         public static final int action_paste=0x7f0a0044;
         public static final int action_rename=0x7f0a0049;
-        public static final int action_repeat=0x7f0a004d;
+        public static final int action_repeat=0x7f0a004e;
         public static final int action_save=0x7f0a0046;
         public static final int action_set_rests_duration=0x7f0a0047;
         public static final int action_settings=0x7f0a004a;
@@ -222,8 +223,8 @@ public final class R {
         public static final int action_settings=0x7f07000d;
         public static final int action_start=0x7f07000e;
         public static final int app_name=0x7f070000;
-        public static final int archive_all=0x7f070034;
-        public static final int calendar=0x7f070032;
+        public static final int archive_all=0x7f070035;
+        public static final int calendar=0x7f070033;
         public static final int cancel=0x7f07000f;
         public static final int copy=0x7f070011;
         public static final int count=0x7f070010;
@@ -233,6 +234,7 @@ public final class R {
         public static final int error_load_xml=0x7f070016;
         public static final int error_saving_file=0x7f070015;
         public static final int expand_text=0x7f070017;
+        public static final int extract_from_archive=0x7f070036;
         public static final int file_name=0x7f070018;
         public static final int file_saved=0x7f070019;
         public static final int lock=0x7f07001a;
@@ -249,17 +251,18 @@ public final class R {
         public static final int rest=0x7f070025;
         public static final int run=0x7f070026;
         public static final int select=0x7f070027;
+        public static final int select_file=0x7f070029;
         public static final int select_path=0x7f070028;
-        public static final int select_programm=0x7f070033;
-        public static final int speach_descr=0x7f070029;
-        public static final int starts_on=0x7f07002a;
-        public static final int text=0x7f07002b;
-        public static final int timers=0x7f07002c;
-        public static final int title_add=0x7f07002d;
-        public static final int title_edit=0x7f07002e;
-        public static final int unlock=0x7f07002f;
-        public static final int weight=0x7f070030;
-        public static final int zero=0x7f070031;
+        public static final int select_programm=0x7f070034;
+        public static final int speach_descr=0x7f07002a;
+        public static final int starts_on=0x7f07002b;
+        public static final int text=0x7f07002c;
+        public static final int timers=0x7f07002d;
+        public static final int title_add=0x7f07002e;
+        public static final int title_edit=0x7f07002f;
+        public static final int unlock=0x7f070030;
+        public static final int weight=0x7f070031;
+        public static final int zero=0x7f070032;
     }
     public static final class style {
         /** 

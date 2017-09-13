@@ -54,7 +54,8 @@
 
 	<string name="select">Select</string>
 	<string name="select_path">Select path</string>
-	<string name="speach_descr">Pronounce the exercise description</string>
+	<string name="select_file">Select file</string>
+		<string name="speach_descr">Pronounce the exercise description</string>
     <string name="starts_on">Starts on</string>
 	
     <string name="text">Description:</string>
@@ -70,6 +71,7 @@
     <string name="calendar">Calendar</string>
 
     <string name="select_programm">Select programm</string>
-    <string name="archive_all">To archive all</string>
+    <string name="archive_all">Archive all</string>
+    <string name="extract_from_archive">Extract from archive</string>
     
 </resources>

@@ -97,7 +97,7 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 			@Override
 			public void onClick(View p1)
 			{
-				DialogSelectPath dialog = new DialogSelectPath(mContext, textViewPathToMp3.getText().toString());
+				DialogSelectPath dialog = new DialogSelectPath(mContext, textViewPathToMp3.getText().toString(),"",true);
 				dialog.callback = new DialogSelectPath.SelectFileCallback() {
 					@Override
 					public void callbackOk(String path) {

@@ -54,6 +54,8 @@
 
 	<string name="select">Выбрать</string>
 	<string name="select_path">Выбрать путь</string>
+	<string name="select_file">Выбрать файл</string>
+		
 	<string name="speach_descr">Произносить описание упражнение</string>
     <string name="starts_on">Начало в</string>
 	
@@ -71,5 +73,6 @@
 
     <string name="select_programm">Выбрать программу</string>
     <string name="archive_all">Архивировать всё</string>
+    <string name="extract_from_archive">Извлечь из архива</string>
     
 </resources>

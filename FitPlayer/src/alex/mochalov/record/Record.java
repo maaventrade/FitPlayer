@@ -140,8 +140,13 @@ public class Record
 	}
 
 	public Exercise getExercise() {
-		// TODO Auto-generated method stub
 		return mExercise;
+	}	
+
+	public String getIdString() {
+		if (getExercise() == null) 
+			return "";
+		else return " id=\"" + getExercise().getID() + "\"";
 	}	
 	
 }

@@ -207,14 +207,32 @@ public class FragmentFiles extends Fragment
 		case R.id.action_archive:
 			archive();
 			return true;
+		case R.id.action_extract:
+			extract();
+			return true;						
 		default:	
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void archive() {
+	private void extract() {
+		DialogSelectPath dialog = new DialogSelectPath(mContext, "", getResources().getString(R.string.extract_from_archive), false);
 		
-		DialogSelectPath dialog = new DialogSelectPath(mContext, "");
+		dialog.callback = new DialogSelectPath.SelectFileCallback() {
+			@Override
+			public void callbackOk(String path) {
+
+				if (Utils.extract(mContext, path, files, adapter)){
+					
+				}
+			}
+		}; 
+		dialog.show(); 
+		
+	}
+
+	private void archive() {
+		DialogSelectPath dialog = new DialogSelectPath(mContext, "", getResources().getString(R.string.archive_all), true);
 		
 		dialog.callback = new DialogSelectPath.SelectFileCallback() {
 			@Override

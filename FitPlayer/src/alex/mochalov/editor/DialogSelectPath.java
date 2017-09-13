@@ -2,6 +2,8 @@ package alex.mochalov.editor;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import alex.mochalov.editor.DialogEditMain.MyCallback;
 import alex.mochalov.fitplayer.R;
@@ -24,6 +26,8 @@ public class DialogSelectPath extends Dialog
 	private Dialog dialog;
 
 	private String PATH = "";
+	private String mTitle = "";
+	private Boolean mDir = true;
 	
 	private ArrayList<File> listFiles = new ArrayList<File>();
 	private ArrayAdapter<String> adapter;
@@ -34,10 +38,13 @@ public class DialogSelectPath extends Dialog
 		void callbackOk(String path); 
 	} 
 	
-	public DialogSelectPath(Context context, String path) {
+	public DialogSelectPath(Context context, String path, String title, Boolean dir) {
 		
 		super(context);
 		mContext = context;
+		mTitle = title;
+		mDir = dir;
+		
 		dialog = this;
 		
 		PATH = path;
@@ -47,7 +54,7 @@ public class DialogSelectPath extends Dialog
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		this.setTitle(mContext.getResources().getString(R.string.select_path)+": "+PATH);
+		setTitle();
 		
 		setContentView(R.layout.dialog_select_path);
 	
@@ -76,7 +83,7 @@ public class DialogSelectPath extends Dialog
 					PATH = PATH + "/" + f;
 				}
 				
-				dialog.setTitle(mContext.getResources().getString(R.string.select_path)+": "+PATH);
+				setTitle();
 				
 				String[] stringArray = readFiles(PATH);
 				adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, 
@@ -110,6 +117,29 @@ public class DialogSelectPath extends Dialog
 		
 	}
 
+	private void setTitle() {
+		String s = mTitle;
+		if ( !s.equals("") )
+			s = s + ". ";
+				
+		if (mDir)
+			this.setTitle(s+mContext.getResources().getString(R.string.select_path)+": "+PATH);
+		else
+			this.setTitle(s+mContext.getResources().getString(R.string.select_file)+": "+PATH);
+	}
+
+	
+	class FileNameComparator implements Comparator<File> {   
+		public int compare(File fileA, File fileB) {
+			if ((fileA.isDirectory())&&(!fileB.isDirectory()))
+				return -1;
+			else if ((!fileA.isDirectory())&&(fileB.isDirectory()))
+				return 1;
+			else
+				return fileA.getName().compareToIgnoreCase(fileB.getName());
+			}
+	}
+	
 	private String[] readFiles(String path) {
 
 		listFiles.clear();
@@ -119,7 +149,9 @@ public class DialogSelectPath extends Dialog
         if (files != null )
             for (int i=0; i<files.length; i++){
             	boolean addFile = false;
-            	if (files[i].isDirectory()) addFile = true;
+            	if (files[i].isDirectory()) 
+            		addFile = true;
+            	else if ( !mDir ) addFile = true;
             	//else if (fileExt.length == 0) addFile = true;
             	//else for (int j=0; j<fileExt.length; j++)
             	//	if (files[i].getName().endsWith(fileExt[j])){
@@ -129,6 +161,9 @@ public class DialogSelectPath extends Dialog
             	if (addFile) listFiles.add(files[i]);
         	}	
 
+        FileNameComparator fnc = new FileNameComparator();
+        Collections.sort(listFiles, fnc);
+        
         String[] stringArray;
 		int i = 0;
         
@@ -139,7 +174,7 @@ public class DialogSelectPath extends Dialog
 		} else {
 			stringArray = new String[listFiles.size()];
 		}
-			
+
 		for (File f: listFiles){
 			stringArray[i] = f.getName();
 			i++;
