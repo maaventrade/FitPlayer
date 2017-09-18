@@ -44,7 +44,6 @@ public class DialogSelectRecord extends Dialog
 		super.onCreate(savedInstanceState);
 		
 		this.setTitle(mContext.getResources().getString(R.string.select));
-		
 		setContentView(R.layout.dialog_select);
 	
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
@@ -66,13 +65,35 @@ public class DialogSelectRecord extends Dialog
 				}
 			}}
 		);	
-	
-		Button btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
+		
+		Button btnCancel = (Button)findViewById(R.id.btnCancel);
 		btnCancel.setOnClickListener(new Button.OnClickListener(){
 				@Override
 				public void onClick(View p1)
 				{
 					dialog.dismiss();
+				}
+			});
+		
+		Button btnAdd = (Button)findViewById(R.id.btnAdd);
+		btnAdd.setOnClickListener(new Button.OnClickListener(){
+				@Override
+				public void onClick(View p1)
+				{
+					
+				
+					DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), new Exercise());
+					dialogEditExercise.show();
+					dialogEditExercise.callback = new DialogEditExercise.MyCallback() {
+						
+						@Override
+						public void callbackOk() {
+							adapter.notifyDataSetChanged();
+							
+						}
+					};
+					
+					
 				}
 			});
 		

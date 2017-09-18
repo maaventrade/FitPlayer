@@ -30,7 +30,7 @@ public class Exercises {
 	public static String getText(UUID id)
 	{
 		for (Exercise r: records)
-			if (r.getID().equals(id))
+			if (r.getUUID().equals(id))
 				return r.getText();
 
 		return "";
@@ -227,7 +227,7 @@ public class Exercises {
 			for (Exercise r : records) {
 				writer.write("<record name=\"" + r.getName() + "\""
 						+ " text=\"" + r.getText() + "\"" + " rest=\""
-						+ r.isRest() + "\"" + " id=\"" + r.getID() + "\""
+						+ r.isRest() + "\"" + " id=\"" + r.getUUID() + "\""
 						+ ">\n");
 				writer.write("</record>" + "\n");
 			}
@@ -248,13 +248,13 @@ public class Exercises {
 	public static UUID findRecord(String text) {
 		for (Exercise r: records)
 			if (r.getText().equals(text))
-				return r.getID();
+				return r.getUUID();
 		
 		return null;
 	}
 	public static Exercise getRecordByID(UUID uuid) {
 		for (Exercise r: records)
-			if (r.getID().equals(uuid))
+			if (r.getUUID().equals(uuid))
 				return r;
 		
 		return null;

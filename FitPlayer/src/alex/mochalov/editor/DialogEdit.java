@@ -1,5 +1,7 @@
 package alex.mochalov.editor;
 
+import java.util.UUID;
+
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.*;
 import alex.mochalov.programm.Programm;
@@ -33,6 +35,8 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	
 	private CheckBox itIsTheRest;
 	private CheckBox cbWeight;
+	
+	private UUID mUUID = null;
 	
 	private boolean newRecord = false;
 	
@@ -72,6 +76,8 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		name = (EditText)findViewById(R.id.editTextName);
 		name.setText(record.getName());
 		name.setSelectAllOnFocus(true);
+		
+		mUUID = record.getUUID();
 
 		TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
 		if (newRecord)
@@ -169,6 +175,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			//record.setText(text.getText());
 			record.setRest(itIsTheRest.isChecked());
 			record.setWeight(cbWeight.isChecked());
+			record.setID(mUUID);
 			
 			if (! mIsGroup)
 				record.setDuration(duration.getText());
@@ -185,10 +192,14 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			DialogSelectRecord dialog = new DialogSelectRecord(mContext);
 			dialog.callback = new DialogSelectRecord.MyCallback() {
 				@Override
-				public void selected(Exercise record) {
-					name.setText(record.getName());
-					text.setText(record.getText());
-					itIsTheRest.setChecked(record.isRest());
+				public void selected(Exercise exercise) {
+					name.setText(exercise.getName());
+					text.setText(exercise.getText());
+					itIsTheRest.setChecked(exercise.isRest());
+					mUUID = exercise.getUUID();
+					
+					record.setExercise(exercise);
+
 				}
 			}; 
 			dialog.show();

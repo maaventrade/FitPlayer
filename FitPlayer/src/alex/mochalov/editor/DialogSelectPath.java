@@ -28,6 +28,7 @@ public class DialogSelectPath extends Dialog
 	private String PATH = "";
 	private String mTitle = "";
 	private Boolean mDir = true;
+	private String mDirectory = "";
 	
 	private ArrayList<File> listFiles = new ArrayList<File>();
 	private ArrayAdapter<String> adapter;
@@ -73,7 +74,14 @@ public class DialogSelectPath extends Dialog
 			@Override
 			public void onItemClick(AdapterView<?> p1, View p2, int index, long p4)
 			{
+				
 				String f = (String) p1.getItemAtPosition(index);
+				
+				if (listFiles.get(index).isFile()){
+					if (callback != null)
+						callback.callbackOk(PATH + "/" + f);
+					dialog.dismiss();
+				}
 				
 				if (f.equals("..")){
 					int i = PATH.lastIndexOf("/");

@@ -135,6 +135,10 @@ public class Record
 		mRest = rest;
 	}
 
+	public void setID(UUID uuid) {
+		getExercise().setID(uuid);
+	}
+
 	public void setWeight(boolean weight) {
 		mWeight = weight;
 	}
@@ -144,9 +148,19 @@ public class Record
 	}	
 
 	public String getIdString() {
-		if (getExercise() == null) 
+		if (getExercise() == null || getExercise().getUUID() == null) 
 			return "";
-		else return " id=\"" + getExercise().getID() + "\"";
+		else return " id=\"" + getExercise().getUUID() + "\"";
+	}
+
+	public UUID getUUID() {
+		if (getExercise() == null || getExercise().getUUID() == null) 
+			return null;
+		else return getExercise().getUUID();
+	}
+
+	public void setExercise(Exercise exercise) {
+		mExercise = exercise;
 	}	
 	
 }

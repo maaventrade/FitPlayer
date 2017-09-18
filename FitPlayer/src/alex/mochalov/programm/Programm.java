@@ -319,7 +319,7 @@ public class Programm {
 
 						String strUUID = parser.getAttributeValue(null, "id");
 						UUID uuid;
-						if (strUUID == null)
+						if (strUUID == null || strUUID.equals("null"))
 							uuid = null;
 						else uuid = UUID.fromString(strUUID);
 						

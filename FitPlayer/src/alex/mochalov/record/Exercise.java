@@ -29,7 +29,7 @@ public class Exercise
 	}
 	
 	
-	public UUID getID() {
+	public UUID getUUID() {
 		return UUID;
 	}
 
@@ -47,5 +47,6 @@ public class Exercise
 
 	public boolean isWeight() {
 		return mWeight;
-	}	
+	}
+
 }

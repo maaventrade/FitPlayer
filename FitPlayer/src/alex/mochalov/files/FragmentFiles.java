@@ -14,6 +14,7 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 
+import java.io.File;
 import java.util.*;
 
 public class FragmentFiles extends Fragment
@@ -34,6 +35,8 @@ public class FragmentFiles extends Fragment
 	private int selectedStringIndex = -1;
 	
 	private int copyStringIndex = -1;
+
+	private String directory = "";
 	
 	public interface OnStartProgrammListener {
 		public void onGoSelected(String text);
@@ -216,12 +219,13 @@ public class FragmentFiles extends Fragment
 	}
 
 	private void extract() {
-		DialogSelectPath dialog = new DialogSelectPath(mContext, "", getResources().getString(R.string.extract_from_archive), false);
+		DialogSelectPath dialog = new DialogSelectPath(mContext, directory, getResources().getString(R.string.extract_from_archive), false);
 		
 		dialog.callback = new DialogSelectPath.SelectFileCallback() {
 			@Override
 			public void callbackOk(String path) {
-
+				File file = new File(path);
+				directory = file.getParent(); // to get the parent dir name				
 				if (Utils.extract(mContext, path, files, adapter)){
 					
 				}
@@ -232,12 +236,13 @@ public class FragmentFiles extends Fragment
 	}
 
 	private void archive() {
-		DialogSelectPath dialog = new DialogSelectPath(mContext, "", getResources().getString(R.string.archive_all), true);
+		DialogSelectPath dialog = new DialogSelectPath(mContext, directory, getResources().getString(R.string.archive_all), true);
 		
 		dialog.callback = new DialogSelectPath.SelectFileCallback() {
 			@Override
 			public void callbackOk(String path) {
-				
+				File file = new File(path);
+				directory = file.getParent(); // to get the parent dir name				
 				Toast.makeText(mContext, 
 						Utils.archive(files, path), 
 						Toast.LENGTH_LONG).show();
