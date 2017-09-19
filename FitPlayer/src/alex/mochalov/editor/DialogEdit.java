@@ -189,8 +189,8 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			
 			dialog.dismiss();
 		} else if (v == buttonSelect) {
-			DialogSelectRecord dialog = new DialogSelectRecord(mContext);
-			dialog.callback = new DialogSelectRecord.MyCallback() {
+			DialogSelectExercise dialog = new DialogSelectExercise(mContext);
+			dialog.callback = new DialogSelectExercise.MyCallback() {
 				@Override
 				public void selected(Exercise exercise) {
 					name.setText(exercise.getName());

@@ -73,5 +73,7 @@
     <string name="select_programm">Select programm</string>
     <string name="archive_all">Archive all</string>
     <string name="extract_from_archive">Extract from archive</string>
+
+    <string name="edit_exercise">Edit exercise</string>
     
 </resources>

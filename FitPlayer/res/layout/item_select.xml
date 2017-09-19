@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/item_background_selector1"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/TextViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       
+		android:textColor="@drawable/item_text_selector1" 
         android:text="Big Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
         />
@@ -17,7 +19,7 @@
         android:id="@+id/TextViewText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        
+		android:textColor="@drawable/item_text_selector1"         
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
          />

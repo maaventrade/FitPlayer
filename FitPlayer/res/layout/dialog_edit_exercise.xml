@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/salad"
+    android:minHeight="500dp"
+    android:orientation="vertical"
+    android:padding="@dimen/item_padding"
+>
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+		<TextView
+		    android:id="@+id/tvName"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/name"
+		    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+		<EditText
+		    android:id="@+id/etName"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:ems="10" >
+
+		    <requestFocus />
+		</EditText>
+
+	</LinearLayout>
+
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" />
+    </LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<Button
+			android:id="@+id/btnOk"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/ok"
+			android:layout_weight="0.5"/>
+
+		<Button
+			android:id="@+id/btnCancel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/cancel"
+			android:layout_weight="0.5"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

@@ -24,18 +24,24 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class Exercises {
-
-	private static ArrayList<Exercise> records = new ArrayList<Exercise>();
+	private static ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
 	public static String getText(UUID id)
 	{
-		for (Exercise r: records)
+		for (Exercise r: exercises)
 			if (r.getUUID().equals(id))
 				return r.getText();
 
 		return "";
 		
 	}
+	
+	public static void addExercise(Exercise exercise)
+	{
+		exercises.add(exercise);
+		Utils.sortR(exercises);
+	}
+	
 /*
 	public static void loadXMLrecords(Context mContext) {
 
@@ -131,8 +137,8 @@ public class Exercises {
 		Utils.sortR(records);
 	}
 	*/
-	public static void loadRecords(Context mContext) {
-		records.clear();
+	public static void loadExercises(Context mContext) {
+		exercises.clear();
  
 		try {
 			String name = Utils.APP_FOLDER + "/records.xml";
@@ -187,7 +193,7 @@ public class Exercises {
 								uuid,
 								Boolean.parseBoolean(parser.getAttributeValue(null, "weight")));
 
-						records.add(exercise);
+						exercises.add(exercise);
 
 					}
 				}
@@ -202,15 +208,15 @@ public class Exercises {
 			Log.d("", t.toString());
 		}
 
-		Utils.sortR(records);
+		Utils.sortR(exercises);
 	}
 
 	public static ArrayList<Exercise> getRecords() {
 
-		return records;
+		return exercises;
 	}
 
-	public static boolean SaveRecords(Context mContext) {
+	public static boolean SaveExercises(Context mContext) {
 		try {
 			File file = new File(Utils.APP_FOLDER);
 			if (!file.exists()) {
@@ -224,7 +230,7 @@ public class Exercises {
 			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
 			writer.write("<body type = \"records\">" + "\n");
 
-			for (Exercise r : records) {
+			for (Exercise r : exercises) {
 				writer.write("<record name=\"" + r.getName() + "\""
 						+ " text=\"" + r.getText() + "\"" + " rest=\""
 						+ r.isRest() + "\"" + " id=\"" + r.getUUID() + "\""
@@ -246,14 +252,14 @@ public class Exercises {
 	}
 
 	public static UUID findRecord(String text) {
-		for (Exercise r: records)
+		for (Exercise r: exercises)
 			if (r.getText().equals(text))
 				return r.getUUID();
 		
 		return null;
 	}
 	public static Exercise getRecordByID(UUID uuid) {
-		for (Exercise r: records)
+		for (Exercise r: exercises)
 			if (r.getUUID().equals(uuid))
 				return r;
 		

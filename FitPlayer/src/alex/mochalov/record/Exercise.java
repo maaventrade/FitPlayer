@@ -21,7 +21,9 @@ public class Exercise
 	}
 	
 	public Exercise() {
-		
+		mName = "New";
+		mText = "";
+		UUID =  java.util.UUID.randomUUID();
 	}
 	
 	public String getText() {

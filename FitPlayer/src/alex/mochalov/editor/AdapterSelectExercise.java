@@ -14,7 +14,7 @@ import android.widget.*;
 
 import java.util.*;
 
-public class AdapterSelectRecord extends BaseAdapter {
+public class AdapterSelectExercise extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	private ArrayList<Exercise> objects;
@@ -26,7 +26,7 @@ public class AdapterSelectRecord extends BaseAdapter {
 	
 	public OnButtonClickListener listener;
 
-	AdapterSelectRecord(Context context, ArrayList<Exercise> obj) {
+	AdapterSelectExercise(Context context, ArrayList<Exercise> obj) {
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		objects = obj;
