@@ -53,26 +53,6 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 
 		return getView(groupPosition, childPosition, isLastChild, false,
 				convertView, parent);
-
-		/*
-		 * final Record record = (Record) getChild(groupPosition,
-		 * childPosition);
-		 * 
-		 * if (convertView == null) { LayoutInflater infalInflater =
-		 * (LayoutInflater) mContext
-		 * .getSystemService(Context.LAYOUT_INFLATER_SERVICE); convertView =
-		 * infalInflater.inflate(R.layout.item_editor_child, null); }
-		 * 
-		 * TextView name = (TextView) convertView
-		 * .findViewById(R.id.TextViewName); name.setText(record.getName());
-		 * 
-		 * TextView duration = (TextView) convertView
-		 * .findViewById(R.id.TextViewDuration);
-		 * duration.setText(Utils.MStoString(record.getDuration()));
-		 * 
-		 * return convertView;
-		 */
-
 	}
 
 	private View getView(final int groupPosition, final int childPosition,

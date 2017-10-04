@@ -156,7 +156,7 @@ public class DialogEditCalendar extends Dialog implements android.view.View.OnCl
 				}});
 			
 			
-			Utils.readFilesList(mFiles);
+			/// 1111111111111111  Utils.readFilesList(mFiles);
 
 			ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(mContext, 
 					android.R.layout.simple_list_item_1, android.R.id.text1, mFiles);

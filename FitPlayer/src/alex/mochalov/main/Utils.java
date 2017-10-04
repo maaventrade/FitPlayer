@@ -50,14 +50,6 @@ public class Utils {
 
 	private static Record copyRecord = null;
 	
-	private static Date date0 = new Date(0);
-
-
-	public static Object getDateOfTheLastFale()
-	{
-		return date0;
-	}
-
 	public static void setCopyRecord(Record record)
 	{
 		copyRecord = new Record(record);
@@ -176,33 +168,6 @@ public class Utils {
 		webView.loadData(translation, "text/html; charset=utf-8", "UTF-8");
 	}
 
-	public static void readFilesList(ArrayList<String> programms) {
-		programms.clear();
-		File file = new File(APP_FOLDER);
-		if(!file.exists()){                          
-			file.mkdirs();                  
-		}
-
-		File[] files = file.listFiles();
-		
-		for (int i = 0; i < files.length; i++)
-		{
-			String name = files[i].getName();
-			if (name.toLowerCase().endsWith(".xml")
-				&& Programm.isProgramm(files[i])
-				){
-				Date date  =  new Date(files[i].lastModified());
-				if (date.compareTo(date0) > 0)
-					date0 = date;
-				programms.add(name);
-			}
-		}
-		
-        sort(programms);
-		return ;
-	}
-
-	
 
 	
 	public static void sort(ArrayList<String> programms) {
@@ -361,7 +326,7 @@ public class Utils {
 		        			return;
 		        	    }
 		        		
-						Utils.readFilesList(files);
+						///      1111111111111111  Utils.readFilesList(files);
 						adapter.notifyDataSetChanged();
 						Toast.makeText(mContext, 
 						"Ok", 

@@ -120,7 +120,6 @@ public class FragmentEditor extends Fragment {
 		listViewRecords.setAdapter(adapter);
 
 		listViewRecords.setOnGroupClickListener(new OnGroupClickListener() {
-
 			@Override
 			public boolean onGroupClick(ExpandableListView parent, View v,
 					int groupPosition, long id) {

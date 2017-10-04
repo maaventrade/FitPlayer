@@ -17,11 +17,27 @@
 	    android:text="@string/timers"
 	    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-	<ListView
+<ExpandableListView
+	    android:id="@+id/ListViewFiles"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="0.9"
+	    android:choiceMode="singleChoice"
+	    android:indicatorLeft="250dp"
+	    android:indicatorRight="300dp" 
+	    android:layoutDirection="rtl" 
+	    android:listSelector = "@drawable/selector_list_item"
+	    android:groupIndicator="@null"
+	    />
+	
+<!--  
+	
+<ListView
 		android:id="@+id/ListViewFiles"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_weight="0.9"/>
+-->
 
 </LinearLayout>
 

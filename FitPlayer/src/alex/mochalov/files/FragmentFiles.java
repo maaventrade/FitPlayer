@@ -13,6 +13,8 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
 import java.io.File;
 import java.util.*;
@@ -27,9 +29,10 @@ public class FragmentFiles extends Fragment
 	//Fragment thisFragment;
 	private View rootView;
 	//
-	private ArrayList<String> files;
 	
-	private ListView listViewFiles;
+	//private ArrayList<String> files;
+	
+	private ExpandableListView listViewFiles;
 	private AdapterFiles adapter;
 	
 	private int selectedStringIndex = -1;
@@ -64,13 +67,12 @@ public class FragmentFiles extends Fragment
 
         rootView = inflater.inflate(R.layout.fragment_files, container, false);
 		
-		listViewFiles = (ListView)rootView.findViewById(R.id.ListViewFiles); 
-		listViewFiles.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		listViewFiles = (ExpandableListView)rootView.findViewById(R.id.ListViewFiles); 
+		//listViewFiles.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		files = new ArrayList<String>();
-		Utils.readFilesList(files);
+		Files.readFilesList();
 
-		adapter = new AdapterFiles(mContext, mContext, files);
+		adapter = new AdapterFiles(mContext, mContext, Files.getGroups(), Files.getChilds());
 
 		adapter.listener = new AdapterFiles.OnButtonClickListener(){
 
@@ -92,6 +94,52 @@ public class FragmentFiles extends Fragment
 		
 		listViewFiles.setAdapter(adapter);
 		
+		listViewFiles.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v,
+					int groupPosition, long id) {
+
+				int index = parent.getFlatListPosition(ExpandableListView
+						.getPackedPositionForGroup(groupPosition));
+				parent.setItemChecked(index, true);
+
+				selectedStringIndex = groupPosition;
+				/*
+				 * if (selectedRecord1 == selectedRecord)
+				 * openDialogEdit(selectedRecord,
+				 * adapter.getChildrenCount(groupPosition) > 0); else
+				 * selectedRecord = selectedRecord1;
+				 */
+				return false;
+			}
+		});
+
+		listViewFiles.setOnChildClickListener(new OnChildClickListener() {
+
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+
+				int index = parent.getFlatListPosition(ExpandableListView
+						.getPackedPositionForChild(groupPosition, childPosition));
+				parent.setItemChecked(index, true);
+
+				/*
+				Record selectedRecord1 = Programm.getItem(groupPosition,
+						childPosition);
+
+				if (selectedRecord1 == selectedRecord)
+					openDialogEdit(selectedRecord, false);
+				else
+					selectedRecord = selectedRecord1;
+*/
+				return true;
+			}
+
+		});
+		
+		
+		/*
 		listViewFiles.setOnItemClickListener( new ListView.OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
@@ -114,7 +162,7 @@ public class FragmentFiles extends Fragment
 					else selectedStringIndex = index;
 				}}
 		);	
-		
+		*/
 		
 		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.timers));
 		;
@@ -133,6 +181,7 @@ public class FragmentFiles extends Fragment
 		
 		switch (id){
 		case R.id.action_edit:
+			/* 11111111111111
 			if (selectedStringIndex >= 0){
 			FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
 
@@ -148,14 +197,15 @@ public class FragmentFiles extends Fragment
 
 			ft.commit();
 			}
+			*/
 			return true;
 			
 		case R.id.action_delete:
 				if (selectedStringIndex >= 0){
-
-					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-					builder.setMessage("Delete "+files.get(selectedStringIndex)+". Are you sure?").setPositiveButton("Yes", dialogClickListener)
-					    .setNegativeButton("No", dialogClickListener).show();
+					// 1111111111111
+					//AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+					//builder.setMessage("Delete "+files.get(selectedStringIndex)+". Are you sure?").setPositiveButton("Yes", dialogClickListener)
+					//    .setNegativeButton("No", dialogClickListener).show();
 
 				}
 
@@ -169,21 +219,21 @@ public class FragmentFiles extends Fragment
 				
 		case R.id.action_paste:
 				if (copyStringIndex >= 0){
-					DialogAddPasteRename("paste");
+					///  111111111 DialogAddPasteRename("paste");
 				}
 
 				return true;
 				
 		case R.id.action_rename:
 				if (selectedStringIndex >= 0){
-					DialogAddPasteRename("rename");
+					/// 11111111111 DialogAddPasteRename("rename");
 				}
 
 				return true;
 			
 		case R.id.action_add:
 			
-			DialogAddPasteRename("add");
+			// 111111111111 DialogAddPasteRename("add");
 			return true;
 		case R.id.action_calendar:
 				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
@@ -191,7 +241,7 @@ public class FragmentFiles extends Fragment
 				FragmentCalendar fragmentCalendar = new FragmentCalendar(mContext);
 
 				Bundle arguments = new Bundle();
-
+/* 111111111111111
 				Object[] objectsArray = files.toArray();
 				String[] stringsArray = new String[objectsArray.length];
 
@@ -205,7 +255,8 @@ public class FragmentFiles extends Fragment
 				
 				ft.addToBackStack(null);
 
-				ft.commit(); 
+				ft.commit();
+				*/
 				return true;
 		case R.id.action_archive:
 			archive();
@@ -226,9 +277,9 @@ public class FragmentFiles extends Fragment
 			public void callbackOk(String path) {
 				File file = new File(path);
 				directory = file.getParent(); // to get the parent dir name				
-				if (Utils.extract(mContext, path, files, adapter)){
-					
-				}
+				//if (Utils.extract(mContext, path, files, adapter)){
+				// 1111111111	
+				//}
 			}
 		}; 
 		dialog.show(); 
@@ -237,7 +288,7 @@ public class FragmentFiles extends Fragment
 
 	private void archive() {
 		DialogSelectPath dialog = new DialogSelectPath(mContext, directory, getResources().getString(R.string.archive_all), true);
-		
+		/* 11111111111
 		dialog.callback = new DialogSelectPath.SelectFileCallback() {
 			@Override
 			public void callbackOk(String path) {
@@ -249,10 +300,11 @@ public class FragmentFiles extends Fragment
 				
 			}
 		}; 
-		dialog.show(); 
+		dialog.show();
+		*/
 		
 	}
-
+/* 11111111111111
 	private void DialogAddPasteRename(final String p0)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -330,5 +382,5 @@ public class FragmentFiles extends Fragment
 	    }
 	};
 	
-	
+	*/
 }
