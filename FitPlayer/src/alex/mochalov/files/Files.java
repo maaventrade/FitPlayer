@@ -20,7 +20,6 @@ import alex.mochalov.main.Utils;
 import alex.mochalov.programm.Programm;
 import alex.mochalov.record.Record;
 import android.widget.Toast;
-
 public class Files {
 
 	private static ArrayList<String> listDataHeader = new ArrayList<String>();
