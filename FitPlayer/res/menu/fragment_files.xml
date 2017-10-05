@@ -23,6 +23,14 @@
         android:showAsAction="always"
         android:icon="@drawable/add"
         android:title="@string/action_add"/>
+    
+    <item
+        android:id="@+id/action_add_child"
+        android:orderInCategory="25"
+        android:showAsAction="always"
+        android:icon="@drawable/add_child"
+        android:title="@string/action_add_child"/>
+  
     	
 	<item
         android:id="@+id/action_copy"

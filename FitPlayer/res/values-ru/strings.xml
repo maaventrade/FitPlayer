@@ -18,6 +18,8 @@
     <string name="action_settings">Настройки</string>
     <string name="action_start">Пуск</string>
     
+    <string name="action_add_group">Добавить группу</string>
+    
 	<string name="cancel">Отказ</string>
 	<string name="count">Отсчёт перед окончанием</string>
 	<string name="copy">Копировать</string>

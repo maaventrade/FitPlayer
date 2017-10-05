@@ -23,8 +23,8 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 	private Activity mActivity;
 	private Context mContext;
 	
-	private List<String> mGroups; // header titles
-	private HashMap<String, List<String>> mChilds;
+	private List<PFile> mGroups; // header titles
+	private HashMap<PFile, List<PFile>> mChilds;
 	
 	public interface OnButtonClickListener {
 		public void onEdit(String text);
@@ -32,13 +32,16 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 	}
 	public OnButtonClickListener listener;
 
-	AdapterFiles(Activity activity, Context context, List<String> groups,
-			HashMap<String, List<String>> childs) {
+	AdapterFiles(Activity activity, Context context, List<PFile> groups,
+			HashMap<PFile, List<PFile>> childs) {
 		
 		mContext = context;
 		mActivity = activity;
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		mGroups = groups;
+		mChilds = childs;
 		
 	}
 	
@@ -118,11 +121,11 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 		TextView tvDuration = (TextView)convertView.findViewById(R.id.tvDuration);
 		TextView tvInfo = (TextView)convertView.findViewById(R.id.tvInfo);
 		
-		String record = null;
+		PFile record = null;
 		if (childPosition < 0)
-			record = (String) getGroup(groupPosition);
+			record = (PFile) getGroup(groupPosition);
 		else
-			record = (String)getChild(groupPosition, childPosition);
+			record = (PFile)getChild(groupPosition, childPosition);
 
 		
 		ImageButton brnGo = (ImageButton)convertView.findViewById(R.id.imageButtonGo);
@@ -153,9 +156,9 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 				}});
 		
 		
-    	textViewName.setText(record);
+    	textViewName.setText(record.getName());
 		
-		Date date = Utils.getFileDateTime(record);
+		Date date = record.getDate();
 	//	Log.d("d","date "+date+"  "+Utils.getDateOfTheLastFale());
 		DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
 		DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
@@ -170,16 +173,16 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 		
 		
 		
-		
+	/*	
     	FileData fileData = Utils.getFileData(mActivity, record);
     	tvDuration.setText(Utils.MStoString(fileData.duration));
 		tvInfo.setText(fileData.getInfo());
-    	
+/*    	
 		if (fileData.isLocked())
 			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.lock));
 		else
 			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));
-
+*/
 		return convertView;
 	}
 }

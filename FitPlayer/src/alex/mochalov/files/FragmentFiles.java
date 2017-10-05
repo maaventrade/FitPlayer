@@ -35,9 +35,11 @@ public class FragmentFiles extends Fragment
 	private ExpandableListView listViewFiles;
 	private AdapterFiles adapter;
 	
-	private int selectedStringIndex = -1;
+	private int selectedGroupIndex = -1;
+	private int selectedItemIndex = -1;
 	
-	private int copyStringIndex = -1;
+	private int copyItemIndex = -1;
+	private int copyGroupIndex = -1;
 
 	private String directory = "";
 	
@@ -103,7 +105,10 @@ public class FragmentFiles extends Fragment
 						.getPackedPositionForGroup(groupPosition));
 				parent.setItemChecked(index, true);
 
-				selectedStringIndex = groupPosition;
+				
+				selectedGroupIndex = groupPosition;
+				selectedItemIndex = -1;
+				
 				/*
 				 * if (selectedRecord1 == selectedRecord)
 				 * openDialogEdit(selectedRecord,
@@ -124,6 +129,9 @@ public class FragmentFiles extends Fragment
 						.getPackedPositionForChild(groupPosition, childPosition));
 				parent.setItemChecked(index, true);
 
+				selectedGroupIndex = groupPosition;
+				selectedItemIndex = childPosition;
+				
 				/*
 				Record selectedRecord1 = Programm.getItem(groupPosition,
 						childPosition);
@@ -181,14 +189,13 @@ public class FragmentFiles extends Fragment
 		
 		switch (id){
 		case R.id.action_edit:
-			/* 11111111111111
-			if (selectedStringIndex >= 0){
+			if (selectedItemIndex >= 0){
 			FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
 
 			FragmentEditor fragmentEditor = new FragmentEditor(mContext);
 			
 			Bundle args = new Bundle();
-		    args.putString("name", files.get(selectedStringIndex));
+		    args.putString("name", Files.getItem(selectedGroupIndex, selectedItemIndex).getName());
 		    
 		    fragmentEditor.setArguments(args);
 
@@ -197,51 +204,51 @@ public class FragmentFiles extends Fragment
 
 			ft.commit();
 			}
-			*/
 			return true;
 			
 		case R.id.action_delete:
-				if (selectedStringIndex >= 0){
-					// 1111111111111
-					//AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-					//builder.setMessage("Delete "+files.get(selectedStringIndex)+". Are you sure?").setPositiveButton("Yes", dialogClickListener)
-					//    .setNegativeButton("No", dialogClickListener).show();
+				if (selectedItemIndex >= 0){
+					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+					builder.setMessage("Delete "+
+							Files.getItem(selectedGroupIndex, selectedItemIndex)+". Are you sure?").setPositiveButton("Yes", dialogClickListener)
+					    .setNegativeButton("No", dialogClickListener).show();
 
 				}
 
 			return true;
 		case R.id.action_copy:
-				if (selectedStringIndex >= 0){
-					copyStringIndex = selectedStringIndex;
+				if (selectedItemIndex >= 0){
+					copyItemIndex = selectedItemIndex;
+					copyGroupIndex = selectedGroupIndex;
 				}
-
 				return true;
-				
 		case R.id.action_paste:
-				if (copyStringIndex >= 0){
-					///  111111111 DialogAddPasteRename("paste");
+				if (copyItemIndex >= 0){
+					DialogAddPasteRename("paste", getResources().getString(R.string.action_add_child));
 				}
-
 				return true;
-				
 		case R.id.action_rename:
-				if (selectedStringIndex >= 0){
-					/// 11111111111 DialogAddPasteRename("rename");
+				if (copyItemIndex >= 0){
+					DialogAddPasteRename("rename", getResources().getString(R.string.action_add_child));
 				}
 
 				return true;
+			
+		case R.id.action_add_child:
+			DialogAddPasteRename("add", getResources().getString(R.string.action_add_child));
+			return true;
 			
 		case R.id.action_add:
-			
-			// 111111111111 DialogAddPasteRename("add");
+			DialogAddPasteRename("addGroup", getResources().getString(R.string.action_add_group));
 			return true;
+			
 		case R.id.action_calendar:
 				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
 
 				FragmentCalendar fragmentCalendar = new FragmentCalendar(mContext);
 
 				Bundle arguments = new Bundle();
-/* 111111111111111
+/*
 				Object[] objectsArray = files.toArray();
 				String[] stringsArray = new String[objectsArray.length];
 
@@ -304,20 +311,21 @@ public class FragmentFiles extends Fragment
 		*/
 		
 	}
-/* 11111111111111
-	private void DialogAddPasteRename(final String p0)
+
+	private void DialogAddPasteRename(final String p0, String title)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle(getResources().getString(R.string.action_add));
+		
+		builder.setTitle(title);
 
 		final EditText name = new EditText(mContext);
 		name.setInputType(InputType.TYPE_CLASS_TEXT);
 		builder.setView(name);
 		
 		if(p0.equals("rename"))
-			name.setText(Utils.trimExt(files.get(selectedStringIndex)));
+			name.setText(Utils.trimExt(Files.getItem(selectedGroupIndex, selectedItemIndex).getName()));
 		else if (p0.equals("paste")){
-			builder.setTitle(getResources().getString(R.string.copy)+" "+files.get(selectedStringIndex));
+			builder.setTitle(getResources().getString(R.string.copy)+" "+Files.getItem(selectedGroupIndex, selectedItemIndex));
 			
 		}
 
@@ -325,31 +333,43 @@ public class FragmentFiles extends Fragment
 				@Override
 				public void onClick(DialogInterface p1, int p2)
 				{
-					String newFileName = Utils.trimExt(name.getText().toString())+".xml";
+					String newFileName = Utils.trimExt(name.getText().toString());
+					if (! p0.equals("addGroup"))
+						newFileName = newFileName + ".xml";
 					
 					if (p0.equals("add")){
 						Programm.clear();
 						Utils.setFileName(newFileName);
-						Programm.save(mContext, newFileName);
-						files.add(Utils.getFileName());
-					} else if (p0.equals("rename")) {
+						File file = Programm.save(mContext, newFileName);
+						Files.addChildRecord(Files.getGroup(selectedGroupIndex), file);
 						
-						if (!Utils.rename(mContext,files.get(selectedStringIndex), newFileName))
+					} else if (p0.equals("addGroup")) {
+
+						File file = Utils.addDirectory(mContext, newFileName);
+						if (file != null) 
+							Files.addGroup(file, selectedGroupIndex);
+						
+					} else if (p0.equals("rename")) {
+						/*
+						if (!Utils.rename(mContext, Files.getItem(selectedGroupIndex, selectedItemIndex).getName(), newFileName))
 							return;
 						Utils.setFileName(newFileName);
-						files.set(selectedStringIndex, Utils.getFileName());
+						Files.setChild(selectedGroupIndex, selectedItemIndex, Utils.getFileName());
+						*/
 						
 					} else {
-						if (!Utils.copy(files.get(selectedStringIndex), newFileName))
+						/*
+						if (!Utils.copy(Files.getItem(selectedGroupIndex, selectedItemIndex), newFileName))
 							return;
 						Utils.setFileName(newFileName);
-						files.add(Utils.getFileName());
+						Files.addChildRecord(Files.getGroup(selectedGroupIndex), Utils.getFileName());
+						*/
 					}
 					
 					
-					Utils.sort(files);
+					//Utils.sort(files);
 
-					listViewFiles.setItemChecked(files.indexOf(selectedStringIndex), true);
+					listViewFiles.setItemChecked(selectedItemIndex, true); /// ???????????
 
 					adapter.notifyDataSetChanged();
 				}
@@ -369,10 +389,10 @@ public class FragmentFiles extends Fragment
 	        switch (which){
 				case DialogInterface.BUTTON_POSITIVE:
 
-					Utils.deleteFile(files.get(selectedStringIndex));
-					files.remove(selectedStringIndex);
+					//Utils.deleteFile(Files.getItem(selectedGroupIndex, selectedItemIndex));
+					//Files.deleteRecord(Files.getItem(selectedGroupIndex, selectedItemIndex));
 					
-					selectedStringIndex = -1;
+					selectedItemIndex = -1;
 					adapter.notifyDataSetChanged();
 					break;
 
@@ -382,5 +402,5 @@ public class FragmentFiles extends Fragment
 	    }
 	};
 	
-	*/
+
 }

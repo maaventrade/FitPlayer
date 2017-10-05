@@ -20,23 +20,25 @@ import alex.mochalov.main.Utils;
 import alex.mochalov.programm.Programm;
 import alex.mochalov.record.Record;
 import android.widget.Toast;
+
+
 public class Files {
 
-	private static ArrayList<String> listDataHeader = new ArrayList<String>();
-	private static HashMap<String, List<String>> listDataChild = new HashMap<String, List<String>>();
+	private static ArrayList<PFile> listDataHeader = new ArrayList<PFile>();
+	private static HashMap<PFile, List<PFile>> listDataChild = new HashMap<PFile, List<PFile>>();
 
 
-	public static int getIndex(String newRecord) {
+	public static int getIndex(PFile newRecord) {
 		int index = -1;
 
-		for (String r : listDataHeader) {
+		for (PFile r : listDataHeader) {
 			index++;
 			if (r == newRecord)
 				return index;
 
-			List<String> l = listDataChild.get(r);
+			List<PFile> l = listDataChild.get(r);
 			if (l != null) {
-				for (String p : l) {
+				for (PFile p : l) {
 					index++;
 					if (r == p)
 						return index;
@@ -49,30 +51,30 @@ public class Files {
 	}
 
 	public static void clear() {
-		listDataHeader = new ArrayList<String>();
-		listDataChild = new HashMap<String, List<String>>();
+		listDataHeader = new ArrayList<PFile>();
+		listDataChild = new HashMap<PFile, List<PFile>>();
 	}
 
-	public static ArrayList<String> getGroups() {
+	public static ArrayList<PFile> getGroups() {
 		return listDataHeader;
 	}
 
-	public static HashMap<String, List<String>> getChilds() {
+	public static HashMap<PFile, List<PFile>> getChilds() {
 		return listDataChild;
 	}
 
-	public static ArrayList<String> getList() {
+	public static ArrayList<PFile> getList() {
 
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<PFile> list = new ArrayList<PFile>();
 
-		for (String r : listDataHeader) {
+		for (PFile r : listDataHeader) {
 			boolean child = false;
-			List<String> l = listDataChild.get(r);
+			List<PFile> l = listDataChild.get(r);
 			if (l != null) {
 				if (l.size() == 0)
 					list.add(r);
 				else {
-					for (String p : l)
+					for (PFile p : l)
 						list.add(p);
 				}
 			} else {
@@ -84,25 +86,25 @@ public class Files {
 	}
 
 
-	public static String getGroup(int index) {
+	public static PFile getGroup(int index) {
 		return listDataHeader.get(index);
 	}
 
-	public static String getItem(int groupPosition, int childPosition) {
-		String group = listDataHeader.get(groupPosition);
+	public static PFile getItem(int groupPosition, int childPosition) {
+		PFile group = listDataHeader.get(groupPosition);
 		return listDataChild.get(group).get(childPosition);
 	}
 
-	public static void deleteRecord(String selectedRecord) {
-		String parent = null;
+	public static void deleteRecord(PFile selectedRecord) {
+		PFile parent = null;
 
 		listDataHeader.remove(selectedRecord);
 
 		if (listDataChild.get(selectedRecord) != null)
 			listDataChild.remove(selectedRecord);
 		else {
-			for (Entry<String, List<String>> entry : listDataChild.entrySet())
-				for (String r : entry.getValue())
+			for (Entry<PFile, List<PFile>> entry : listDataChild.entrySet())
+				for (PFile r : entry.getValue())
 					if (r == selectedRecord) {
 						parent = entry.getKey();
 						entry.getValue().remove(r);
@@ -112,30 +114,48 @@ public class Files {
 		}
 	}
 
-	public static String addCHildRecord(String selectedRecord) {
-		String String = new String("New String");
+	public static PFile addChildRecord(PFile selectedRecord, File file) {
+		PFile pfile = new PFile(file);
 
 		if (listDataChild.get(selectedRecord) == null) {
-			ArrayList<String> newArray = new ArrayList<String>();
-			newArray.add(String);
+			ArrayList<PFile> newArray = new ArrayList<PFile>();
+			newArray.add(pfile);
 			listDataChild.put(selectedRecord, newArray);
 		} else {
-			listDataChild.get(selectedRecord).add(String);
+			listDataChild.get(selectedRecord).add(pfile);
 		}
 
 		return null;
 	}
 
 	
+	
+	/*
+	public static void setChild(int selectedGroupIndex, int selectedItemIndex,
+			String fileName) {
+		listDataChild.get(selectedGroupIndex).set(selectedItemIndex, fileName);
+	}
+	*/
 
-	//public static String getMainRecord() {
+	//public static PFile getMainRecord() {
 	//	return main;
 //	}
 
 	
-	public static String addRecord(String newRecord, String currentRecord) {
+	
+	public static void addGroup(File file, int index) {
+		if (index < 0) index = 0;
+		
+		PFile pFile = new PFile(file);
+		
+		listDataHeader.add(index, pFile); 
+		listDataChild.put(pFile, new ArrayList<PFile>());
+	}
+	
+	/*
+	public static PFile addRecord(PFile newRecord, String currentRecord) {
 		if (newRecord == null)
-			newRecord = new String("new String");
+			newRecord = new PFile("new String", false);
 
 		if (currentRecord == null)
 			listDataHeader.add(newRecord);
@@ -147,7 +167,7 @@ public class Files {
 						newRecord);
 			}
 		} else {
-			for (Entry<String, List<String>> entry : listDataChild.entrySet())
+			for (Entry<PFile, List<PFile>> entry : listDataChild.entrySet())
 				if (entry.getValue().contains(currentRecord))
 					entry.getValue().add(
 							entry.getValue().indexOf(currentRecord) + 1,
@@ -157,26 +177,28 @@ public class Files {
 
 		return newRecord;
 	}
+*/
+	/*
+	public static PFile copyRecord(PFile currentRecord) {
 
-	public static String copyRecord(String currentRecord) {
-
-		String String = new String(currentRecord);
+		PFile pFile = new PFile(currentRecord);
 
 		if (listDataHeader.indexOf(currentRecord) > 0) {
-			listDataHeader.add(String);
+			listDataHeader.add(pFile);
 		} else {
-			for (Entry<String, List<String>> entry : listDataChild.entrySet())
+			for (Entry<PFile, List<PFile>> entry : listDataChild.entrySet())
 				if (entry.getValue().contains(currentRecord))
-					entry.getValue().add(String);
+					entry.getValue().add(pFile);
 
 		}
 
-		return String;
+		return pFile;
 	}
+	*/
 
-	public static String getGroup(String String) {
+	public static PFile getGroup(PFile String) {
 
-		for (Entry<String, List<String>> entry : listDataChild.entrySet())
+		for (Entry<PFile, List<PFile>> entry : listDataChild.entrySet())
 			if (entry.getValue().contains(String))
 				return entry.getKey();
 
@@ -185,23 +207,23 @@ public class Files {
 
 
 
-	public static String pasteRecord(String copyRecord, String selectedRecord) {
-
+	public static PFile pasteRecord(PFile copyRecord, String selectedRecord) {
+/*
 		String String = new String(copyRecord);
 
 		if (listDataHeader.indexOf(selectedRecord) >= 0) {
 			listDataHeader.add(listDataHeader.indexOf(selectedRecord) + 1,
 					String);
 		} else {
-			for (Entry<String, List<String>> entry : listDataChild.entrySet())
+			for (Entry<PFile, List<PFile>> entry : listDataChild.entrySet())
 				if (entry.getValue().contains(selectedRecord))
 					entry.getValue().add(
 							entry.getValue().indexOf(selectedRecord) + 1,
 							String);
 
 		}
-
-		return String;
+*/
+		return null;
 	}
 
 	private static Date date0 = new Date(0);
@@ -216,9 +238,7 @@ public class Files {
 		listDataHeader.clear();
 		listDataChild.clear();
 
-		Record currentGroup = null;
-		Record record = null;
-		
+		PFile currentGroup = null;
 		
 		File file = new File(Utils.APP_FOLDER);
 		if(!file.exists()){                          
@@ -230,157 +250,30 @@ public class Files {
 		for (int i = 0; i < files.length; i++)
 		{
 			String name = files[i].getName();
-			if (name.toLowerCase().endsWith(".xml")
-				&& Programm.isProgramm(files[i])
-				){
-				Date date  =  new Date(files[i].lastModified());
-				if (date.compareTo(date0) > 0)
-					date0 = date;
-				///////////////programms.add(name);
+			
+			if (files[i].isDirectory()){
+				currentGroup = new PFile(files[i]);
+				listDataHeader.add(currentGroup);
+				listDataChild.put(currentGroup, new ArrayList<PFile>() );
+			} else {
+				if (name.toLowerCase().endsWith(".xml")
+						&& Programm.isProgramm(files[i])
+						){
+						Date date  =  new Date(files[i].lastModified());
+						if (date.compareTo(date0) > 0)
+							date0 = date;
+						if (currentGroup != null)
+							listDataChild.get(currentGroup).add(new PFile(files[i]));
+						else{
+							listDataHeader.add(new PFile(files[i]));
+							listDataChild.put(currentGroup, new ArrayList<PFile>() );
+						}
+					}
 			}
 		}
 		
         //////////////sort(programms);
 		/////////////////////return ;
-		
-		
-/*
-		try {
-
-			String name = Utils.APP_FOLDER + "/" + fileName;
-
-			BufferedReader reader;
-			BufferedReader rd = new BufferedReader(new InputStreamReader(
-					new FileInputStream(name)));
-
-			String line = rd.readLine();
-
-			rd.close();
-
-			if (line.toLowerCase().contains("windows-1251"))
-				reader = new BufferedReader(new InputStreamReader(
-						new FileInputStream(name), "windows-1251")); // Cp1252
-			else if (line.toLowerCase().contains("utf-8"))
-				reader = new BufferedReader(new InputStreamReader(
-						new FileInputStream(name), "UTF-8"));
-			else if (line.toLowerCase().contains("utf-16"))
-				reader = new BufferedReader(new InputStreamReader(
-						new FileInputStream(name), "utf-16"));
-			else
-				reader = new BufferedReader(new InputStreamReader(
-						new FileInputStream(name)));
-
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-			factory.setNamespaceAware(true);
-			XmlPullParser parser = factory.newPullParser();
-
-			parser.setInput(reader);
-
-			int eventType = parser.getEventType();
-			while (eventType != XmlPullParser.END_DOCUMENT) {
-
-				if (eventType == XmlPullParser.START_DOCUMENT) {
-				} else if (eventType == XmlPullParser.END_TAG) {
-					if (parser.getName().equals("children")) {
-						currentGroup = null;
-					}
-				} else if (eventType == XmlPullParser.START_TAG) {
-
-					if (parser.getName() == null)
-						;
-					else if (parser.getName().equals("main")) {
-
-						int duration = 0;
-						if (parser.getAttributeValue(null, "duration") != null)
-							duration = Integer.parseInt(parser
-									.getAttributeValue(null, "duration"));
-
-						main = new Record(
-								parser.getAttributeValue(null, "name"),
-								parser.getAttributeValue(null, "text"),
-								Boolean.parseBoolean(parser.getAttributeValue(
-										null, "rest")), duration,
-								Boolean.parseBoolean(parser.getAttributeValue(
-												null, "weight")));
-
-						soundNextName = parser.getAttributeValue(null,
-								"soundNextName");
-						soundNextGroupUri = parser.getAttributeValue(null,
-								"soundNextGroupUri");
-						soundNextGroupOn = Boolean.parseBoolean(parser
-								.getAttributeValue(null, "soundNextGroupOn"));
-						countBeforeTheEnd = Boolean.parseBoolean(parser
-								.getAttributeValue(null, "countBeforeTheEnd"));
-						pathToMp3 = parser.getAttributeValue(null, "pathToMp3");
-						playMusic = Boolean.parseBoolean(parser
-								.getAttributeValue(null, "playMusic"));
-						music_quieter = Boolean.parseBoolean(parser
-								.getAttributeValue(null, "music_quieter"));
-						expand_text = Boolean.parseBoolean(parser
-								.getAttributeValue(null, "expand_text"));
-						speach_descr = Boolean.parseBoolean(parser
-								.getAttributeValue(null, "speach_descr"));
-						locked = Boolean.parseBoolean(parser.getAttributeValue(
-								null, "locked"));
-
-					} else if (parser.getName().equals("children")) {
-						currentGroup = record;
-						listDataChild
-								.put(currentGroup, new ArrayList<Record>());
-					} else if (parser.getName().equals("record")) {
-
-						int duration = 0;
-						if (parser.getAttributeValue(null, "duration") != null)
-							duration = Integer.parseInt(parser
-									.getAttributeValue(null, "duration"));
-
-						String strUUID = parser.getAttributeValue(null, "id");
-						UUID uuid;
-						if (strUUID == null || strUUID.equals("null"))
-							uuid = null;
-						else uuid = UUID.fromString(strUUID);
-						
-						record = new Record(parser.getAttributeValue(null,
-								"name"),
-								parser.getAttributeValue(null, "text"),
-								Boolean.parseBoolean(parser.getAttributeValue(null, "rest")), 
-								duration,
-								uuid, 
-								Boolean.parseBoolean(parser.getAttributeValue(null, "weight")));
-
-						//record.setID(Records.findRecord(record.getText()));
-						
-						
-						
-						if (currentGroup != null) {
-							listDataChild.get(currentGroup).add(record);
-						} else {
-							listDataHeader.add(record);
-						}
-
-					}
-				}
-
-				try {
-					eventType = parser.next();
-				} catch (XmlPullParserException e) {
-					Toast.makeText(
-							mContext,
-							mContext.getResources().getString(R.string.error_load_xml)
-									+ ". " + e.toString(), Toast.LENGTH_LONG).show();
-					return false;
-				}
-			}
-
-		} catch (Throwable t) {
-			Toast.makeText(
-					mContext,
-					mContext.getResources().getString(R.string.error_load_xml)
-							+ ". " + t.toString(), Toast.LENGTH_LONG).show();
-			return false;
-		}
-		
-*/
+			
 	}
-
 }

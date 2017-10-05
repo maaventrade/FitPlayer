@@ -48,11 +48,9 @@ public class Programm {
 
 	public static boolean isProgramm(File file)
 	{
-
 		try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(
 												new FileInputStream(file.getPath())));
-
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);
 			XmlPullParser parser = factory.newPullParser();
@@ -410,17 +408,16 @@ public class Programm {
 		return null;
 	}
 
-	public static boolean save(Context mContext, String fileName) {
+	public static File save(Context mContext, String fileName) {
+		summDurationsAll();
+
+		File file = new File(Utils.APP_FOLDER);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		file = new File(Utils.APP_FOLDER, fileName);
 		try {
-
-			summDurationsAll();
-
-			File file = new File(Utils.APP_FOLDER);
-			if (!file.exists()) {
-				file.mkdirs();
-			}
-			file = new File(Utils.APP_FOLDER, fileName);
-
 			Writer writer = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(file), "UTF-8"));
 
@@ -481,9 +478,9 @@ public class Programm {
 					mContext.getResources().getString(
 							R.string.error_saving_file)
 							+ " " + e, Toast.LENGTH_LONG).show();
-			return false;
+			return null;
 		}
-		return true;
+		return file;
 	}
 
 	public static Record getMainRecord() {

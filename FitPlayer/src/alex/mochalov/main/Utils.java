@@ -340,6 +340,19 @@ public class Utils {
 		return true;
 	}
 
+	public static File addDirectory(Context mContext, String newFileName) {
+		File file = new File(Utils.APP_FOLDER+"/"+newFileName);
+		if (!file.exists()) {
+			file.mkdirs();
+			return file;
+		} else {
+			Toast.makeText(mContext, 
+			"Directory already exists!", 
+			Toast.LENGTH_LONG).show();
+			return null;
+		}
+	}
+
 	
 }
 
