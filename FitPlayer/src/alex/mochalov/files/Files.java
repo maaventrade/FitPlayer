@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,8 +93,12 @@ public class Files {
 	}
 
 	public static PFile getItem(int groupPosition, int childPosition) {
-		PFile group = listDataHeader.get(groupPosition);
-		return listDataChild.get(group).get(childPosition);
+		if (groupPosition == -1)
+			return listDataHeader.get(childPosition);
+		else {
+			PFile group = listDataHeader.get(groupPosition);
+			return listDataChild.get(group).get(childPosition);
+		}
 	}
 
 	public static void deleteRecord(PFile selectedRecord) {
@@ -233,6 +239,22 @@ public class Files {
 		return date0;
 	}
 
+
+	static class PFComparator implements Comparator<PFile> {   
+		public int compare(PFile fileA, PFile fileB) {
+			if (fileA.isDirectory() && ! fileB.isDirectory())
+				return -1;
+			else if (!fileA.isDirectory() && fileB.isDirectory())
+				return 1;
+			else
+			return fileA.getName().compareToIgnoreCase(fileB.getName());
+		}
+	}
+	
+	public static void sort(ArrayList<PFile> headers) {
+		PFComparator fnc = new PFComparator();
+        Collections.sort(headers, fnc);
+	}
 	
 	public static void readFilesList() {
 		listDataHeader.clear();
@@ -255,6 +277,23 @@ public class Files {
 				currentGroup = new PFile(files[i]);
 				listDataHeader.add(currentGroup);
 				listDataChild.put(currentGroup, new ArrayList<PFile>() );
+				
+				File[] filesSubdir = files[i].listFiles();
+				for (int i1 = 0; i1 < filesSubdir.length; i1++)
+				{
+					name = filesSubdir[i1].getName();
+					
+					if (filesSubdir[i1].isDirectory()){
+					} else {
+						if (name.toLowerCase().endsWith(".xml")
+								&& Programm.isProgramm(filesSubdir[i1])
+								){
+								listDataChild.get(currentGroup).add(new PFile(filesSubdir[i1]));
+							}
+					}
+				}
+				
+				
 			} else {
 				if (name.toLowerCase().endsWith(".xml")
 						&& Programm.isProgramm(files[i])
@@ -272,8 +311,8 @@ public class Files {
 			}
 		}
 		
-        //////////////sort(programms);
-		/////////////////////return ;
+		
+		sort(listDataHeader);
 			
 	}
 }

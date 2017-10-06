@@ -105,9 +105,15 @@ public class FragmentFiles extends Fragment
 						.getPackedPositionForGroup(groupPosition));
 				parent.setItemChecked(index, true);
 
-				
-				selectedGroupIndex = groupPosition;
-				selectedItemIndex = -1;
+				PFile pFile = (PFile)adapter.getGroup(groupPosition);
+						
+				if (pFile.isDirectory()){
+					selectedGroupIndex = groupPosition;
+					selectedItemIndex = -1;
+				} else {
+					selectedGroupIndex = -1;
+					selectedItemIndex = groupPosition;
+				}
 				
 				/*
 				 * if (selectedRecord1 == selectedRecord)

@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.Date;
 
 public class PFile {
-		String mName;
-		Boolean mIsDirectory;
-		Date mDate;
+		private String mName;
+		private Boolean mIsDirectory;
+		private Date mDate;
 		
 		public PFile(File file) {
 			mName = file.getName();
@@ -25,6 +25,10 @@ public class PFile {
 
 		public Date getDate() {
 			return mDate;
+		}
+
+		public boolean isDirectory() {
+			return mIsDirectory;
 		}
 		
 }

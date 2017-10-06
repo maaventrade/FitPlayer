@@ -1,6 +1,7 @@
 package alex.mochalov.main;
 
 import alex.mochalov.files.AdapterFiles;
+import alex.mochalov.files.PFile;
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.programm.FileData;
 import alex.mochalov.programm.Programm;
@@ -29,7 +30,7 @@ class FileNameComparator implements Comparator<String> {
 	}
 }
 
-class RecordNameComparator implements Comparator<Exercise> {   
+class   RecordNameComparator implements Comparator<Exercise> {   
 	public int compare(Exercise a, Exercise b) {
 		return a.getName().compareToIgnoreCase(b.getName());
 	}
@@ -169,9 +170,19 @@ public class Utils {
 	}
 
 
+	class PFComparator implements Comparator<PFile> {   
+		public int compare(PFile fileA, PFile fileB) {
+			if (fileA.isDirectory() && ! fileB.isDirectory())
+				return 1;
+			else if (!fileA.isDirectory() && fileB.isDirectory())
+				return -1;
+			else
+			return fileA.getName().compareToIgnoreCase(fileB.getName());
+		}
+	}
+	
 	
 	public static void sort(ArrayList<String> programms) {
-		
 		FileNameComparator fnc = new FileNameComparator();
         Collections.sort(programms, fnc);
 	}

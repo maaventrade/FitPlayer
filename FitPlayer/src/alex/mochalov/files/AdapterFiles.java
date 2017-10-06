@@ -5,6 +5,7 @@ import alex.mochalov.main.*;
 import alex.mochalov.player.*;
 import alex.mochalov.programm.FileData;
 import alex.mochalov.record.*;
+import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -13,7 +14,7 @@ import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
-
+import android.widget.LinearLayout.LayoutParams;
 import java.text.*;
 import java.util.*;
 
@@ -106,6 +107,7 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 		return true;
 	}
 
+	@SuppressLint("NewApi")
 	private View getView(final int groupPosition, final int childPosition,
 			boolean isLastChild, boolean isExpanded, View convertView,
 			ViewGroup parent) {
@@ -114,7 +116,9 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 			convertView = inflater.inflate(R.layout.item_files, null);
 		}
 				
-		
+		if (childPosition >= 0){
+			convertView.setPadding(40, 0, 0, 0);
+		}
 		TextView textViewName = (TextView)convertView.findViewById(R.id.TextViewName);
 		TextView TextViewDate = (TextView)convertView.findViewById(R.id.TextViewDate);
 		ImageView ivLocked =  (ImageView)convertView.findViewById(R.id.ivLocked);
@@ -127,6 +131,12 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 		else
 			record = (PFile)getChild(groupPosition, childPosition);
 
+		ImageButton ibFile = (ImageButton)convertView.findViewById(R.id.ibFile);
+		if (record.isDirectory())
+			ibFile.setImageResource(R.drawable.folder);
+		else	
+			ibFile.setImageResource(R.drawable.file);
+		
 		
 		ImageButton brnGo = (ImageButton)convertView.findViewById(R.id.imageButtonGo);
 		brnGo.setOnClickListener(new OnClickListener(){
@@ -139,13 +149,13 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 
 					Bundle args = new Bundle();
 					
-					String record = null;
+					PFile record = null;
 					if (childPosition < 0)
-						record = (String) getGroup(groupPosition);
+						record = (PFile) getGroup(groupPosition);
 					else
-						record = (String)getChild(groupPosition, childPosition);
+						record = (PFile)getChild(groupPosition, childPosition);
 					
-					args.putString("name", record);
+					args.putString("name", record.getName());
 					fragmentPlayer.setArguments(args);
 
 					ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
