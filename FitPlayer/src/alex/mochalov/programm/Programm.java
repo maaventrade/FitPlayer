@@ -1,33 +1,15 @@
 package alex.mochalov.programm;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.UUID;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import alex.mochalov.fitplayer.R;
-import alex.mochalov.main.Utils;
-import alex.mochalov.record.Record;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
+import alex.mochalov.files.*;
+import alex.mochalov.fitplayer.*;
+import alex.mochalov.main.*;
+import alex.mochalov.record.*;
+import android.content.*;
+import android.widget.*;
+import java.io.*;
+import java.util.*;
+import java.util.Map.*;
+import org.xmlpull.v1.*;
 
 public class Programm {
 
@@ -642,7 +624,7 @@ public class Programm {
 		return record;
 	}
 
-	public static boolean loadXMLInfo(Context mContext, String fileName, FileData fileData) {
+	public static boolean loadXMLInfo( String fileName, PFile pFile) {
 
 		try {
 			String name = Utils.APP_FOLDER + "/" + fileName;
@@ -661,12 +643,12 @@ public class Programm {
 			while (eventType != XmlPullParser.END_DOCUMENT) {
 				if (eventType == XmlPullParser.START_TAG) {
 					if (parser.getName().equals("main")){
-						fileData.setLocked(Boolean.parseBoolean(parser.getAttributeValue(null, "locked")));
-						fileData.setInfo(parser.getAttributeValue(null, "text"));
-						fileData.duration = 0;
+						pFile.setLocked(Boolean.parseBoolean(parser.getAttributeValue(null, "locked")));
+						pFile.setInfo(parser.getAttributeValue(null, "text"));
+						pFile.setDuration(0);
 						if (parser.getAttributeValue(null, "duration") != null)
-							fileData.duration = Integer.parseInt(parser
-									.getAttributeValue(null, "duration"));
+							pFile.setDuration(Integer.parseInt(parser
+									.getAttributeValue(null, "duration")));
 						return true;
 					}
 				}

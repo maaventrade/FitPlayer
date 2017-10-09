@@ -1,17 +1,19 @@
 package alex.mochalov.editor;
 
-import alex.mochalov.fitplayer.R;
+import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
-import alex.mochalov.programm.Programm;
+import alex.mochalov.programm.*;
 import alex.mochalov.record.*;
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.text.*;
+import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 import android.widget.ExpandableListView.*;
+
 import android.view.View.OnClickListener;
 
 public class FragmentEditor extends Fragment {
@@ -60,7 +62,7 @@ public class FragmentEditor extends Fragment {
 		Bundle args = getArguments();
 		Utils.setFileName(args.getString("name", ""));
 		// textViewFileName.setText(fileName);
-
+Log.d("g",args.getString("name", ""));
 		Programm.loadXML(mContext, Utils.getFileName());
 
 		// Edit programm Header

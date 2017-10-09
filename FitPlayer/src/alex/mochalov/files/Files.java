@@ -303,6 +303,7 @@ public class Files {
 							date0 = date;
 						if (currentGroup != null)
 							listDataChild.get(currentGroup).add(new PFile(files[i]));
+						
 						else{
 							listDataHeader.add(new PFile(files[i]));
 							listDataChild.put(currentGroup, new ArrayList<PFile>() );

@@ -3,7 +3,6 @@ package alex.mochalov.files;
 import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
 import alex.mochalov.player.*;
-import alex.mochalov.programm.FileData;
 import alex.mochalov.record.*;
 import android.annotation.SuppressLint;
 import android.app.*;
@@ -180,19 +179,18 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 //			textViewName.setTypeface(null, Typeface.BOLD);
 // 1111111111111111	;
 	
-		
-		
-		
-	/*	
-    	FileData fileData = Utils.getFileData(mActivity, record);
-    	tvDuration.setText(Utils.MStoString(fileData.duration));
-		tvInfo.setText(fileData.getInfo());
-/*    	
-		if (fileData.isLocked())
+		if (record.isDirectory())
+			tvDuration.setText("");
+		else
+    		tvDuration.setText(Utils.MStoString(record.getDuration()));
+			
+		tvInfo.setText(record.getInfo());
+   	
+		if (record.isLocked())
 			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.lock));
 		else
 			ivLocked.setImageDrawable(mContext.getResources().getDrawable(R.drawable.void1));
-*/
+
 		return convertView;
 	}
 }

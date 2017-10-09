@@ -3,7 +3,6 @@ package alex.mochalov.main;
 import alex.mochalov.files.AdapterFiles;
 import alex.mochalov.files.PFile;
 import alex.mochalov.fitplayer.R;
-import alex.mochalov.programm.FileData;
 import alex.mochalov.programm.Programm;
 import alex.mochalov.record.*;
 import android.app.Activity;
@@ -60,10 +59,12 @@ public class Utils {
 		return copyRecord;
 	}
 	
-	public static boolean rename(Context mContext, String from, String to)
+	public static boolean rename(Context mContext, 
+								 String groupName,
+		String from, String to)
 	{
-		File src = new File(APP_FOLDER+"/"+from);
-		File dst = new File(APP_FOLDER+"/"+to);
+		File src = new File(APP_FOLDER+"/"+groupName+from);
+		File dst = new File(APP_FOLDER+"/"+groupName+to);
 		Toast.makeText(mContext,from,Toast.LENGTH_LONG).show();
 		Toast.makeText(mContext,to,Toast.LENGTH_LONG).show();
 		src.renameTo(dst);
@@ -214,14 +215,14 @@ public class Utils {
 		RecordNameComparator fnc = new RecordNameComparator();
         Collections.sort(records, fnc);
 	}
-
+/*
 	public static FileData getFileData(Activity mContext, String string) {
 		FileData fileData = new FileData();
 		Programm.loadXMLInfo(mContext, string, fileData);
 		
 		return fileData;
 	}
-
+*/
 
 
 	public static String archive(ArrayList<String> files, String path) {

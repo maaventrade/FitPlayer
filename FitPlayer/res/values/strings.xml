@@ -19,7 +19,8 @@
     <string name="action_start">Start</string>
     
     <string name="action_add_group">Add the group</string>
-    
+	<string name="action_rename_group">Rename the group</string>
+
     
 	<string name="cancel">Cancel</string>
 	<string name="count">Count before the end</string>
