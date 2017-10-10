@@ -79,5 +79,9 @@
     <string name="extract_from_archive">Extract from archive</string>
 
     <string name="edit_exercise">Edit exercise</string>
+
+    <string name="warning_select_programm">Select item, not group</string>
+    <string name="into">in to</string>
+    
     
 </resources>

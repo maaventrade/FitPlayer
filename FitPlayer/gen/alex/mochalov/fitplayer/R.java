@@ -250,6 +250,7 @@ public final class R {
         public static final int extract_from_archive=0x7f070038;
         public static final int file_name=0x7f07001a;
         public static final int file_saved=0x7f07001b;
+        public static final int into=0x7f07003b;
         public static final int lock=0x7f07001c;
         public static final int music=0x7f07001d;
         public static final int music_quieter=0x7f07001f;
@@ -274,6 +275,7 @@ public final class R {
         public static final int title_add=0x7f070030;
         public static final int title_edit=0x7f070031;
         public static final int unlock=0x7f070032;
+        public static final int warning_select_programm=0x7f07003a;
         public static final int weight=0x7f070033;
         public static final int zero=0x7f070034;
     }

@@ -38,8 +38,7 @@ public class FragmentFiles extends Fragment
 	private int selectedGroupIndex = -1;
 	private int selectedItemIndex = -1;
 
-	private int copyItemIndex = -1;
-	private int copyGroupIndex = -1;
+	private PFile copyPFile = null;
 
 	private String directory = "";
 
@@ -250,22 +249,19 @@ public class FragmentFiles extends Fragment
 				return true;
 			case R.id.action_copy:
 				if (selectedItemIndex >= 0)
-				{
-					copyItemIndex = selectedItemIndex;
-					copyGroupIndex = selectedGroupIndex;
-				}
+					copyPFile = Files.getItem(selectedGroupIndex, selectedItemIndex);
+				else 
+					Toast.makeText(mContext, getResources().getString(R.string.warning_select_programm), Toast.LENGTH_LONG).show();
 				return true;
 			case R.id.action_paste:
-				if (copyItemIndex >= 0)
-				{
+				if (copyPFile !=  null)
 					DialogAddPasteRename("paste", getResources().getString(R.string.action_add_child));
-				}
 				return true;
 			case R.id.action_rename:
-				if (copyItemIndex >= 0)
-				{
-					DialogAddPasteRename("rename", getResources().getString(R.string.action_add_child));
-				}
+				//if (copyItemIndex >= 0)
+				//{
+				//	DialogAddPasteRename("rename", getResources().getString(R.string.action_add_child));
+				//}
 
 				return true;
 
@@ -356,6 +352,10 @@ public class FragmentFiles extends Fragment
 
 		builder.setTitle(title);
 
+		String groupName = "root";
+		if (selectedGroupIndex == -1)
+			groupName = Files.getGroup(selectedGroupIndex).getName()+"/";
+		
 		final EditText name = new EditText(mContext);
 		name.setInputType(InputType.TYPE_CLASS_TEXT);
 		builder.setView(name);
@@ -364,10 +364,13 @@ public class FragmentFiles extends Fragment
 			name.setText(Utils.trimExt(Files.getItem(selectedGroupIndex, selectedItemIndex).getName()));
 		else if (p0.equals("renameGroup"))
 			name.setText(Files.getGroup(selectedGroupIndex).getName());
-		
 		else if (p0.equals("paste"))
 		{
-			builder.setTitle(getResources().getString(R.string.copy) + " " + Files.getItem(selectedGroupIndex, selectedItemIndex));
+			builder.setTitle(getResources().getString(R.string.copy) + " " 
+					+ copyPFile.getName()+" "
+					+ getResources().getString(R.string.into)+" "
+					+ groupName);
+			name.setVisibility(View.INVISIBLE);
 
 		}
 
@@ -376,7 +379,7 @@ public class FragmentFiles extends Fragment
 				public void onClick(DialogInterface p1, int p2)
 				{
 					String newFileName = Utils.trimExt(name.getText().toString());
-					if (! p0.equals("addGroup"))
+					if (! p0.equals("addGroup") && ! p0.equals("renameGroup"))
 						newFileName = newFileName + ".xml";
 
 					if (p0.equals("add"))
@@ -395,7 +398,7 @@ public class FragmentFiles extends Fragment
 							Files.addGroup(file, selectedGroupIndex);
 
 					}
-					else if (p0.equals("rename") || p0.equals("renameGroup") )
+					else if (p0.equals("rename"))
 					{
 						String groupName = "";
 						if (selectedGroupIndex == -1)
@@ -405,8 +408,22 @@ public class FragmentFiles extends Fragment
 										  groupName,
 						 	Files.getItem(selectedGroupIndex, selectedItemIndex).getName(), 
 							newFileName))
+						 return;
+						 
+						 
+						 Utils.setFileName(newFileName);
+						// Files.setChild(selectedGroupIndex, selectedItemIndex, Utils.getFileName());
+					}
+					else if (p0.equals("renameGroup") )
+					{
+						 if (!Utils.rename(mContext, 
+										  "",
+						 	Files.getGroup(selectedGroupIndex).getName(), 
+							newFileName))
 							
 						 return;
+						 Files.getGroup(selectedGroupIndex).setName(newFileName);
+						 
 						 Utils.setFileName(newFileName);
 						// Files.setChild(selectedGroupIndex, selectedItemIndex, Utils.getFileName());
 					}

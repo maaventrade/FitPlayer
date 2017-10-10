@@ -292,7 +292,7 @@ public class Files {
 							}
 					}
 				}
-				
+				currentGroup = null;
 				
 			} else {
 				if (name.toLowerCase().endsWith(".xml")
@@ -301,13 +301,8 @@ public class Files {
 						Date date  =  new Date(files[i].lastModified());
 						if (date.compareTo(date0) > 0)
 							date0 = date;
-						if (currentGroup != null)
-							listDataChild.get(currentGroup).add(new PFile(files[i]));
-						
-						else{
-							listDataHeader.add(new PFile(files[i]));
-							listDataChild.put(currentGroup, new ArrayList<PFile>() );
-						}
+						listDataHeader.add(new PFile(files[i]));
+						listDataChild.put(currentGroup, new ArrayList<PFile>() );
 					}
 			}
 		}

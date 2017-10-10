@@ -2,6 +2,7 @@ package alex.mochalov.files;
 
 import alex.mochalov.programm.*;
 import android.content.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -71,6 +72,11 @@ public class PFile {
 	{
 
 		return mInfo;
+	}
+
+	public void setName(String newFileName) {
+		mName = newFileName;
+		
 	}
 		
 		
