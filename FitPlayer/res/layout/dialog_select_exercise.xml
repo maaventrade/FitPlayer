@@ -9,6 +9,7 @@
         android:id="@+id/ListViewSelect"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+		android:listSelector = "@drawable/selector_list_item"
         android:layout_weight="0.9" />
 
     <LinearLayout

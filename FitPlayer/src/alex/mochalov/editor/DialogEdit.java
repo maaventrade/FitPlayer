@@ -16,7 +16,7 @@ import android.view.*;
 import android.text.*;
 
 public class DialogEdit extends Dialog implements android.view.View.OnClickListener
-{
+{/**/
 
 	private Context mContext;
 	private Dialog dialog;
@@ -172,7 +172,6 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	public void onClick(View v) {
 		if (v == btnOk  || v == imgBtnOk ){
 			record.setName(name.getText().toString());
-			//record.setText(text.getText());
 			record.setRest(itIsTheRest.isChecked());
 			record.setWeight(cbWeight.isChecked());
 			record.setID(mUUID);
@@ -181,7 +180,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 				record.setDuration(duration.getText());
 			
 			Programm.summDurations(record);
-			
+	
 			if (callback != null)
 				if (newRecord)
 					callback.callbackOkNew(record);
@@ -189,7 +188,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 			
 			dialog.dismiss();
 		} else if (v == buttonSelect) {
-			DialogSelectExercise dialog = new DialogSelectExercise(mContext);
+			DialogSelectExercise dialog = new DialogSelectExercise(mContext, record.getExercise(), name.getText().toString());
 			dialog.callback = new DialogSelectExercise.MyCallback() {
 				@Override
 				public void selected(Exercise exercise) {

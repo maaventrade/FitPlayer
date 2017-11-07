@@ -29,15 +29,21 @@ public class DialogSelectExercise extends Dialog
 	
 	private int selectedStringIndex = -1;
 	
+	private Exercise mExercise;
+	
 	MyCallback callback = null;
+
+	private String mName;
 	interface MyCallback {
 		void selected(Exercise record); 
 	} 
 	
-	public DialogSelectExercise(Context context) {
+	public DialogSelectExercise(Context context, Exercise exercise, String name) {
 		super(context);
 		mContext = context;
 		dialog = this;
+		mExercise = exercise;
+		mName = name;
 	}
 
 	@Override
@@ -56,6 +62,16 @@ public class DialogSelectExercise extends Dialog
         adapter = new AdapterSelectExercise(mContext, Exercises.getRecords());
 		
         listViewExercice.setAdapter(adapter);
+		if (mExercise != null)
+			listViewExercice.setSelection(Exercises.getRecords().indexOf(mExercise));
+		else{
+			for (Exercise e: Exercises.getRecords())
+				if (mName.equals(e.getName())){
+					listViewExercice.setSelection(Exercises.getRecords().indexOf(e));
+					break;
+				}
+		}
+		adapter.notifyDataSetChanged();
 		
         listViewExercice.setOnItemClickListener( new ListView.OnItemClickListener(){
 			@Override
@@ -105,6 +121,7 @@ public class DialogSelectExercise extends Dialog
 						dialogEditExercise.callback = new DialogEditExercise.MyCallback() {
 							@Override
 							public void callbackOk(Exercise exercise) {
+								//Exercises
 								adapter.notifyDataSetChanged();
 							}
 						};

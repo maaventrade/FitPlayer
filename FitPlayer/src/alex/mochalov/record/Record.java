@@ -68,6 +68,11 @@ public class Record
 		//modifications = new ArrayList<Record>();
 	}
 
+	public void setText(String text)
+	{
+		mDetails = text;
+	}
+
 	public void copy()
 	{
 		Utils.setCopyRecord(this);

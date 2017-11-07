@@ -1,6 +1,7 @@
 package alex.mochalov.record;
 
 import java.util.*;
+import android.text.*;
 
 public class Exercise
 {
@@ -24,6 +25,16 @@ public class Exercise
 		mName = "New";
 		mText = "";
 		UUID =  java.util.UUID.randomUUID();
+	}
+
+	public void setText(String text)
+	{
+		mText = text;
+	}
+
+	public void setName(String name)
+	{
+		mName = name;
 	}
 	
 	public String getText() {

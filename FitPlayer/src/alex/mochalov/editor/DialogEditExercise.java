@@ -60,6 +60,8 @@ public class DialogEditExercise extends Dialog
 			@Override
 			public void onClick(View p1)
 			{
+				mExercise.setName(etName.getText().toString());
+				mExercise.setText(etDescription.getText().toString());
 				if (callback != null)
 					callback.callbackOk(mExercise);
 				dismiss();

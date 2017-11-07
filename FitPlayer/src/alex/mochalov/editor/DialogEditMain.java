@@ -256,7 +256,9 @@ public class DialogEditMain extends Dialog implements android.view.View.OnClickL
 	public void onClick(View v) {
 		if (v == btnOk || v == imgBtnOk ){
 			//record.setName(name.getText());
-			//record.setText(text.getText());
+			record.setText(text.getText().toString());
+			
+			
 
 			countBeforeTheEnd = (CheckBox)findViewById(R.id.countBeforeTheEnd); 
 			Programm.setCountBeforeTheEnd(countBeforeTheEnd.isChecked());
