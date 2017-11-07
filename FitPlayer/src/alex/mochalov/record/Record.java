@@ -11,13 +11,13 @@ import java.util.*;
 
 public class Record
 {
-	
-	String mName;
-	boolean mRest;
-	boolean mWeight;
+	private String mName;
+	private String mText;
+	private boolean mRest;
+	private boolean mWeight;
 	
 	private long mDuration;
-	private String mDetails = "";
+//	private String mDetails = "";
 
 	private Exercise mExercise;
 	//private ArrayList<Record> modifications;
@@ -25,7 +25,7 @@ public class Record
 	public Record(String name, String text, Boolean rest, int duration, Boolean weight) {
 		
 		mName = name;
-		//mText = text;
+		mText = text;
 		mDuration = duration;
 		mRest = rest;
 		mWeight = weight;
@@ -50,7 +50,7 @@ public class Record
 
 	public Record(String name, String text, Boolean rest, Boolean weight) {
 		mName = name;
-		//mText = text;
+		mText = text;
 		mRest = rest;
 		mWeight = weight;
 		
@@ -70,7 +70,7 @@ public class Record
 
 	public void setText(String text)
 	{
-		mDetails = text;
+		mText = text;
 	}
 
 	public void copy()
@@ -111,13 +111,14 @@ public class Record
 
 	public String getText() {
 		if (mExercise != null)
-			if (mDetails.length() > 0)
-				return mExercise.getText()+" "+mDetails;
+			if (mText.length() > 0)
+				return mExercise.getText()+" "+mText;
 			else
 				return mExercise.getText();
 		else
-			return mDetails; 
+			return mText; 
 	}
+
 
 	public String getName() {
 		return mName;

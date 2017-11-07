@@ -76,8 +76,8 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 		TextView name = (TextView) convertView.findViewById(R.id.TextViewName);
 		name.setText(record.getName());
 
-		TextView text = (TextView) convertView.findViewById(R.id.TextViewText);
-		text.setText(record.getText());
+		TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfo);
+		//txtInfo.setText(record. .getInfo());
 
 		TextView duration = (TextView) convertView
 				.findViewById(R.id.TextViewDuration);

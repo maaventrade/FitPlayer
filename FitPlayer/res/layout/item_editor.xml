@@ -53,7 +53,7 @@
             	    android:src="@drawable/weight" />
 
             	<TextView
-            	    android:id="@+id/TextViewText"
+            	    android:id="@+id/txtInfo"
             	    android:layout_width="match_parent"
             	    android:layout_height="match_parent"
             	    android:maxLines="2"
