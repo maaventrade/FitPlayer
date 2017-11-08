@@ -29,6 +29,7 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 	public interface OnButtonClickListener {
 		public void onEdit(String text);
 		public void onAdd(String text);
+		public void onContextMenu(int groupPosition, int childPosition);
 	}
 	public OnButtonClickListener listener;
 
@@ -138,8 +139,17 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 			ibFile.setImageResource(R.drawable.folder);
 		else	
 			ibFile.setImageResource(R.drawable.file);
+
+		ImageButton ibContextMenu = (ImageButton)convertView.findViewById(R.id.ibContextMenu);
+		ibContextMenu.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if (listener != null)
+						listener.onContextMenu(groupPosition, childPosition);
+				}});
 		
 		
+		/*
 		ImageButton brnGo = (ImageButton)convertView.findViewById(R.id.imageButtonGo);
 		brnGo.setOnClickListener(new OnClickListener(){
 				@Override
@@ -166,7 +176,7 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 					ft.commit();
 
 				}});
-		
+		*/
 		
     	textViewName.setText(record.getName());
 		

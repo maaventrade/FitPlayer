@@ -111,12 +111,12 @@ public class Record
 
 	public String getText() {
 		if (mExercise != null)
-			if (mText.length() > 0)
+			if (mText != null && mText.length() > 0)
 				return mExercise.getText()+" "+mText;
 			else
 				return mExercise.getText();
 		else
-			return mText; 
+			return ""; 
 	}
 
 

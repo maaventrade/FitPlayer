@@ -3,6 +3,7 @@ import alex.mochalov.calendar.*;
 import alex.mochalov.editor.*;
 import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
+import alex.mochalov.player.FragmentPlayer;
 import alex.mochalov.programm.*;
 import android.app.*;
 import android.content.*;
@@ -13,6 +14,7 @@ import android.view.ContextMenu.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import android.widget.ExpandableListView.*;
+
 import java.io.*;
 
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -39,6 +41,8 @@ public class FragmentFiles extends Fragment
 	private PFile copyPFile = null;
 
 	private String directory = "";
+	
+	private LinearLayout llFiles;
 
 	public interface OnStartProgrammListener
 	{
@@ -71,6 +75,8 @@ public class FragmentFiles extends Fragment
 
         rootView = inflater.inflate(R.layout.fragment_files, container, false);
 
+        llFiles =  (LinearLayout)rootView.findViewById(R.id.llFiles);
+        
 		listViewFiles = (ExpandableListView)rootView.findViewById(R.id.ListViewFiles); 
 		//listViewFiles.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		registerForContextMenu(listViewFiles);
@@ -94,7 +100,15 @@ public class FragmentFiles extends Fragment
 			{
 
 			}
+
+			@Override
+			public void onContextMenu(int groupPosition, int childPosition) {
+				//showPopupMenu(listViewFiles, groupPosition, childPosition);
+				mContext.openContextMenu(listViewFiles);
+			}
 		};
+		
+		
 
 		listViewFiles.setAdapter(adapter);
 
@@ -121,12 +135,6 @@ public class FragmentFiles extends Fragment
 						selectedItemIndex = groupPosition;
 					}
 
-					/*
-					 * if (selectedRecord1 == selectedRecord)
-					 * openDialogEdit(selectedRecord,
-					 * adapter.getChildrenCount(groupPosition) > 0); else
-					 * selectedRecord = selectedRecord1;
-					 */
 					return false;
 				}
 			});
@@ -145,15 +153,6 @@ public class FragmentFiles extends Fragment
 					selectedGroupIndex = groupPosition;
 					selectedItemIndex = childPosition;
 
-					/*
-					 Record selectedRecord1 = Programm.getItem(groupPosition,
-					 childPosition);
-
-					 if (selectedRecord1 == selectedRecord)
-					 openDialogEdit(selectedRecord, false);
-					 else
-					 selectedRecord = selectedRecord1;
-					 */
 					return true;
 				}
 
@@ -200,7 +199,19 @@ public class FragmentFiles extends Fragment
 	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		menu.setHeaderTitle("This is my title");
+		if (selectedItemIndex >= 0)
+			if (selectedGroupIndex == -1)
+				menu.setHeaderTitle(Files.getItem(selectedGroupIndex, selectedItemIndex).getName());
+			else
+				menu.setHeaderTitle(Files.getGroup(selectedGroupIndex).getName() + "/" +
+							   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+							   );
+		else
+			if (selectedGroupIndex == -1)
+				return;
+			else
+				menu.setHeaderTitle(Files.getGroup(selectedGroupIndex).getName());
+			
 		//Toast.makeText(mContext, "menu", Toast.LENGTH_LONG).show();
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId()==R.id.ListViewFiles) {
@@ -211,29 +222,41 @@ public class FragmentFiles extends Fragment
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		switch(item.getItemId()) {
-			case R.id.action_add:
-				// add stuff here
-				return true;
-			
-			default:
-                return super.onContextItemSelected(item);
-		}
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
 		int id = item.getItemId();
 
 		switch (id)
 		{
-			case R.id.action_edit:
+		case R.id.action_go:
+			if (selectedItemIndex >= 0)
+			{
+				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+
+				FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+
+				Bundle args = new Bundle();
+				
+				if (selectedGroupIndex == -1)
+					args.putString("name",
+								   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+								   );
+				else
+					args.putString("name",
+								   Files.getGroup(selectedGroupIndex).getName() + "/" +
+								   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+								   );
+				
+				fragmentPlayer.setArguments(args);
+
+				ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
+				ft.addToBackStack(null);
+
+				ft.commit();
+			}
+			return true;
+		case R.id.action_edit:
 				if (selectedItemIndex >= 0)
 				{
 					FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-
 					FragmentEditor fragmentEditor = new FragmentEditor(mContext);
 
 					Bundle args = new Bundle();
@@ -295,7 +318,24 @@ public class FragmentFiles extends Fragment
 			case R.id.action_add:
 				DialogAddPasteRename("addGroup", getResources().getString(R.string.action_add_group));
 				return true;
+			case R.id.action_archive:
+				archive();
+				return true;
+			case R.id.action_extract:
+				extract();
+				return true;						
+			default:	
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		int id = item.getItemId();
 
+		switch (id)
+		{
 			case R.id.action_calendar:
 				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
 
