@@ -116,20 +116,20 @@ public final class R {
         public static final int TextViewTimer=0x7f0a0014;
         public static final int action_add=0x7f0a0048;
         public static final int action_add_child=0x7f0a0049;
-        public static final int action_archive=0x7f0a0053;
+        public static final int action_archive=0x7f0a0052;
         public static final int action_calendar=0x7f0a0050;
         public static final int action_copy=0x7f0a004a;
         public static final int action_cut=0x7f0a004b;
         public static final int action_delete=0x7f0a004d;
         public static final int action_edit=0x7f0a0047;
-        public static final int action_extract=0x7f0a0054;
-        public static final int action_parameters=0x7f0a0055;
+        public static final int action_extract=0x7f0a0053;
+        public static final int action_parameters=0x7f0a0054;
         public static final int action_paste=0x7f0a004c;
-        public static final int action_rename=0x7f0a0051;
-        public static final int action_repeat=0x7f0a0056;
+        public static final int action_rename=0x7f0a0056;
+        public static final int action_repeat=0x7f0a0055;
         public static final int action_save=0x7f0a004e;
         public static final int action_set_rests_duration=0x7f0a004f;
-        public static final int action_settings=0x7f0a0052;
+        public static final int action_settings=0x7f0a0051;
         public static final int btnAdd=0x7f0a002b;
         public static final int btnCancel=0x7f0a0017;
         public static final int btnEdit=0x7f0a002a;
@@ -217,6 +217,7 @@ public final class R {
         public static final int fragment_files=0x7f090002;
         public static final int fragment_player=0x7f090003;
         public static final int main=0x7f090004;
+        public static final int popup_files=0x7f090005;
     }
     public static final class string {
         public static final int action_add=0x7f070001;

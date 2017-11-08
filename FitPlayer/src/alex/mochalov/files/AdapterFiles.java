@@ -115,6 +115,9 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 			convertView = inflater.inflate(R.layout.item_files, null);
 		}
 				
+		//convertView.setLongClickable(true);
+		
+		
 		if (childPosition >= 0){
 			convertView.setPadding(40, 0, 0, 0);
 		}

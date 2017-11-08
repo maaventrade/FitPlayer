@@ -1,0 +1,61 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="alex.mochalov.fitplayer.MainActivity" >
+
+
+  
+    <item
+        android:id="@+id/action_edit"
+        android:orderInCategory="10"
+        android:showAsAction="always"
+        android:title="@string/action_edit" 
+        android:icon="@drawable/edit44"/>
+
+    <item
+        android:id="@+id/action_add"
+        android:orderInCategory="20"
+        android:showAsAction="always"
+        android:icon="@drawable/add"
+        android:title="@string/action_add"/>
+
+    <item
+        android:id="@+id/action_add_child"
+        android:orderInCategory="25"
+        android:showAsAction="always"
+        android:icon="@drawable/add_child"
+        android:title="@string/action_add_child"/>
+
+
+	<item
+        android:id="@+id/action_copy"
+        android:orderInCategory="30"
+        android:showAsAction="always"
+        android:icon="@drawable/copy"
+        android:title="@string/action_copy"/>
+
+	<item
+        android:id="@+id/action_paste"
+        android:orderInCategory="40"
+        android:showAsAction="always"
+        android:icon="@drawable/paste"
+        android:title="@string/paste"/>
+
+	<item
+        android:id="@+id/action_rename"
+        android:orderInCategory="50"
+        android:showAsAction="always"
+        android:icon="@drawable/rename"
+        android:title="@string/rename"/>
+
+
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="55"
+        android:showAsAction="always"
+        android:icon="@drawable/delete"
+        android:title="@string/action_delete"/>
+
+
+  
+
+</menu>

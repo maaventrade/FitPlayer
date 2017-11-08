@@ -3,21 +3,19 @@ import alex.mochalov.calendar.*;
 import alex.mochalov.editor.*;
 import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
-import alex.mochalov.player.*;
-import alex.mochalov.programm.Programm;
-import alex.mochalov.record.*;
+import alex.mochalov.programm.*;
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.text.*;
-import android.util.*;
 import android.view.*;
+import android.view.ContextMenu.*;
 import android.widget.*;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.AdapterView.*;
+import android.widget.ExpandableListView.*;
+import java.io.*;
 
-import java.io.File;
-import java.util.*;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class FragmentFiles extends Fragment
 {
@@ -75,7 +73,7 @@ public class FragmentFiles extends Fragment
 
 		listViewFiles = (ExpandableListView)rootView.findViewById(R.id.ListViewFiles); 
 		//listViewFiles.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
+		registerForContextMenu(listViewFiles);
 		Files.readFilesList();
 
 		adapter = new AdapterFiles(mContext, mContext, Files.getGroups(), Files.getChilds());
@@ -85,7 +83,7 @@ public class FragmentFiles extends Fragment
 			@Override
 			public void onEdit(String text)
 			{
-				//Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
+
 				if (listener != null && text.length() > 0)
 					listener.onGoSelected(text);
 
@@ -162,30 +160,29 @@ public class FragmentFiles extends Fragment
 			});
 
 
-		/*
+		
 		 listViewFiles.setOnItemClickListener( new ListView.OnItemClickListener(){
 		 @Override
 		 public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
 		 {
-		 //String selectedString1 = (String) adapter.getItemAtPosition(index);
-		 if (selectedStringIndex == index){
-		 FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+			 Toast.makeText(mContext,"You Clicked : ",Toast.LENGTH_SHORT).show();  
+			 
+			      
+			 PopupMenu popup = new PopupMenu(mContext, p2);  
+			 //Inflating the Popup using xml file  
+			 popup.getMenuInflater().inflate(R.menu.popup_files, popup.getMenu());  
 
-		 FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+			 //registering popup with OnMenuItemClickListener  
+			 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {  
+					 public boolean onMenuItemClick(MenuItem item) {  
+						return true;  
+					 }  
+				 });  
 
-		 Bundle args = new Bundle();
-		 args.putString("name", files.get(selectedStringIndex));
-		 fragmentPlayer.setArguments(args);
-
-		 ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
-		 ft.addToBackStack(null);
-
-		 ft.commit();
-		 }
-		 else selectedStringIndex = index;
+			 popup.show();//showing popup menu  
 		 }}
 		 );	
-		 */
+		 
 
 		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.timers));
 		;
@@ -199,6 +196,32 @@ public class FragmentFiles extends Fragment
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
+	// Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();  
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		menu.setHeaderTitle("This is my title");
+		//Toast.makeText(mContext, "menu", Toast.LENGTH_LONG).show();
+		super.onCreateContextMenu(menu, v, menuInfo);
+		if (v.getId()==R.id.ListViewFiles) {
+			MenuInflater inflater = mContext.getMenuInflater();
+			inflater.inflate(R.menu.popup_files, menu);
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		switch(item.getItemId()) {
+			case R.id.action_add:
+				// add stuff here
+				return true;
+			
+			default:
+                return super.onContextItemSelected(item);
+		}
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
