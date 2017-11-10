@@ -124,7 +124,7 @@ public final class R {
         public static final int action_delete=0x7f0a004e;
         public static final int action_edit=0x7f0a0048;
         public static final int action_extract=0x7f0a0054;
-        public static final int action_go=0x7f0a0057;
+        public static final int action_go1=0x7f0a0057;
         public static final int action_parameters=0x7f0a0055;
         public static final int action_paste=0x7f0a004d;
         public static final int action_rename=0x7f0a0058;
@@ -221,6 +221,7 @@ public final class R {
         public static final int fragment_player=0x7f090003;
         public static final int main=0x7f090004;
         public static final int popup_files=0x7f090005;
+        public static final int popup_files_group=0x7f090006;
     }
     public static final class string {
         public static final int action_add=0x7f070001;

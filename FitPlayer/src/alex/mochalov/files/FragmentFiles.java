@@ -104,6 +104,25 @@ public class FragmentFiles extends Fragment
 			@Override
 			public void onContextMenu(int groupPosition, int childPosition) {
 				//showPopupMenu(listViewFiles, groupPosition, childPosition);
+				
+				PFile pFile = (PFile)adapter.getGroup(groupPosition);
+
+				if (pFile.isDirectory())
+				{
+					selectedGroupIndex = groupPosition;
+					selectedItemIndex = -1;
+				}
+				else
+				{
+					selectedGroupIndex = -1;
+					selectedItemIndex = groupPosition;
+				}
+				
+				//selectedGroupIndex = groupPosition;
+				//selectedItemIndex = childPosition;
+				
+				//Toast.makeText(mContext,"You Clicked : "+ groupPosition+"  "+ childPosition ,Toast.LENGTH_SHORT).show();
+				//listViewFiles.setSelection(childPosition);
 				mContext.openContextMenu(listViewFiles);
 			}
 		};
@@ -188,17 +207,18 @@ public class FragmentFiles extends Fragment
 		mContext. getActionBar().setDisplayHomeAsUpEnabled(false);
 		return rootView;
 	}
-
+/*
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.fragment_files, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-	// Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();  
-	
+*/
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	
+		
 		if (selectedItemIndex >= 0)
 			if (selectedGroupIndex == -1)
 				menu.setHeaderTitle(Files.getItem(selectedGroupIndex, selectedItemIndex).getName());
@@ -216,17 +236,34 @@ public class FragmentFiles extends Fragment
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId()==R.id.ListViewFiles) {
 			MenuInflater inflater = mContext.getMenuInflater();
-			inflater.inflate(R.menu.popup_files, menu);
+			PFile pFile = (PFile)adapter.getGroup(selectedGroupIndex);
+
+			//if (pFile.isDirectory())
+			//{
+				//inflater.inflate(R.menu.popup_files_group, menu);
+			//}
+			//else
+			//{
+				inflater.inflate(R.menu.popup_files, menu);
+			//}
+			
+			
 		}
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		int id = item.getItemId();
-
+		
+		
+		  
+		
 		switch (id)
 		{
-		case R.id.action_go:
+		case R.id.action_go1:
+			
+				Toast.makeText(mContext,"You selectedItemIndex : " + selectedItemIndex,Toast.LENGTH_SHORT).show();  
+				
 			if (selectedItemIndex >= 0)
 			{
 				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
