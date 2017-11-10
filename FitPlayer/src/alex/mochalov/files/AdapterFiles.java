@@ -133,19 +133,27 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 			record = (PFile) getGroup(groupPosition);
 		else
 			record = (PFile)getChild(groupPosition, childPosition);
-
+    
 		ImageButton ibFile = (ImageButton)convertView.findViewById(R.id.ibFile);
 		if (record.isDirectory())
 			ibFile.setImageResource(R.drawable.folder);
 		else	
 			ibFile.setImageResource(R.drawable.file);
+		
+		ibFile.setTag(new IbTag(groupPosition, childPosition));
+		Log.d("", "->"+ibFile);
 
 		ImageButton ibContextMenu = (ImageButton)convertView.findViewById(R.id.ibContextMenu);
 		ibContextMenu.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					if (listener != null)
-						listener.onContextMenu(groupPosition, childPosition);
+
+					Log.d("", "+"+v);
+					/*
+					if (listener != null){
+						IbTag ibTag = (IbTag)v.getTag();
+						listener.onContextMenu(ibTag.getGroupPosition(), ibTag.getChildPosition());
+					}	*/
 				}});
 		
 		
