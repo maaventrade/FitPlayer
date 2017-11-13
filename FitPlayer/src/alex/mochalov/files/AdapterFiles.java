@@ -14,6 +14,7 @@ import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 import android.widget.LinearLayout.LayoutParams;
+
 import java.text.*;
 import java.util.*;
 
@@ -22,6 +23,8 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 	
 	private Activity mActivity;
 	private Context mContext;
+	
+	private ImageButton ibContextMenu;
 	
 	private List<PFile> mGroups; // header titles
 	private HashMap<PFile, List<PFile>> mChilds;
@@ -140,20 +143,16 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 		else	
 			ibFile.setImageResource(R.drawable.file);
 		
-		ibFile.setTag(new IbTag(groupPosition, childPosition));
-		Log.d("", "->"+ibFile);
+		convertView.setTag(new IbTag(groupPosition, childPosition));
 
-		ImageButton ibContextMenu = (ImageButton)convertView.findViewById(R.id.ibContextMenu);
+		ibContextMenu = (ImageButton)convertView.findViewById(R.id.ibContextMenu);
 		ibContextMenu.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-
-					Log.d("", "+"+v);
-					/*
 					if (listener != null){
-						IbTag ibTag = (IbTag)v.getTag();
+						IbTag ibTag = (IbTag)((View) v.getParent().getParent().getParent()).getTag();
 						listener.onContextMenu(ibTag.getGroupPosition(), ibTag.getChildPosition());
-					}	*/
+					}
 				}});
 		
 		
