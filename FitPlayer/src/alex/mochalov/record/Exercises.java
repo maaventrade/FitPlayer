@@ -42,10 +42,15 @@ public class Exercises {
 		Utils.sortR(exercises);
 	}
 	
-/*
+	/**
+	 * 
+	 * @param mContext
+	 * 
+	 *  Load exercises from the all xml files to list "exercises"  
+	 */
 	public static void loadXMLrecords(Context mContext) {
 
-		records.clear();
+		exercises.clear();
 		
 		File dir = new File(Utils.APP_FOLDER + "/");
 		File[] files = dir.listFiles();
@@ -112,14 +117,20 @@ public class Exercises {
 									if (record.getText() != null
 											&& record.getText().length() > 0) {
 										boolean found = false;
-										for (Exercise r : records)
-											if (r.mName.equals(record.mName)) {
+										for (Exercise r : exercises)
+											if (r.mName.equals(record.getName())) {
 												found = true;
 												break;
 											}
 
-										if (!found)
-											records.add(record);
+										if (!found){
+											Exercise exercise = new Exercise();
+											exercise.setName(record.getName());
+											exercise.setText(record.getText());
+											exercise.setRest(record.isRest());
+											exercise.setWeight(record.isWeight());
+											exercises.add(exercise);
+										}
 									}
 
 								}
@@ -128,15 +139,20 @@ public class Exercises {
 							try {
 								eventType = parser.next();
 							} catch (XmlPullParserException e) {
+								Log.d("", e.toString());
 							}
 						}
 					} catch (Throwable t) {
 					}
 				}
 			}
-		Utils.sortR(records);
+		Utils.sortR(exercises);
 	}
-	*/
+
+	
+	public static void replaceRecords(Context mContext) {
+	}
+	
 	public static void loadExercises(Context mContext) {
 		exercises.clear();
  

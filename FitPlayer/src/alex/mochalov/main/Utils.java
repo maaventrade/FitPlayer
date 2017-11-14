@@ -211,7 +211,6 @@ public class Utils {
 	}
 
 	public static void sortR(ArrayList<Exercise> records) {
-
 		RecordNameComparator fnc = new RecordNameComparator();
         Collections.sort(records, fnc);
 	}

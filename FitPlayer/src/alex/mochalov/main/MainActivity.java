@@ -93,7 +93,8 @@ public class MainActivity extends Activity implements OnInitListener{
 		}
 		
 		Exercises.loadExercises(this);
-		//Records.loadXMLrecords(this);
+		//Exercises.loadXMLrecords(this);
+		//Exercises.SaveExercises(this);
 		
 	}
 /*

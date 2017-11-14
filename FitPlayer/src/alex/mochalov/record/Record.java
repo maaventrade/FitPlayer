@@ -116,7 +116,7 @@ public class Record
 			else
 				return mExercise.getText();
 		else
-			return ""; 
+			return mText; 
 	}
 
 

@@ -58,6 +58,14 @@ public class Exercise
 		return mRest;
 	}
 
+	public void setRest(Boolean rest) {
+		mRest = rest;
+	}
+
+	public void setWeight(Boolean weight) {
+		mWeight = weight;
+	}
+	
 	public boolean isWeight() {
 		return mWeight;
 	}

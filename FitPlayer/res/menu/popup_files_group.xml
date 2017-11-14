@@ -2,14 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="alex.mochalov.fitplayer.MainActivity" >
 
-
-    <item
-        android:id="@+id/action_edit"
-        android:orderInCategory="10"
-        android:showAsAction="always"
-        android:title="@string/action_edit" 
-        android:icon="@drawable/edit44"/>
-
     <item
         android:id="@+id/action_add_group"
         android:orderInCategory="20"

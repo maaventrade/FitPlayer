@@ -236,18 +236,17 @@ public class FragmentFiles extends Fragment
 		
 		if (v.getId()==R.id.ListViewFiles) {
 			MenuInflater inflater = mContext.getMenuInflater();
-			//PFile pFile = (PFile)adapter.getGroup(selectedGroupIndex);
-
-			//if (pFile.isDirectory())
-			//{
-				//inflater.inflate(R.menu.popup_files_group, menu);
-			//}
-			//else
-			//{
+			
+			if (selectedGroupIndex < 0)
 				inflater.inflate(R.menu.popup_files, menu);
-			//}
-			
-			
+			else {
+				PFile pFile = (PFile)adapter.getGroup(selectedGroupIndex);
+
+				if (pFile.isDirectory())
+					inflater.inflate(R.menu.popup_files_group, menu);
+				else
+					inflater.inflate(R.menu.popup_files, menu);
+			}
 		}
 	}
 
@@ -314,8 +313,6 @@ public class FragmentFiles extends Fragment
 					ft.addToBackStack(null);
 
 					ft.commit();
-				} else if (selectedGroupIndex >= 0){
-					DialogAddPasteRename("renameGroup", getResources().getString(R.string.action_rename_group));
 				}
 				return true;
 
@@ -341,13 +338,11 @@ public class FragmentFiles extends Fragment
 					DialogAddPasteRename("paste", getResources().getString(R.string.action_add_programm));
 				return true;
 			case R.id.action_rename:
-				//if (copyItemIndex >= 0)
-				//{
-				//	DialogAddPasteRename("rename", getResources().getString(R.string.action_add_child));
-				//}
-
+				if (selectedItemIndex >= 0)
+					DialogAddPasteRename("rename", getResources().getString(R.string.action_rename_group));
+				else
+					DialogAddPasteRename("renameGroup", getResources().getString(R.string.action_rename_group));
 				return true;
-
 			case R.id.action_add_programm:
 				DialogAddPasteRename("add", getResources().getString(R.string.action_add_programm));
 				return true;
@@ -453,8 +448,8 @@ public class FragmentFiles extends Fragment
 		builder.setTitle(title);
 
 		String groupName = "root";
-		if (selectedGroupIndex == -1)
-			groupName = Files.getGroup(selectedGroupIndex).getName()+"/";
+		if (selectedGroupIndex != -1)
+			groupName = Files.getGroup(selectedGroupIndex).getName();
 		
 		final EditText name = new EditText(mContext);
 		name.setInputType(InputType.TYPE_CLASS_TEXT);
