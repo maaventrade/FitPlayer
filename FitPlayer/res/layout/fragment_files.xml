@@ -14,9 +14,12 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:background="@color/bronze_light2"
+		android:layout_weight="0.5"
 	    android:text="@string/timers"
 	    android:textAppearance="?android:attr/textAppearanceLarge" />
 
+
+	
 <ExpandableListView
 	    android:id="@+id/ListViewFiles"
 	    android:layout_width="match_parent"

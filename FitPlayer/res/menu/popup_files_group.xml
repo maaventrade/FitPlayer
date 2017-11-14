@@ -11,33 +11,20 @@
         android:icon="@drawable/edit44"/>
 
     <item
-        android:id="@+id/action_add"
+        android:id="@+id/action_add_group"
         android:orderInCategory="20"
         android:showAsAction="always"
         android:icon="@drawable/add"
-        android:title="@string/action_add"/>
+        android:title="@string/action_add_group"/>
 
     <item
-        android:id="@+id/action_add_child"
+        android:id="@+id/action_add_programm"
         android:orderInCategory="25"
         android:showAsAction="always"
         android:icon="@drawable/add_child"
-        android:title="@string/action_add_child"/>
+        android:title="@string/action_add_programm"/>
 
 
-	<item
-        android:id="@+id/action_copy"
-        android:orderInCategory="30"
-        android:showAsAction="always"
-        android:icon="@drawable/copy"
-        android:title="@string/action_copy"/>
-
-	<item
-        android:id="@+id/action_paste"
-        android:orderInCategory="40"
-        android:showAsAction="always"
-        android:icon="@drawable/paste"
-        android:title="@string/paste"/>
 
 	<item
         android:id="@+id/action_rename"

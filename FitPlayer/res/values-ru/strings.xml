@@ -3,8 +3,8 @@
 
     <string name="app_name">FitTimer</string>
 
-    <string name="action_add">Добавить</string>
-    <string name="action_add_child">Добавить подуровень</string>
+    <string name="action_add_group">Добавить группу</string>
+    <string name="action_add_programm">Добавить программу</string>
     <string name="action_copy">Копировать</string>
 	<string name="action_cut">Вырезать</string>
     <string name="action_delete">Удалить</string>
@@ -18,7 +18,7 @@
     <string name="action_settings">Настройки</string>
     <string name="action_start">Пуск</string>
     
-    <string name="action_add_group">Добавить группу</string>
+    <string name="action_add_exercise">Добавить упражнение</string>
     
 	<string name="cancel">Отказ</string>
 	<string name="count">Отсчёт перед окончанием</string>

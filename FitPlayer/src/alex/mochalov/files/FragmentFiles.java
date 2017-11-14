@@ -3,21 +3,18 @@ import alex.mochalov.calendar.*;
 import alex.mochalov.editor.*;
 import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
-import alex.mochalov.player.FragmentPlayer;
+import alex.mochalov.player.*;
 import alex.mochalov.programm.*;
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.text.*;
+import android.util.*;
 import android.view.*;
 import android.view.ContextMenu.*;
 import android.widget.*;
-import android.widget.AdapterView.*;
 import android.widget.ExpandableListView.*;
-
 import java.io.*;
-
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class FragmentFiles extends Fragment
 {
@@ -106,6 +103,7 @@ public class FragmentFiles extends Fragment
 				//showPopupMenu(listViewFiles, groupPosition, childPosition);
 				
 				PFile pFile = (PFile)adapter.getGroup(groupPosition);
+				Log.d("h","pfile "+pFile.isDirectory());
 
 				if (pFile.isDirectory())
 				{
@@ -122,8 +120,9 @@ public class FragmentFiles extends Fragment
 				//selectedItemIndex = childPosition;
 				
 				//Toast.makeText(mContext,"You Clicked : "+ groupPosition+"  "+ childPosition ,Toast.LENGTH_SHORT).show();
-				//listViewFiles.setSelection(childPosition);
+				listViewFiles.setSelection(childPosition);
 				mContext.openContextMenu(listViewFiles);
+				
 			}
 		};
 		
@@ -232,11 +231,12 @@ public class FragmentFiles extends Fragment
 			else
 				menu.setHeaderTitle(Files.getGroup(selectedGroupIndex).getName());
 			
-		//Toast.makeText(mContext, "menu", Toast.LENGTH_LONG).show();
+		Toast.makeText(mContext, "menu", Toast.LENGTH_LONG).show();
 		super.onCreateContextMenu(menu, v, menuInfo);
+		
 		if (v.getId()==R.id.ListViewFiles) {
 			MenuInflater inflater = mContext.getMenuInflater();
-			PFile pFile = (PFile)adapter.getGroup(selectedGroupIndex);
+			//PFile pFile = (PFile)adapter.getGroup(selectedGroupIndex);
 
 			//if (pFile.isDirectory())
 			//{
@@ -338,7 +338,7 @@ public class FragmentFiles extends Fragment
 				return true;
 			case R.id.action_paste:
 				if (copyPFile !=  null)
-					DialogAddPasteRename("paste", getResources().getString(R.string.action_add_child));
+					DialogAddPasteRename("paste", getResources().getString(R.string.action_add_programm));
 				return true;
 			case R.id.action_rename:
 				//if (copyItemIndex >= 0)
@@ -348,11 +348,11 @@ public class FragmentFiles extends Fragment
 
 				return true;
 
-			case R.id.action_add_child:
-				DialogAddPasteRename("add", getResources().getString(R.string.action_add_child));
+			case R.id.action_add_programm:
+				DialogAddPasteRename("add", getResources().getString(R.string.action_add_programm));
 				return true;
 
-			case R.id.action_add:
+			case R.id.action_add_group:
 				DialogAddPasteRename("addGroup", getResources().getString(R.string.action_add_group));
 				return true;
 			case R.id.action_archive:

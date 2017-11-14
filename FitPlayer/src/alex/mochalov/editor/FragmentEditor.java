@@ -267,7 +267,7 @@ Log.d("g",args.getString("name", ""));
 
 			setModyfied();
 			return true;
-		case R.id.action_add:
+			case R.id.action_add_group:
 			if (isLocked())
 				return true;
 
@@ -275,7 +275,7 @@ Log.d("g",args.getString("name", ""));
 
 			setModyfied();
 			return true;
-		case R.id.action_add_child:
+			case R.id.action_add_exercise:
 			if (isLocked())
 				return true;
 			

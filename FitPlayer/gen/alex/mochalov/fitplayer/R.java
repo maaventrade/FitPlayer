@@ -115,8 +115,9 @@ public final class R {
         public static final int TextViewName=0x7f0a002f;
         public static final int TextViewText=0x7f0a0031;
         public static final int TextViewTimer=0x7f0a0014;
-        public static final int action_add=0x7f0a0049;
-        public static final int action_add_child=0x7f0a004a;
+        public static final int action_add_exercise=0x7f0a0049;
+        public static final int action_add_group=0x7f0a0058;
+        public static final int action_add_programm=0x7f0a004a;
         public static final int action_archive=0x7f0a0053;
         public static final int action_calendar=0x7f0a0051;
         public static final int action_copy=0x7f0a004b;
@@ -127,7 +128,7 @@ public final class R {
         public static final int action_go1=0x7f0a0057;
         public static final int action_parameters=0x7f0a0055;
         public static final int action_paste=0x7f0a004d;
-        public static final int action_rename=0x7f0a0058;
+        public static final int action_rename=0x7f0a0059;
         public static final int action_repeat=0x7f0a0056;
         public static final int action_save=0x7f0a004f;
         public static final int action_set_rests_duration=0x7f0a0050;
@@ -224,9 +225,9 @@ public final class R {
         public static final int popup_files_group=0x7f090006;
     }
     public static final class string {
-        public static final int action_add=0x7f070001;
-        public static final int action_add_child=0x7f070002;
-        public static final int action_add_group=0x7f07000f;
+        public static final int action_add_exercise=0x7f07000f;
+        public static final int action_add_group=0x7f070001;
+        public static final int action_add_programm=0x7f070002;
         public static final int action_copy=0x7f070003;
         public static final int action_cut=0x7f070004;
         public static final int action_delete=0x7f070005;

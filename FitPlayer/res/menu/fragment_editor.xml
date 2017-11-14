@@ -3,18 +3,18 @@
     tools:context="alex.mochalov.fitplayer.MainActivity" >
 
     <item
-        android:id="@+id/action_add"
+        android:id="@+id/action_add_exercise"
         android:orderInCategory="2"
         android:showAsAction="always"
         android:icon="@drawable/add"
-        android:title="@string/action_add"/>
+        android:title="@string/action_add_exercise"/>
 
     <item
-        android:id="@+id/action_add_child"
+        android:id="@+id/action_add_programm"
         android:orderInCategory="4"
         android:showAsAction="always"
         android:icon="@drawable/add_child"
-        android:title="@string/action_add_child"/>
+        android:title="@string/action_add_programm"/>
     	
 	<item
         android:id="@+id/action_copy"
