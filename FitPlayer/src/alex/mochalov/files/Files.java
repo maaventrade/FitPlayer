@@ -22,12 +22,22 @@ import alex.mochalov.main.Utils;
 import alex.mochalov.programm.Programm;
 import alex.mochalov.record.Record;
 import android.widget.Toast;
+import android.widget.*;
 
 
 public class Files {
 
 	private static ArrayList<PFile> listDataHeader = new ArrayList<PFile>();
 	private static HashMap<PFile, List<PFile>> listDataChild = new HashMap<PFile, List<PFile>>();
+
+	public static void getGroups(ArrayAdapter<String> arrayAdapter)
+	{
+
+		for (PFile r:listDataHeader)
+		if (r.isDirectory())
+			arrayAdapter.add(r.getName());
+		
+	}
 
 
 	public static int getIndex(PFile newRecord) {

@@ -15,6 +15,7 @@ import android.view.ContextMenu.*;
 import android.widget.*;
 import android.widget.ExpandableListView.*;
 import java.io.*;
+import java.util.*;
 
 public class FragmentFiles extends Fragment
 {
@@ -315,7 +316,12 @@ public class FragmentFiles extends Fragment
 					ft.commit();
 				}
 				return true;
+			case R.id.action_move:
+				if (selectedItemIndex >= 0)
+				
+					DialogMove();
 
+				return true;
 			case R.id.action_delete:
 				if (selectedItemIndex >= 0)
 				{
@@ -359,6 +365,35 @@ public class FragmentFiles extends Fragment
 			default:	
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void DialogMove()
+	{
+		
+		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+		dialog.setTitle(Files.getItem(selectedGroupIndex, selectedItemIndex).getName());
+		//dialog.setMessage(getResources().getString(R.string.action_move));
+		
+		final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
+		arrayAdapter.add("root");
+		Files.getGroups(arrayAdapter);
+		
+
+		dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+
+		dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					String strName = arrayAdapter.getItem(which);
+					Utils.move(Files.getItem(selectedGroupIndex, selectedItemIndex).getName(), strName);
+				}
+			});
+		dialog.show();
 	}
 	
 	@Override

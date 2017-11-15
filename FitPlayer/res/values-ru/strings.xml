@@ -17,7 +17,7 @@
 	<string name="action_set_rests_duration">Установить длительность отдыха</string>
     <string name="action_settings">Настройки</string>
     <string name="action_start">Пуск</string>
-    
+    <string name="action_move">Перенести в группу</string>
     <string name="action_add_exercise">Добавить упражнение</string>
     
 	<string name="cancel">Отказ</string>

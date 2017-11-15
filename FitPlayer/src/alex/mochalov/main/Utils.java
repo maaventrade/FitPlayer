@@ -49,6 +49,14 @@ public class Utils {
 	private static String mFileName;
 
 	private static Record copyRecord = null;
+
+	public static void move(String name, String groupName)
+	{
+		File src = new File(APP_FOLDER+"/"+name);
+		File dst = new File(APP_FOLDER+"/"+groupName+"/"+name);
+		
+		src.renameTo(dst);
+	}
 	
 	public static void setCopyRecord(Record record)
 	{

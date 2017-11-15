@@ -68,6 +68,17 @@ public class Record
 		//modifications = new ArrayList<Record>();
 	}
 
+	public void setRec()
+	{
+		Log.d("a", mName);
+		for (Exercise e:Exercises.getExercises()){
+			if (e.getName().equals(mName)){
+				mExercise = e;
+				break;
+			}
+		}
+	}
+
 	public void setText(String text)
 	{
 		mText = text;

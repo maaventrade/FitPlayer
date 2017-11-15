@@ -24,6 +24,14 @@
         android:icon="@drawable/add"
         android:title="@string/action_add_group"/>
 	
+	<item
+        android:id="@+id/action_move"
+        android:orderInCategory="22"
+        android:showAsAction="always"
+        android:icon="@drawable/add"
+        android:title="@string/action_move"/>
+	
+	
     <item
         android:id="@+id/action_add_programm"
         android:orderInCategory="20"

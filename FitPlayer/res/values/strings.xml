@@ -17,7 +17,10 @@
 	<string name="action_set_rests_duration">Set rests duration</string>
     <string name="action_settings">Settings</string>
     <string name="action_start">Start</string>
+	<string name="action_set_recs">Set recs</string>
+    <string name="action_move">Move to group</string>
     
+	
     <string name="action_add_exercise">Add exercise</string>
 	<string name="action_rename_group">Rename the group</string>
 

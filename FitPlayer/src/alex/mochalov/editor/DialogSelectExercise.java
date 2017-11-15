@@ -59,15 +59,15 @@ public class DialogSelectExercise extends Dialog
 		ListView listViewExercice = (ListView)findViewById(R.id.ListViewSelect);
 		listViewExercice.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		
-        adapter = new AdapterSelectExercise(mContext, Exercises.getRecords());
+        adapter = new AdapterSelectExercise(mContext, Exercises.getExercises());
 		
         listViewExercice.setAdapter(adapter);
 		if (mExercise != null)
-			listViewExercice.setSelection(Exercises.getRecords().indexOf(mExercise));
+			listViewExercice.setSelection(Exercises.getExercises().indexOf(mExercise));
 		else{
-			for (Exercise e: Exercises.getRecords())
+			for (Exercise e: Exercises.getExercises())
 				if (mName.equals(e.getName())){
-					listViewExercice.setSelection(Exercises.getRecords().indexOf(e));
+					listViewExercice.setSelection(Exercises.getExercises().indexOf(e));
 					break;
 				}
 		}
@@ -79,7 +79,7 @@ public class DialogSelectExercise extends Dialog
 			{
 				if (selectedStringIndex == index){
 					if (callback != null){
-						callback.selected(Exercises.getRecords().get(index));
+						callback.selected(Exercises.getExercises().get(index));
 						dialog.dismiss();
 					}
 				}
@@ -103,7 +103,7 @@ public class DialogSelectExercise extends Dialog
 				{
 					if (selectedStringIndex != -1){
 						if (callback != null){
-							callback.selected(Exercises.getRecords().get(selectedStringIndex));
+							callback.selected(Exercises.getExercises().get(selectedStringIndex));
 							dialog.dismiss();
 						}
 					}
@@ -116,7 +116,7 @@ public class DialogSelectExercise extends Dialog
 				public void onClick(View p1)
 				{
 					if (selectedStringIndex != -1){
-						DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), Exercises.getRecords().get(selectedStringIndex));
+						DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), Exercises.getExercises().get(selectedStringIndex));
 						dialogEditExercise.show();
 						dialogEditExercise.callback = new DialogEditExercise.MyCallback() {
 							@Override

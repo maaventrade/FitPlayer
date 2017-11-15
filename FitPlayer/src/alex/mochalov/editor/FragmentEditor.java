@@ -317,6 +317,9 @@ Log.d("g",args.getString("name", ""));
 			DialogSetRestsTime();
 			setModyfied();
 			return true;
+		case R.id.action_set_recs:
+			Programm.setRecs();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

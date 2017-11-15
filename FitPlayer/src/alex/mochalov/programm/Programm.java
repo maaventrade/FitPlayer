@@ -28,6 +28,16 @@ public class Programm {
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
 
+	public static void setRecs()
+	{
+		for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
+			for (Record r : entry.getValue())
+				
+					r.setRec();
+
+				
+	}
+
 	public static boolean isProgramm(File file)
 	{
 		try {

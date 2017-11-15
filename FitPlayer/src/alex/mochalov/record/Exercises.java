@@ -227,7 +227,7 @@ public class Exercises {
 		Utils.sortR(exercises);
 	}
 
-	public static ArrayList<Exercise> getRecords() {
+	public static ArrayList<Exercise> getExercises() {
 
 		return exercises;
 	}
