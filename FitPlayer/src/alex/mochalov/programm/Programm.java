@@ -637,11 +637,9 @@ public class Programm {
 	public static boolean loadXMLInfo( String fileName, PFile pFile) {
 
 		try {
-			String name = Utils.APP_FOLDER + "/" + fileName;
-
 			BufferedReader reader;
 			reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(name)));
+					new FileInputStream(fileName)));
 
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);

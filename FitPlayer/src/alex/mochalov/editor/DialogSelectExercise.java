@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import alex.mochalov.editor.DialogEdit.MyCallback;
+import alex.mochalov.files.PFile;
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.*;
 import alex.mochalov.player.AdapterPlayer;
@@ -28,7 +29,8 @@ public class DialogSelectExercise extends Dialog
 	private AdapterSelectExercise adapter;
 	
 	private int selectedStringIndex = -1;
-	
+	// 				PFile pFile = getPFile(groupPosition, childPosition);
+
 	private Exercise mExercise;
 	
 	MyCallback callback = null;

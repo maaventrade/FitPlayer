@@ -9,8 +9,6 @@
         android:showAsAction="always"
         android:title="" 
         android:icon="@drawable/calendar"/>
-    
-    
 
     <item
         android:id="@+id/action_settings"

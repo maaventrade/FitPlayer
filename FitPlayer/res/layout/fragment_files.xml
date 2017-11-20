@@ -9,20 +9,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin" >
 
-
-	
 <ExpandableListView
-	    android:id="@+id/ListViewFiles"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_weight="0.9"
-	    android:choiceMode="singleChoice"
-	    android:indicatorLeft="250dp"
-	    android:indicatorRight="300dp" 
-	    android:layoutDirection="rtl" 
-	    android:listSelector = "@drawable/selector_list_item"
-	    android:groupIndicator="@null"
-	    />
+    android:id="@+id/ListViewFiles"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="0.9"
+    android:choiceMode="singleChoice"
+    android:groupIndicator="@null"
+    android:indicatorLeft="250dp"
+    android:indicatorRight="300dp"
+    android:layoutDirection="rtl"
+    android:listSelector="@drawable/selector_list_item" />
 	
 <!--  
 	

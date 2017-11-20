@@ -73,10 +73,7 @@ public class Utils {
 	{
 		File src = new File(APP_FOLDER+"/"+groupName+from);
 		File dst = new File(APP_FOLDER+"/"+groupName+to);
-		Toast.makeText(mContext,from,Toast.LENGTH_LONG).show();
-		Toast.makeText(mContext,to,Toast.LENGTH_LONG).show();
-		src.renameTo(dst);
-		
+		src.renameTo(dst);		
 		return true;
 	}
 
@@ -232,7 +229,7 @@ public class Utils {
 */
 
 
-	public static String archive(ArrayList<String> files, String path) {
+	public static String archive(ArrayList<PFile> files, String path) {
 		int BUFFER = 1000;
 		
 		Calendar c = Calendar.getInstance();
@@ -254,7 +251,7 @@ public class Utils {
 			    
 				  origin = new BufferedInputStream(fi, BUFFER); 
 			    
-				  ZipEntry entry = new ZipEntry(files.get(i)); 
+				  ZipEntry entry = new ZipEntry(files.get(i).getName()); 
 				  
 				  out.putNextEntry(entry); 
 			    
@@ -270,6 +267,39 @@ public class Utils {
 				return e.toString();
 			} 		
 		return "Created "+zipName;
+		
+		/*
+		 String zipEntryName = fileToZip.getName();
+    if (parrentDirectoryName!=null && !parrentDirectoryName.isEmpty()) {
+        zipEntryName = parrentDirectoryName + "/" + fileToZip.getName();
+    }
+
+    if (fileToZip.isDirectory()) {
+        System.out.println("+" + zipEntryName);
+        for (File file : fileToZip.listFiles()) {
+            addDirToZipArchive(zos, file, zipEntryName);
+        }
+    } else {
+        System.out.println("   " + zipEntryName);
+        byte[] buffer = new byte[1024];
+        FileInputStream fis = new FileInputStream(fileToZip);
+        zos.putNextEntry(new ZipEntry(zipEntryName));
+        int length;
+        while ((length = fis.read(buffer)) > 0) {
+            zos.write(buffer, 0, length);
+        }
+        zos.closeEntry();
+        fis.close();
+    }
+    
+    FileOutputStream fos = new FileOutputStream("C:\\Users\\vebrpav\\archive.zip");
+    ZipOutputStream zos = new ZipOutputStream(fos);
+    addDirToZipArchive(zos, new File("C:\\Users\\vebrpav\\Downloads\\"), null);
+    zos.flush();
+    fos.flush();
+    zos.close();
+    fos.close();
+		 * */
 	}
 
 	public static boolean extract(final Activity mContext, final String path, final ArrayList<String> files, final AdapterFiles adapter) {

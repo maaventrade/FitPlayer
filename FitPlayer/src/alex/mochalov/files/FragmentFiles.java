@@ -66,6 +66,13 @@ public class FragmentFiles extends Fragment
 		mContext = context;
 	}
 
+	private PFile getPFile(int groupPosition, int childPosition){
+		if (childPosition < 0)
+			return (PFile)adapter.getGroup(groupPosition);
+		else 
+			return (PFile)adapter.getChild(groupPosition, childPosition);
+	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -76,7 +83,7 @@ public class FragmentFiles extends Fragment
         llFiles =  (LinearLayout)rootView.findViewById(R.id.llFiles);
         
 		listViewFiles = (ExpandableListView)rootView.findViewById(R.id.ListViewFiles); 
-		//listViewFiles.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		listViewFiles.setChoiceMode(ListView.CHOICE_MODE_SINGLE);////
 		registerForContextMenu(listViewFiles);
 		Files.readFilesList();
 
@@ -99,13 +106,14 @@ public class FragmentFiles extends Fragment
 
 			}
 
+			
 			@Override
 			public void onContextMenu(int groupPosition, int childPosition) {
 				//showPopupMenu(listViewFiles, groupPosition, childPosition);
-				
-				PFile pFile = (PFile)adapter.getGroup(groupPosition);
-				Log.d("h","pfile "+pFile.isDirectory());
 
+				PFile pFile = getPFile(groupPosition, childPosition);
+
+				/*
 				if (pFile.isDirectory())
 				{
 					selectedGroupIndex = groupPosition;
@@ -116,9 +124,10 @@ public class FragmentFiles extends Fragment
 					selectedGroupIndex = -1;
 					selectedItemIndex = groupPosition;
 				}
+				*/
 				
-				//selectedGroupIndex = groupPosition;
-				//selectedItemIndex = childPosition;
+				selectedGroupIndex = groupPosition;
+				selectedItemIndex = childPosition;
 				
 				//Toast.makeText(mContext,"You Clicked : "+ groupPosition+"  "+ childPosition ,Toast.LENGTH_SHORT).show();
 				listViewFiles.setSelection(childPosition);
@@ -136,7 +145,6 @@ public class FragmentFiles extends Fragment
 				public boolean onGroupClick(ExpandableListView parent, View v,
 											int groupPosition, long id)
 				{
-
 					int index = parent.getFlatListPosition(ExpandableListView
 														   .getPackedPositionForGroup(groupPosition));
 					parent.setItemChecked(index, true);
@@ -169,6 +177,32 @@ public class FragmentFiles extends Fragment
 														   .getPackedPositionForChild(groupPosition, childPosition));
 					parent.setItemChecked(index, true);
 
+					
+					if (selectedGroupIndex == groupPosition && selectedItemIndex == childPosition){
+						FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+						FragmentEditor fragmentEditor = new FragmentEditor(mContext);
+
+						Bundle args = new Bundle();
+
+						if (selectedGroupIndex == -1)
+							args.putString("name",
+										   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+										   );
+						else
+							args.putString("name",
+										   Files.getGroup(selectedGroupIndex).getName() + "/" +
+										   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+										   );
+
+						fragmentEditor.setArguments(args);
+
+						ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
+						ft.addToBackStack(null);
+
+						ft.commit();
+					}
+						
+					
 					selectedGroupIndex = groupPosition;
 					selectedItemIndex = childPosition;
 
@@ -178,46 +212,21 @@ public class FragmentFiles extends Fragment
 			});
 
 
-		
-		 listViewFiles.setOnItemClickListener( new ListView.OnItemClickListener(){
-		 @Override
-		 public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
-		 {
-			 Toast.makeText(mContext,"You Clicked : ",Toast.LENGTH_SHORT).show();  
-			 
-			      
-			 PopupMenu popup = new PopupMenu(mContext, p2);  
-			 //Inflating the Popup using xml file  
-			 popup.getMenuInflater().inflate(R.menu.popup_files, popup.getMenu());  
-
-			 //registering popup with OnMenuItemClickListener  
-			 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {  
-					 public boolean onMenuItemClick(MenuItem item) {  
-						return true;  
-					 }  
-				 });  
-
-			 popup.show();//showing popup menu  
-		 }}
-		 );	
-		 
-
 		mContext. getActionBar().setTitle(mContext.getResources().getString(R.string.timers));
 		;
 		mContext. getActionBar().setDisplayHomeAsUpEnabled(false);
 		return rootView;
 	}
-/*
+
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.fragment_files, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-*/
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	
 		
 		if (selectedItemIndex >= 0)
 			if (selectedGroupIndex == -1)
@@ -232,7 +241,6 @@ public class FragmentFiles extends Fragment
 			else
 				menu.setHeaderTitle(Files.getGroup(selectedGroupIndex).getName());
 			
-		Toast.makeText(mContext, "menu", Toast.LENGTH_LONG).show();
 		super.onCreateContextMenu(menu, v, menuInfo);
 		
 		if (v.getId()==R.id.ListViewFiles) {
@@ -241,7 +249,7 @@ public class FragmentFiles extends Fragment
 			if (selectedGroupIndex < 0)
 				inflater.inflate(R.menu.popup_files, menu);
 			else {
-				PFile pFile = (PFile)adapter.getGroup(selectedGroupIndex);
+				PFile pFile = getPFile(selectedGroupIndex, selectedItemIndex);
 
 				if (pFile.isDirectory())
 					inflater.inflate(R.menu.popup_files_group, menu);
@@ -261,8 +269,6 @@ public class FragmentFiles extends Fragment
 		switch (id)
 		{
 		case R.id.action_go1:
-			
-				Toast.makeText(mContext,"You selectedItemIndex : " + selectedItemIndex,Toast.LENGTH_SHORT).show();  
 				
 			if (selectedItemIndex >= 0)
 			{
@@ -391,6 +397,8 @@ public class FragmentFiles extends Fragment
 				public void onClick(DialogInterface dialog, int which) {
 					String strName = arrayAdapter.getItem(which);
 					Utils.move(Files.getItem(selectedGroupIndex, selectedItemIndex).getName(), strName);
+					Files.readFilesList();
+					adapter.notifyDataSetChanged();
 				}
 			});
 		dialog.show();
@@ -459,20 +467,21 @@ public class FragmentFiles extends Fragment
 	private void archive()
 	{
 		DialogSelectPath dialog = new DialogSelectPath(mContext, directory, getResources().getString(R.string.archive_all), true);
-		/* 11111111111
+		
 		 dialog.callback = new DialogSelectPath.SelectFileCallback() {
 		 @Override
 		 public void callbackOk(String path) {
 		 File file = new File(path);
 		 directory = file.getParent(); // to get the parent dir name				
 		 Toast.makeText(mContext, 
-		 Utils.archive(files, path), 
+		 
+		 Utils.archive(Files.getGroups(), path),
+		 
 		 Toast.LENGTH_LONG).show();
 
 		 }
 		 }; 
 		 dialog.show();
-		 */
 
 	}
 
@@ -531,7 +540,7 @@ public class FragmentFiles extends Fragment
 					else if (p0.equals("rename"))
 					{
 						String groupName = "";
-						if (selectedGroupIndex == -1)
+						if (selectedGroupIndex != -1)
 							groupName = Files.getGroup(selectedGroupIndex).getName()+"/";
 							
 						 if (!Utils.rename(mContext, 
@@ -542,6 +551,7 @@ public class FragmentFiles extends Fragment
 						 
 						 
 						 Utils.setFileName(newFileName);
+						 adapter.notifyDataSetChanged();
 						// Files.setChild(selectedGroupIndex, selectedItemIndex, Utils.getFileName());
 					}
 					else if (p0.equals("renameGroup") )
@@ -555,6 +565,7 @@ public class FragmentFiles extends Fragment
 						 Files.getGroup(selectedGroupIndex).setName(newFileName);
 						 
 						 Utils.setFileName(newFileName);
+						 adapter.notifyDataSetChanged();
 						// Files.setChild(selectedGroupIndex, selectedItemIndex, Utils.getFileName());
 					}
 					else

@@ -24,7 +24,7 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 	private Activity mActivity;
 	private Context mContext;
 	
-	private ImageButton ibContextMenu;
+	private ImageView ibContextMenu;
 	
 	private List<PFile> mGroups; // header titles
 	private HashMap<PFile, List<PFile>> mChilds;
@@ -137,15 +137,18 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 		else
 			record = (PFile)getChild(groupPosition, childPosition);
     
-		ImageButton ibFile = (ImageButton)convertView.findViewById(R.id.ibFile);
+		ImageView ibFile = (ImageView)convertView.findViewById(R.id.ibFile);
+		
 		if (record.isDirectory())
 			ibFile.setImageResource(R.drawable.folder);
-		else	
+		else {	
 			ibFile.setImageResource(R.drawable.file);
+			tvDuration.setText(""+record.getDuration());
+		}	
 		
 		convertView.setTag(new IbTag(groupPosition, childPosition));
 
-		ibContextMenu = (ImageButton)convertView.findViewById(R.id.ibContextMenu);
+		ibContextMenu = (ImageView)convertView.findViewById(R.id.ibContextMenu);
 		ibContextMenu.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {

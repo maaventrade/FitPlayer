@@ -2,6 +2,7 @@ package alex.mochalov.files;
 
 import alex.mochalov.programm.*;
 import android.content.*;
+import android.util.Log;
 
 import java.io.*;
 import java.util.*;
@@ -17,11 +18,13 @@ public class PFile {
 		
 	public PFile(File file) {
 			mName = file.getName();
+			
 			mIsDirectory = file.isDirectory();
+			Log.d("ab", ""+mName+" "+mIsDirectory);
+			
 			mDate = new Date(file.lastModified());
 			if (!mIsDirectory)
-				Programm.loadXMLInfo(
-	 mName, this);
+				Programm.loadXMLInfo(file.getAbsolutePath(), this);
 		}
 
 		public PFile(PFile currentRecord, Date date) {

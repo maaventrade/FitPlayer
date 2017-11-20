@@ -77,7 +77,7 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 		name.setText(record.getName());
 
 		TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfo);
-		//txtInfo.setText(record. .getInfo());
+		txtInfo.setText(record.getText());
 
 		TextView duration = (TextView) convertView
 				.findViewById(R.id.TextViewDuration);
@@ -132,6 +132,7 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 	        }			
 		}		
 		
+		convertView.setClickable(false);
 		return convertView;
 
 	}
@@ -199,7 +200,7 @@ public class AdapterEditorExp extends BaseExpandableListAdapter {
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		return true;
+		return false;
 	}
 
 }
