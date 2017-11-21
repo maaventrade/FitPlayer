@@ -105,6 +105,8 @@ public class Files {
 	public static PFile getItem(int groupPosition, int childPosition) {
 		if (groupPosition == -1)
 			return listDataHeader.get(childPosition);
+		else if (childPosition == -1)
+			return listDataHeader.get(groupPosition);
 		else {
 			PFile group = listDataHeader.get(groupPosition);
 			return listDataChild.get(group).get(childPosition);

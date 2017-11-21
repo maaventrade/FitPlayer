@@ -153,7 +153,8 @@ public class Record
 	}
 
 	public void setID(UUID uuid) {
-		getExercise().setID(uuid);
+		if (getExercise() != null)
+			getExercise().setID(uuid);
 	}
 
 	public void setWeight(boolean weight) {

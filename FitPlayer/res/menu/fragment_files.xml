@@ -2,11 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="alex.mochalov.fitplayer.MainActivity" >
 
-	
+    <item
+        android:id="@+id/action_go"
+        android:orderInCategory="5"
+        android:showAsAction="always"
+        android:title="@string/action_go" 
+        android:icon="@drawable/go"/>
+  
+    <item
+        android:id="@+id/action_edit"
+        android:orderInCategory="10"
+        android:showAsAction="always"
+        android:title="@string/action_edit" 
+        android:icon="@drawable/edit44"/>
+    
     <item
         android:id="@+id/action_calendar"
         android:orderInCategory="1"
-        android:showAsAction="always"
+        android:showAsAction="never"
         android:title="" 
         android:icon="@drawable/calendar"/>
 

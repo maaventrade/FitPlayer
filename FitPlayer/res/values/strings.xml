@@ -22,8 +22,7 @@
     
 	
     <string name="action_add_exercise">Add exercise</string>
-	<string name="action_rename_group">Rename the group</string>
-
+	<string name="action_rename">Rename</string>
     
 	<string name="cancel">Cancel</string>
 	<string name="count">Count before the end</string>
@@ -55,7 +54,6 @@
 	<string name="path_music">Path to music:</string>
 	<string name="play_music">Play music</string>
 		
-	<string name="rename">Rename</string>
 	<string name="rest">The rest</string>
 	<string name="run">Run</string>
 

@@ -268,60 +268,6 @@ public class FragmentFiles extends Fragment
 		
 		switch (id)
 		{
-		case R.id.action_go1:
-				
-			if (selectedItemIndex >= 0)
-			{
-				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-
-				FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
-
-				Bundle args = new Bundle();
-				
-				if (selectedGroupIndex == -1)
-					args.putString("name",
-								   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-								   );
-				else
-					args.putString("name",
-								   Files.getGroup(selectedGroupIndex).getName() + "/" +
-								   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-								   );
-				
-				fragmentPlayer.setArguments(args);
-
-				ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
-				ft.addToBackStack(null);
-
-				ft.commit();
-			}
-			return true;
-		case R.id.action_edit:
-				if (selectedItemIndex >= 0)
-				{
-					FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-					FragmentEditor fragmentEditor = new FragmentEditor(mContext);
-
-					Bundle args = new Bundle();
-
-					if (selectedGroupIndex == -1)
-						args.putString("name",
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-					else
-						args.putString("name",
-									   Files.getGroup(selectedGroupIndex).getName() + "/" +
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-
-					fragmentEditor.setArguments(args);
-
-					ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
-					ft.addToBackStack(null);
-
-					ft.commit();
-				}
-				return true;
 			case R.id.action_move:
 				if (selectedItemIndex >= 0)
 				
@@ -350,10 +296,7 @@ public class FragmentFiles extends Fragment
 					DialogAddPasteRename("paste", getResources().getString(R.string.action_add_programm));
 				return true;
 			case R.id.action_rename:
-				if (selectedItemIndex >= 0)
-					DialogAddPasteRename("rename", getResources().getString(R.string.action_rename_group));
-				else
-					DialogAddPasteRename("renameGroup", getResources().getString(R.string.action_rename_group));
+				DialogAddPasteRename("rename", getResources().getString(R.string.action_rename));
 				return true;
 			case R.id.action_add_programm:
 				DialogAddPasteRename("add", getResources().getString(R.string.action_add_programm));
@@ -408,12 +351,11 @@ public class FragmentFiles extends Fragment
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		int id = item.getItemId();
+		FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
 
 		switch (id)
 		{
 			case R.id.action_calendar:
-				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-
 				FragmentCalendar fragmentCalendar = new FragmentCalendar(mContext);
 
 				Bundle arguments = new Bundle();
@@ -433,6 +375,56 @@ public class FragmentFiles extends Fragment
 
 				 ft.commit();
 				 */
+				return true;
+			case R.id.action_go:
+				if (selectedItemIndex >= 0)
+				{
+					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+
+					Bundle args = new Bundle();
+					
+					if (selectedGroupIndex == -1)
+						args.putString("name",
+									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+									   );
+					else
+						args.putString("name",
+									   Files.getGroup(selectedGroupIndex).getName() + "/" +
+									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+									   );
+					
+					fragmentPlayer.setArguments(args);
+
+					ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
+					ft.addToBackStack(null);
+
+					ft.commit();
+				}
+				return true;
+			case R.id.action_edit:
+				if (selectedItemIndex >= 0)
+				{
+					FragmentEditor fragmentEditor = new FragmentEditor(mContext);
+
+					Bundle args = new Bundle();
+
+					if (selectedGroupIndex == -1)
+						args.putString("name",
+									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+									   );
+					else
+						args.putString("name",
+									   Files.getGroup(selectedGroupIndex).getName() + "/" +
+									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+									   );
+
+					fragmentEditor.setArguments(args);
+
+					ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
+					ft.addToBackStack(null);
+
+					ft.commit();
+				}
 				return true;
 			case R.id.action_archive:
 				archive();
@@ -501,8 +493,6 @@ public class FragmentFiles extends Fragment
 
 		if (p0.equals("rename"))
 			name.setText(Utils.trimExt(Files.getItem(selectedGroupIndex, selectedItemIndex).getName()));
-		else if (p0.equals("renameGroup"))
-			name.setText(Files.getGroup(selectedGroupIndex).getName());
 		else if (p0.equals("paste"))
 		{
 			builder.setTitle(getResources().getString(R.string.copy) + " " 
@@ -518,7 +508,7 @@ public class FragmentFiles extends Fragment
 				public void onClick(DialogInterface p1, int p2)
 				{
 					String newFileName = Utils.trimExt(name.getText().toString());
-					if (! p0.equals("addGroup") && ! p0.equals("renameGroup"))
+					if (! p0.equals("addGroup"))
 						newFileName = newFileName + ".xml";
 
 					if (p0.equals("add"))
@@ -540,7 +530,8 @@ public class FragmentFiles extends Fragment
 					else if (p0.equals("rename"))
 					{
 						String groupName = "";
-						if (selectedGroupIndex != -1)
+						
+						if (selectedGroupIndex != -1 && selectedItemIndex != -1) 
 							groupName = Files.getGroup(selectedGroupIndex).getName()+"/";
 							
 						 if (!Utils.rename(mContext, 
@@ -550,21 +541,9 @@ public class FragmentFiles extends Fragment
 						 return;
 						 
 						 
+						 Files.getItem(selectedGroupIndex, selectedItemIndex).setName(newFileName); 
 						 Utils.setFileName(newFileName);
-						 adapter.notifyDataSetChanged();
-						// Files.setChild(selectedGroupIndex, selectedItemIndex, Utils.getFileName());
-					}
-					else if (p0.equals("renameGroup") )
-					{
-						 if (!Utils.rename(mContext, 
-										  "",
-						 	Files.getGroup(selectedGroupIndex).getName(), 
-							newFileName))
-							
-						 return;
-						 Files.getGroup(selectedGroupIndex).setName(newFileName);
 						 
-						 Utils.setFileName(newFileName);
 						 adapter.notifyDataSetChanged();
 						// Files.setChild(selectedGroupIndex, selectedItemIndex, Utils.getFileName());
 					}

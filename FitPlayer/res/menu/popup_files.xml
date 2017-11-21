@@ -4,19 +4,6 @@
 
 
   
-    <item
-        android:id="@+id/action_go1"
-        android:orderInCategory="5"
-        android:showAsAction="always"
-        android:title="@string/action_go" 
-        android:icon="@drawable/go"/>
-  
-    <item
-        android:id="@+id/action_edit"
-        android:orderInCategory="10"
-        android:showAsAction="always"
-        android:title="@string/action_edit" 
-        android:icon="@drawable/edit44"/>
 	<item
         android:id="@+id/action_add_group"
         android:orderInCategory="20"
@@ -58,7 +45,7 @@
         android:orderInCategory="50"
         android:showAsAction="always"
         android:icon="@drawable/rename"
-        android:title="@string/rename"/>
+        android:title="@string/action_rename"/>
 
 
     <item

@@ -23,7 +23,7 @@
         android:orderInCategory="50"
         android:showAsAction="always"
         android:icon="@drawable/rename"
-        android:title="@string/rename"/>
+        android:title="@string/action_rename"/>
 
 
     <item

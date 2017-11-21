@@ -10,11 +10,11 @@
         android:title="@string/action_add_exercise"/>
 
     <item
-        android:id="@+id/action_add_programm"
+        android:id="@+id/action_add_group"
         android:orderInCategory="4"
         android:showAsAction="always"
         android:icon="@drawable/add_child"
-        android:title="@string/action_add_programm"/>
+        android:title="@string/action_add_group"/>
     	
 	<item
         android:id="@+id/action_copy"

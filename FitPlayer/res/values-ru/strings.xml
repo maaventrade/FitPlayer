@@ -50,7 +50,7 @@
 	<string name="path_music">Путь к музыкальным файлам:</string>
 	<string name="play_music">Играть музыку</string>
 		
-	<string name="rename">Переименовать</string>
+	<string name="action_rename">Переименовать</string>
 	<string name="rest">Отдых</string>
 	<string name="run">Пуск</string>
 

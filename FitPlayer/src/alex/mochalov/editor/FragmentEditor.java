@@ -22,6 +22,7 @@ public class FragmentEditor extends Fragment {
 
 	private AdapterEditorExp adapter;
 
+	private Record selectedGroup = null;
 	private Record selectedRecord = null;
 
 	private DialogEditMain dialogEditMain;
@@ -131,6 +132,8 @@ Log.d("g",args.getString("name", ""));
 				parent.setItemChecked(index, true);
 
 				selectedRecord = Programm.getGroup(groupPosition);
+				
+				selectedGroup = Programm.getGroup(groupPosition);
 				/*
 				 * if (selectedRecord1 == selectedRecord)
 				 * openDialogEdit(selectedRecord,
@@ -267,7 +270,7 @@ Log.d("g",args.getString("name", ""));
 
 			setModyfied();
 			return true;
-			case R.id.action_add_group:
+		case R.id.action_add_group:
 			if (isLocked())
 				return true;
 
@@ -275,16 +278,13 @@ Log.d("g",args.getString("name", ""));
 
 			setModyfied();
 			return true;
-			case R.id.action_add_exercise:
+		case R.id.action_add_exercise:
 			if (isLocked())
 				return true;
 			
-			if (selectedRecord != null) {
+			selectedRecord = Programm.addCHildRecord(selectedGroup);
+			adapter.notifyDataSetChanged();
 
-				selectedRecord = Programm.addCHildRecord(selectedRecord);
-				adapter.notifyDataSetChanged();
-
-			}
 			setModyfied();
 			return true;
 		case R.id.action_delete:
