@@ -22,7 +22,7 @@ public class Exercise
 	}
 	
 	public Exercise() {
-		mName = "New";
+		mName = "";
 		mText = "";
 		UUID =  java.util.UUID.randomUUID();
 	}

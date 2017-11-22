@@ -24,15 +24,19 @@ public class DialogEditExercise extends Dialog
 	private EditText etName;
 	private EditText etDescription;
 	private Exercise mExercise;
+	private boolean mAdd;
+	private Context mContext;
 
 	public MyCallback callback = null;
 	public interface MyCallback {
 		void callbackOk(Exercise exercise); 
 	} 
 	
-	public DialogEditExercise(Context context, Exercise exercise) {
+	public DialogEditExercise(Context context, Exercise exercise, boolean add) {
 		super(context);
 		mExercise = exercise;
+		mAdd = add;
+		mContext = context;
 	}
 
 	@Override
@@ -45,15 +49,17 @@ public class DialogEditExercise extends Dialog
 		etName = (EditText)findViewById(R.id.etName);
 		if (mExercise != null)
 			etName.setText(mExercise.getName());
-		else
-			etName.setText("New");
+		
+		if (mAdd)
+			etName.setHint("New exercise");
+		
 		etName.requestFocus();
 		
 		etDescription = (EditText)findViewById(R.id.etDescription);
 		if (mExercise != null)
 			etDescription.setText(mExercise.getText());
 		else
-			etDescription.setText("New");
+			etDescription.setHint("Description");
 		
 		Button btnOk = (Button)findViewById(R.id.btnOk);
 		btnOk.setOnClickListener(new Button.OnClickListener(){
@@ -73,7 +79,22 @@ public class DialogEditExercise extends Dialog
 				@Override
 				public void onClick(View p1)
 				{
-					dismiss();
+					DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+					    @Override
+					    public void onClick(DialogInterface dialog, int which) {
+					        switch (which){
+					        case DialogInterface.BUTTON_POSITIVE:
+								dismiss();
+					            break;
+					        case DialogInterface.BUTTON_NEGATIVE:
+					            break;
+					        }
+					    }
+					};
+
+					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+					builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+					    .setNegativeButton("No", dialogClickListener).show();
 				}
 			});
 		

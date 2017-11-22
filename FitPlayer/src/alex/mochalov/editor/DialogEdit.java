@@ -29,7 +29,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 	private EditText duration;
 	
 	private Button btnOk;
-	private ImageButton imgBtnOk;
+	private Button btnOk1;
 	private Button btnCancel;
 	private Button buttonSelect;
 	
@@ -149,8 +149,8 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		btnOk = (Button)findViewById(R.id.dialogeditButtonOk);
 		btnOk.setOnClickListener(this);
 		
-		imgBtnOk = (ImageButton)findViewById(R.id.imgBtnOk);
-		imgBtnOk.setOnClickListener(this);
+		btnOk1 = (Button)findViewById(R.id.btnOk1);
+		btnOk1.setOnClickListener(this);
 		
 		btnCancel = (Button)findViewById(R.id.dialogeditButtonCancel);
 		btnCancel.setOnClickListener(this);
@@ -170,7 +170,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 
 	@Override
 	public void onClick(View v) {
-		if (v == btnOk  || v == imgBtnOk ){
+		if (v == btnOk  || v == btnOk1 ){
 			record.setName(name.getText().toString());
 			record.setRest(itIsTheRest.isChecked());
 			record.setWeight(cbWeight.isChecked());

@@ -23,6 +23,7 @@
 		    android:id="@+id/etName"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    android:selectAllOnFocus="true"
 		    android:layout_weight="1"
 		    android:ems="10" >
 
@@ -57,18 +58,18 @@
 		android:orientation="horizontal">
 
 		<Button
-			android:id="@+id/btnOk"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/ok"
-			android:layout_weight="0.5"/>
+		    android:id="@+id/btnOk"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0.3"
+		    android:text="@string/ok" />
 
 		<Button
-			android:id="@+id/btnCancel"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/cancel"
-			android:layout_weight="0.5"/>
+		    android:id="@+id/btnCancel"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0.7"
+		    android:text="@string/cancel" />
 
 	</LinearLayout>
 

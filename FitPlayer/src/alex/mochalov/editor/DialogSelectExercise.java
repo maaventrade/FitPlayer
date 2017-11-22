@@ -27,6 +27,7 @@ public class DialogSelectExercise extends Dialog
 	private Dialog dialog;
 
 	private AdapterSelectExercise adapter;
+	private ListView listViewExercice;
 	
 	private int selectedStringIndex = -1;
 	// 				PFile pFile = getPFile(groupPosition, childPosition);
@@ -58,7 +59,7 @@ public class DialogSelectExercise extends Dialog
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
 	              WindowManager.LayoutParams.MATCH_PARENT);
 
-		ListView listViewExercice = (ListView)findViewById(R.id.ListViewSelect);
+		listViewExercice = (ListView)findViewById(R.id.ListViewSelect);
 		listViewExercice.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		
         adapter = new AdapterSelectExercise(mContext, Exercises.getExercises());
@@ -81,6 +82,7 @@ public class DialogSelectExercise extends Dialog
 			{
 				if (selectedStringIndex == index){
 					if (callback != null){
+						Exercises.SaveExercises(mContext);
 						callback.selected(Exercises.getExercises().get(index));
 						dialog.dismiss();
 					}
@@ -94,6 +96,7 @@ public class DialogSelectExercise extends Dialog
 				@Override
 				public void onClick(View p1)
 				{
+					Exercises.SaveExercises(mContext);
 					dialog.dismiss();
 				}
 			});
@@ -105,6 +108,7 @@ public class DialogSelectExercise extends Dialog
 				{
 					if (selectedStringIndex != -1){
 						if (callback != null){
+							Exercises.SaveExercises(mContext);
 							callback.selected(Exercises.getExercises().get(selectedStringIndex));
 							dialog.dismiss();
 						}
@@ -118,7 +122,7 @@ public class DialogSelectExercise extends Dialog
 				public void onClick(View p1)
 				{
 					if (selectedStringIndex != -1){
-						DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), Exercises.getExercises().get(selectedStringIndex));
+						DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), Exercises.getExercises().get(selectedStringIndex), false);
 						dialogEditExercise.show();
 						dialogEditExercise.callback = new DialogEditExercise.MyCallback() {
 							@Override
@@ -136,22 +140,28 @@ public class DialogSelectExercise extends Dialog
 				@Override
 				public void onClick(View p1)
 				{
-					DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), new Exercise());
+					DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), new Exercise(), true);
 					dialogEditExercise.show();
 					dialogEditExercise.callback = new DialogEditExercise.MyCallback() {
 						@Override
 						public void callbackOk(Exercise exercise) {
 							Exercises.addExercise(exercise);
 							adapter.notifyDataSetChanged();
+							listViewExercice.setSelection(Exercises.getExercises().indexOf(exercise));							
 						}
 					};
 				}
 			});
 		
+		this.setOnCancelListener(new OnCancelListener(){
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				Exercises.SaveExercises(mContext);
+			}});
+		
 	}
 
-	protected void onDismiss(DialogInterface dialog){
-		Exercises.SaveExercises(mContext);
-	}
+	
+
 	
 }
