@@ -69,6 +69,8 @@ public class FragmentFiles extends Fragment
 	private PFile getPFile(int groupPosition, int childPosition){
 		if (childPosition < 0)
 			return (PFile)adapter.getGroup(groupPosition);
+		else if (groupPosition < 0)
+			return (PFile)adapter.getGroup(childPosition);
 		else 
 			return (PFile)adapter.getChild(groupPosition, childPosition);
 	}
@@ -263,19 +265,18 @@ public class FragmentFiles extends Fragment
 	public boolean onContextItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		
-		
-		  
+		PFile pFile = getPFile(selectedGroupIndex, selectedItemIndex);
 		
 		switch (id)
 		{
 			case R.id.action_move:
-				if (selectedItemIndex >= 0)
-				
+				if (!pFile.isDirectory())
 					DialogMove();
-
+				else 
+					Toast.makeText(mContext, getResources().getString(R.string.warning_select_programm), Toast.LENGTH_LONG).show();
 				return true;
 			case R.id.action_delete:
-				if (selectedItemIndex >= 0)
+				if (!pFile.isDirectory())
 				{
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 					builder.setMessage("Delete " +
@@ -283,10 +284,12 @@ public class FragmentFiles extends Fragment
 					    .setNegativeButton("No", dialogClickListener).show();
 
 				}
+				else 
+					Toast.makeText(mContext, getResources().getString(R.string.warning_select_programm), Toast.LENGTH_LONG).show();
 
 				return true;
 			case R.id.action_copy:
-				if (selectedItemIndex >= 0)
+				if (!pFile.isDirectory())
 					copyPFile = Files.getItem(selectedGroupIndex, selectedItemIndex);
 				else 
 					Toast.makeText(mContext, getResources().getString(R.string.warning_select_programm), Toast.LENGTH_LONG).show();
@@ -353,6 +356,8 @@ public class FragmentFiles extends Fragment
 		int id = item.getItemId();
 		FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
 
+		PFile pFile = getPFile(selectedGroupIndex, selectedItemIndex);
+		
 		switch (id)
 		{
 			case R.id.action_calendar:
@@ -377,7 +382,7 @@ public class FragmentFiles extends Fragment
 				 */
 				return true;
 			case R.id.action_go:
-				if (selectedItemIndex >= 0)
+				if (!pFile.isDirectory())
 				{
 					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
 
@@ -402,7 +407,7 @@ public class FragmentFiles extends Fragment
 				}
 				return true;
 			case R.id.action_edit:
-				if (selectedItemIndex >= 0)
+				if (!pFile.isDirectory())
 				{
 					FragmentEditor fragmentEditor = new FragmentEditor(mContext);
 
