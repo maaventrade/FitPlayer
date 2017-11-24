@@ -5,15 +5,18 @@ import alex.mochalov.fitplayer.*;
 import alex.mochalov.main.*;
 import alex.mochalov.record.*;
 import android.content.*;
+import android.util.Log;
 import android.widget.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.Map.*;
+
 import org.xmlpull.v1.*;
 
 public class Programm {
 
-	private static Record main = new Record("New programm");
+	private static Record main = new Record("New programm", true);
 	private static boolean soundNextGroupOn = false;
 	private static String soundNextName = "";
 	private static String soundNextGroupUri = "";
@@ -27,6 +30,32 @@ public class Programm {
 
 	private static ArrayList<Record> listDataHeader = new ArrayList<Record>();
 	private static HashMap<Record, List<Record>> listDataChild = new HashMap<Record, List<Record>>();
+
+	public static Record addRecord(Record newRecord, Record currentRecord)
+	{
+		if (newRecord == null)
+			newRecord = new Record("new record", false);
+
+		if (currentRecord == null)
+			listDataHeader.add(newRecord);
+		else if (listDataHeader.indexOf(currentRecord) >= 0) {
+			if (currentRecord == null) {
+				listDataHeader.add(newRecord);
+			} else {
+				listDataHeader.add(listDataHeader.indexOf(currentRecord) + 1,
+								   newRecord);
+			}
+		} else {
+			for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
+				if (entry.getValue().contains(currentRecord))
+					entry.getValue().add(
+						entry.getValue().indexOf(currentRecord) + 1,
+						newRecord);
+
+		}
+
+		return newRecord;
+	}
 
 	public static void setRecs()
 	{
@@ -132,7 +161,7 @@ public class Programm {
 	}
 
 	public static void clear() {
-		main = new Record("New programm");
+		main = new Record("New programm", true);
 		soundNextGroupOn = false;
 		soundNextName = "";
 		soundNextGroupUri = "";
@@ -251,7 +280,7 @@ public class Programm {
 
 			int eventType = parser.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {
-
+Log.d("a", ""+eventType);
 				if (eventType == XmlPullParser.START_DOCUMENT) {
 				} else if (eventType == XmlPullParser.END_TAG) {
 					if (parser.getName().equals("children")) {
@@ -268,13 +297,18 @@ public class Programm {
 							duration = Integer.parseInt(parser
 									.getAttributeValue(null, "duration"));
 
+						String group = parser.getAttributeValue(null, "isGroup");
+						
 						main = new Record(
 								parser.getAttributeValue(null, "name"),
 								parser.getAttributeValue(null, "text"),
 								Boolean.parseBoolean(parser.getAttributeValue(
 										null, "rest")), duration,
-								Boolean.parseBoolean(parser.getAttributeValue(
-												null, "weight")));
+										Boolean.parseBoolean(parser.getAttributeValue(
+												null, "weight")),
+										Boolean.parseBoolean(parser.getAttributeValue(
+										null, "isGroup"))
+												);
 
 						soundNextName = parser.getAttributeValue(null,
 								"soundNextName");
@@ -319,7 +353,9 @@ public class Programm {
 								Boolean.parseBoolean(parser.getAttributeValue(null, "rest")), 
 								duration,
 								uuid, 
-								Boolean.parseBoolean(parser.getAttributeValue(null, "weight")));
+								Boolean.parseBoolean(parser.getAttributeValue(null, "weight")),
+								Boolean.parseBoolean(parser.getAttributeValue(null, "isGroup"))
+								);
 
 						//record.setID(Records.findRecord(record.getText()));
 						
@@ -386,20 +422,6 @@ public class Programm {
 		summDurations(parent);
 	}
 
-	public static Record addCHildRecord(Record selectedRecord) {
-		Record record = new Record("New record");
-
-		if (listDataChild.get(selectedRecord) == null) {
-			ArrayList<Record> newArray = new ArrayList<Record>();
-			newArray.add(record);
-			listDataChild.put(selectedRecord, newArray);
-		} else {
-			listDataChild.get(selectedRecord).add(record);
-		}
-
-		return null;
-	}
-
 	public static File save(Context mContext, String fileName) {
 		summDurationsAll();
 
@@ -428,6 +450,7 @@ public class Programm {
 					+ " expand_text=\"" + expand_text + "\""
 					+ " speach_descr=\"" + speach_descr + "\""					
 					+ " locked=\""+ locked + "\""
+					+ " isGroup=\""+ true + "\""
 					+ ">" + "\n");
 			writer.write("</main>" + "\n");
 
@@ -438,7 +461,9 @@ public class Programm {
 									+ " text=\"" + r.getText() + "\"" 
 									+ r.getIdString()   
 									+ " duration=\""
-									+ r.getDuration() + "\"" + ">" + "\n");
+									+ r.getDuration() + "\""
+									+ " isGroup=\""+ r.isGroup() + "\""
+									+ ">" + "\n");
 				
 				if (listDataChild.get(r) != null) {
 					writer.write("<children>" + "\n");
@@ -447,6 +472,7 @@ public class Programm {
 								+ " text=\"" + l.getText() + "\"" 
 								+ " rest=\""+ l.isRest() + "\"" 
 								+ " weight=\""+ l.isWeight() + "\"" 
+								+ " isGroup=\""+ false + "\""
 								+ l.getIdString()   
 								+ " duration=\""+ l.getDuration() + "\"" + ">" + "\n");
 						writer.write("</record>" + "\n");
@@ -526,9 +552,9 @@ public class Programm {
 		main.setDuration(duration);
 	}
 
-	public static Record addRecord(Record newRecord, Record currentRecord) {
+	public static Record addGroup(Record newRecord, Record currentRecord) {
 		if (newRecord == null)
-			newRecord = new Record("new record");
+			newRecord = new Record("New group", true);
 
 		if (currentRecord == null)
 			listDataHeader.add(newRecord);
@@ -539,15 +565,8 @@ public class Programm {
 				listDataHeader.add(listDataHeader.indexOf(currentRecord) + 1,
 						newRecord);
 			}
-		} else {
-			for (Entry<Record, List<Record>> entry : listDataChild.entrySet())
-				if (entry.getValue().contains(currentRecord))
-					entry.getValue().add(
-							entry.getValue().indexOf(currentRecord) + 1,
-							newRecord);
-
-		}
-
+		} else
+			listDataHeader.add(newRecord);
 		return newRecord;
 	}
 

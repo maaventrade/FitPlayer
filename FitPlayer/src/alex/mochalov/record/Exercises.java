@@ -101,6 +101,8 @@ public class Exercises {
 										duration = Integer.parseInt(parser
 												.getAttributeValue(null,
 														"duration"));
+									
+									String group = parser.getAttributeValue(null, "isGroup");
 
 									Record record = new Record(
 											parser.getAttributeValue(null,
@@ -112,7 +114,9 @@ public class Exercises {
 															"rest")), duration,
 											Boolean.parseBoolean(parser
 														.getAttributeValue(null,
-																"weight")));
+																"weight")),
+											Boolean.parseBoolean("false")
+										);
 
 									if (record.getText() != null
 											&& record.getText().length() > 0) {

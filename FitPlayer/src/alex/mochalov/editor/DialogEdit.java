@@ -53,7 +53,7 @@ public class DialogEdit extends Dialog implements android.view.View.OnClickListe
 		dialog = this;
 		
 		if (object == null){
-			record = new Record("New");
+			record = new Record("New", isGroup);
 			newRecord = true;
 		} else
 			record = object;

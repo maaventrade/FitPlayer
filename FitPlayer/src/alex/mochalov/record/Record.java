@@ -17,18 +17,21 @@ public class Record
 	private boolean mWeight;
 	
 	private long mDuration;
+	
+	private boolean mIsGroup;
 //	private String mDetails = "";
 
 	private Exercise mExercise;
 	//private ArrayList<Record> modifications;
 	
-	public Record(String name, String text, Boolean rest, int duration, Boolean weight) {
+	public Record(String name, String text, Boolean rest, int duration, Boolean weight, boolean isGroup) {
 		
 		mName = name;
 		mText = text;
 		mDuration = duration;
 		mRest = rest;
 		mWeight = weight;
+		mIsGroup = isGroup;
 		
 		//modifications = new ArrayList<Record>();
 	}
@@ -42,9 +45,9 @@ public class Record
 		mWeight = record.mWeight;
 	}
 	
-	public Record(String name) {
+	public Record(String name, boolean isGroup) {
 		mName = name;
-		
+		mIsGroup = isGroup;
 		//modifications = new ArrayList<Record>();
 	}
 
@@ -58,12 +61,13 @@ public class Record
 	}
 	
 
-	public Record(String name, String text, Boolean rest, int duration, UUID uuid, Boolean weight) {
+	public Record(String name, String text, Boolean rest, int duration, UUID uuid, Boolean weight, boolean isGroup) {
 		mName = name;
 		mExercise = Exercises.getRecordByID(uuid);
 		mDuration = duration;
 		mRest = rest;
 		mWeight = weight;
+		mIsGroup = isGroup;
 		
 		//modifications = new ArrayList<Record>();
 	}
@@ -179,6 +183,10 @@ public class Record
 
 	public void setExercise(Exercise exercise) {
 		mExercise = exercise;
+	}
+
+	public boolean isGroup() {
+		return mIsGroup;
 	}	
 	
 }

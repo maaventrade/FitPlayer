@@ -13,13 +13,13 @@ import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 import android.widget.ExpandableListView.*;
-
+     
 import android.view.View.OnClickListener;
 
 public class FragmentEditor extends Fragment {
 	private Activity mContext;
 	private View rootView;
-
+	private View rootView1;
 	private AdapterEditorExp adapter;
 
 	private Record selectedGroup = null;
@@ -63,7 +63,7 @@ public class FragmentEditor extends Fragment {
 		Bundle args = getArguments();
 		Utils.setFileName(args.getString("name", ""));
 		// textViewFileName.setText(fileName);
-Log.d("g",args.getString("name", ""));
+
 		Programm.loadXML(mContext, Utils.getFileName());
 
 		// Edit programm Header
@@ -85,7 +85,6 @@ Log.d("g",args.getString("name", ""));
 		brnEdit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
 				dialogEditMain = new DialogEditMain(mContext, Programm
 						.getMainRecord(), false);
 				dialogEditMain.callback = new DialogEditMain.MyCallback() {
@@ -274,7 +273,7 @@ Log.d("g",args.getString("name", ""));
 			if (isLocked())
 				return true;
 
-			openDialogAdd();
+			openDialogAdd(true);
 
 			setModyfied();
 			return true;
@@ -282,9 +281,8 @@ Log.d("g",args.getString("name", ""));
 			if (isLocked())
 				return true;
 			
-			selectedRecord = Programm.addCHildRecord(selectedGroup);
-			adapter.notifyDataSetChanged();
-
+			openDialogAdd(false);
+			
 			setModyfied();
 			return true;
 		case R.id.action_delete:
@@ -353,19 +351,25 @@ Log.d("g",args.getString("name", ""));
 		builder.show();
 	}
 
-	private void openDialogAdd() {
-		DialogEdit dialog = new DialogEdit(mContext, null, false);
+	private void openDialogAdd(final boolean isGroip) {
+		DialogEdit dialog = new DialogEdit(mContext, null, isGroip);
 		dialog.callback = new DialogEdit.MyCallback() {
 
 			@Override
 			public void callbackOkNew(Record newRecord) {
+				if (isGroip){
+					Programm.addGroup(newRecord, selectedRecord);
 
-				Programm.addRecord(newRecord, selectedRecord);
+					Log.d("a","new "+newRecord);
+					
+				} else {
+					Programm.addRecord(newRecord, selectedGroup);
 
+					Log.d("a","child "+newRecord);
+				}
 				selectedRecord = newRecord;
 				listViewRecords.setItemChecked(Programm.getIndex(newRecord),
-						true);
-
+											   true);
 				adapter.notifyDataSetChanged();
 			}
 
