@@ -136,6 +136,31 @@ public class FragmentFiles extends Fragment
 				mContext.openContextMenu(listViewFiles);
 				
 			}
+
+			@Override
+			public void onGoClicked(int groupPosition, int childPosition) {
+				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
+
+					Bundle args = new Bundle();
+					
+					if (selectedGroupIndex == -1)
+						args.putString("name",
+									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+									   );
+					else
+						args.putString("name",
+									   Files.getGroup(selectedGroupIndex).getName() + "/" +
+									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+									   );
+					
+					fragmentPlayer.setArguments(args);
+
+					ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
+					ft.addToBackStack(null);
+
+					ft.commit();
+			}
 		};
 		
 		
@@ -160,6 +185,9 @@ public class FragmentFiles extends Fragment
 					}
 					else
 					{
+						if (selectedGroupIndex == -1 && selectedItemIndex == groupPosition)
+							StartEdit();
+						
 						selectedGroupIndex = -1;
 						selectedItemIndex = groupPosition;
 					}
@@ -181,27 +209,7 @@ public class FragmentFiles extends Fragment
 
 					
 					if (selectedGroupIndex == groupPosition && selectedItemIndex == childPosition){
-						FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-						FragmentEditor fragmentEditor = new FragmentEditor(mContext);
-
-						Bundle args = new Bundle();
-
-						if (selectedGroupIndex == -1)
-							args.putString("name",
-										   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-										   );
-						else
-							args.putString("name",
-										   Files.getGroup(selectedGroupIndex).getName() + "/" +
-										   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-										   );
-
-						fragmentEditor.setArguments(args);
-
-						ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
-						ft.addToBackStack(null);
-
-						ft.commit();
+						StartEdit();
 					}
 						
 					
@@ -218,6 +226,30 @@ public class FragmentFiles extends Fragment
 		;
 		mContext. getActionBar().setDisplayHomeAsUpEnabled(false);
 		return rootView;
+	}
+
+	protected void StartEdit() {
+		FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+		FragmentEditor fragmentEditor = new FragmentEditor(mContext);
+
+		Bundle args = new Bundle();
+
+		if (selectedGroupIndex == -1)
+			args.putString("name",
+						   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+						   );
+		else
+			args.putString("name",
+						   Files.getGroup(selectedGroupIndex).getName() + "/" +
+						   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+						   );
+
+		fragmentEditor.setArguments(args);
+
+		ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
+		ft.addToBackStack(null);
+
+		ft.commit();
 	}
 
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
@@ -269,6 +301,32 @@ public class FragmentFiles extends Fragment
 		
 		switch (id)
 		{
+			case R.id.action_edit:
+			if (!pFile.isDirectory())
+			{
+				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+				FragmentEditor fragmentEditor = new FragmentEditor(mContext);
+
+				Bundle args = new Bundle();
+
+				if (selectedItemIndex == -1)
+					args.putString("name",
+								   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+								   );
+				else
+					args.putString("name",
+								   Files.getGroup(selectedGroupIndex).getName() + "/" +
+								   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
+								   );
+
+				fragmentEditor.setArguments(args);
+
+				ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
+				ft.addToBackStack(null);
+
+				ft.commit();
+			}
+			return true;
 			case R.id.action_move:
 				if (!pFile.isDirectory())
 					DialogMove();
@@ -380,56 +438,6 @@ public class FragmentFiles extends Fragment
 
 				 ft.commit();
 				 */
-				return true;
-			case R.id.action_go:
-				if (!pFile.isDirectory())
-				{
-					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
-
-					Bundle args = new Bundle();
-					
-					if (selectedGroupIndex == -1)
-						args.putString("name",
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-					else
-						args.putString("name",
-									   Files.getGroup(selectedGroupIndex).getName() + "/" +
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-					
-					fragmentPlayer.setArguments(args);
-
-					ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
-					ft.addToBackStack(null);
-
-					ft.commit();
-				}
-				return true;
-			case R.id.action_edit:
-				if (!pFile.isDirectory())
-				{
-					FragmentEditor fragmentEditor = new FragmentEditor(mContext);
-
-					Bundle args = new Bundle();
-
-					if (selectedGroupIndex == -1)
-						args.putString("name",
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-					else
-						args.putString("name",
-									   Files.getGroup(selectedGroupIndex).getName() + "/" +
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-
-					fragmentEditor.setArguments(args);
-
-					ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
-					ft.addToBackStack(null);
-
-					ft.commit();
-				}
 				return true;
 			case R.id.action_archive:
 				archive();

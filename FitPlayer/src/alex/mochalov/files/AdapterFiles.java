@@ -25,6 +25,7 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 	private Context mContext;
 	
 	private ImageView ibContextMenu;
+	private ImageView ibGo;
 	
 	private List<PFile> mGroups; // header titles
 	private HashMap<PFile, List<PFile>> mChilds;
@@ -32,6 +33,7 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 	public interface OnButtonClickListener {
 		public void onEdit(String text);
 		public void onAdd(String text);
+		public void onGoClicked(int groupPosition, int childPosition);
 		public void onContextMenu(int groupPosition, int childPosition);
 	}
 	public OnButtonClickListener listener;
@@ -157,6 +159,18 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 						listener.onContextMenu(ibTag.getGroupPosition(), ibTag.getChildPosition());
 					}
 				}});
+
+		ibGo = (ImageView)convertView.findViewById(R.id.ibGo);
+		ibGo.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if (listener != null){
+						IbTag ibTag = (IbTag)((View) v.getParent().getParent().getParent()).getTag();
+						listener.onGoClicked(ibTag.getGroupPosition(), ibTag.getChildPosition());
+					}
+				}});
+		
+		
 		
 		
 		/*
