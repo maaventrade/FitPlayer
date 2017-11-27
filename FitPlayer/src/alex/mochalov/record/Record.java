@@ -88,6 +88,11 @@ public class Record
 		mText = text;
 	}
 
+	public void setGroip(Boolean iSGroup)
+	{
+		mIsGroup = iSGroup;
+	}
+
 	public void copy()
 	{
 		Utils.setCopyRecord(this);

@@ -318,6 +318,9 @@ public class FragmentEditor extends Fragment {
 		case R.id.action_set_recs:
 			Programm.setRecs();
 			return true;
+		case R.id.action_set_groups:
+			Programm.setGroups();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -694,7 +694,6 @@ Log.d("a", ""+eventType);
 		long past = 0;
 
 		for (Record r : listDataHeader) {
-
 			List<Record> l = listDataChild.get(r);
 			if (l != null) {
 				for (Record p : l) {
@@ -714,6 +713,15 @@ Log.d("a", ""+eventType);
 		}
 
 		return 0;
+	}
+
+	public static void setGroups() {
+		for (Record r : listDataHeader) {
+			List<Record> l = listDataChild.get(r);
+			if (l != null) 
+				if (l.size() > 0)
+					r.setGroip(true);
+		}
 	}
 	
 }

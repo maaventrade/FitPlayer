@@ -77,7 +77,7 @@ public class DialogSelectPath extends Dialog
 				
 				String f = (String) p1.getItemAtPosition(index);
 				
-				if (listFiles.get(index).isFile()){
+				if (listFiles.get(index-1).isFile()){
 					if (callback != null)
 						callback.callbackOk(PATH + "/" + f);
 					dialog.dismiss();
