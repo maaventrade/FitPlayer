@@ -171,7 +171,8 @@ public class AdapterFiles extends BaseExpandableListAdapter {
 				}});
 		
 		
-		
+		if (record.isDirectory())
+			ibGo.setVisibility(View.INVISIBLE);
 		
 		/*
 		ImageButton brnGo = (ImageButton)convertView.findViewById(R.id.imageButtonGo);

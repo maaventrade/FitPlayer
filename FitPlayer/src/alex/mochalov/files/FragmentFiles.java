@@ -414,7 +414,9 @@ public class FragmentFiles extends Fragment
 		int id = item.getItemId();
 		FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
 
-		PFile pFile = getPFile(selectedGroupIndex, selectedItemIndex);
+		PFile pFile = null;
+		if (selectedGroupIndex >= 0 || selectedItemIndex >= 0 )
+			pFile = getPFile(selectedGroupIndex, selectedItemIndex);
 		
 		switch (id)
 		{
@@ -422,8 +424,8 @@ public class FragmentFiles extends Fragment
 				FragmentCalendar fragmentCalendar = new FragmentCalendar(mContext);
 
 				Bundle arguments = new Bundle();
-				/*
-				 Object[] objectsArray = files.toArray();
+				
+				 Object[] objectsArray = Files.getList().toArray();
 				 String[] stringsArray = new String[objectsArray.length];
 
 				 for (int i = 0; i < objectsArray.length - 1; i++)
@@ -437,7 +439,7 @@ public class FragmentFiles extends Fragment
 				 ft.addToBackStack(null);
 
 				 ft.commit();
-				 */
+				 
 				return true;
 			case R.id.action_archive:
 				archive();
