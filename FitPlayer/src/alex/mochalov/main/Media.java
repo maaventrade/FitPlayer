@@ -18,8 +18,11 @@ public class Media
 	private static String path;
 	private static ArrayList<String> mp3 = new ArrayList<String>();
 
+	private static Context mContext;
 
-	public static void newMediaPlayer(final Activity mContext) {
+	public static void newMediaPlayer(Context context) {
+		mContext = context;
+		
 		mediaPlayer = new MediaPlayer();
 		
 		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -52,13 +55,17 @@ public class Media
 		
 	}
 	
-	public static void restart(final Context mContext, boolean restartMusic)
+	public static void restart(Context context, boolean restartMusic)
 	{
+		mContext = context;
+		
 		if (Programm.isPlayMusicOn() && mp3.size() > 0){
 			if (restartMusic){
 				if (mediaPlayer != null){
 					if(mediaPlayer.isPlaying()) 
 						mediaPlayer.stop();
+				} else {
+					newMediaPlayer(mContext);
 				}
 					
 				int index = (int) (Math.random() * mp3.size());

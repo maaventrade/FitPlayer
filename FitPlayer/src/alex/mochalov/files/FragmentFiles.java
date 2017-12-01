@@ -610,5 +610,21 @@ public class FragmentFiles extends Fragment
 	    }
 	};
 
+	public int getSelectedGroupIndex() {
+		return selectedGroupIndex;
+	}
+
+	public int getSelectedItemIndex() {
+		return selectedItemIndex;
+	}
+
+	public void setSelectedGroupIndex(int par) {
+		selectedGroupIndex = par;
+	}
+
+	public void setSelectedItemIndex(int par) {
+		selectedItemIndex = par;
+	}
+
 
 }

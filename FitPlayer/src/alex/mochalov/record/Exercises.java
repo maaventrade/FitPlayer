@@ -157,6 +157,12 @@ public class Exercises {
 	public static void replaceRecords(Context mContext) {
 	}
 	
+	/**
+	 * 
+	 * @param mContext
+	 * 
+	 * Load full list of the exercises
+	 */
 	public static void loadExercises(Context mContext) {
 		exercises.clear();
  

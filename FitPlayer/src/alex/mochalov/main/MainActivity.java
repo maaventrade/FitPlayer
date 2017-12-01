@@ -24,6 +24,11 @@ public class MainActivity extends Activity implements OnInitListener{
 	
 	String TAG_FRAGMENT_EDITOR = "TAG_FRAGMENT_EDITOR";
 	
+	String SELECTEDGROUPINDEX = "SELECTEDGROUPINDEX";
+	String SELECTEDITEMINDEX = "SELECTEDITEMINDEX";
+	
+	
+	
 	Context mContext;
 
 	int MY_DATA_CHECK_CODE = 0;
@@ -61,6 +66,9 @@ public class MainActivity extends Activity implements OnInitListener{
 		if (savedInstanceState != null){
 			fragmentFiles = (FragmentFiles)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILES);
 			fragmentFiles.setParams(this);
+			
+			fragmentFiles.setSelectedGroupIndex(savedInstanceState.getInt(SELECTEDGROUPINDEX));
+			fragmentFiles.setSelectedItemIndex(savedInstanceState.getInt(SELECTEDITEMINDEX));
 
 			fragmentPlayer = (FragmentPlayer)getFragmentManager().findFragmentByTag(FragmentPlayer.TAG_FRAGMENT_PLAYER);
 			if (fragmentPlayer != null)
@@ -90,9 +98,9 @@ public class MainActivity extends Activity implements OnInitListener{
 			fragmentEditor = new FragmentEditor(this);
 			
 			//Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
+			Exercises.loadExercises(this);
 		}
 		
-		Exercises.loadExercises(this);
 		//Exercises.loadXMLrecords(this);
 		//Exercises.SaveExercises(this);
 		
@@ -129,6 +137,9 @@ public class MainActivity extends Activity implements OnInitListener{
 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		
+		outState.putInt( SELECTEDGROUPINDEX, fragmentFiles.getSelectedGroupIndex());
+		outState.putInt( SELECTEDITEMINDEX, fragmentFiles.getSelectedItemIndex());
 		
 		//outState.putString(MTEXT, MenuData.getText());
 		//outState.putBoolean(RANDOMIZE, Utils.getRandomize());
