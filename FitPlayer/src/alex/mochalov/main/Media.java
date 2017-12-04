@@ -24,6 +24,7 @@ public class Media
 		mContext = context;
 		
 		mediaPlayer = new MediaPlayer();
+		Media.loadMediaFiles(mContext);
 		
 		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 		    public void onCompletion(MediaPlayer mp) {
@@ -64,18 +65,16 @@ public class Media
 				if (mediaPlayer != null){
 					if(mediaPlayer.isPlaying()) 
 						mediaPlayer.stop();
-				} else {
-					newMediaPlayer(mContext);
 				}
-					
+				
 				int index = (int) (Math.random() * mp3.size());
 				try {
 					mediaPlayer.setDataSource(mContext, Uri.parse(path+"/" + mp3.get(index)));
+					mediaPlayer.prepareAsync();
 				} catch (IllegalArgumentException | SecurityException
 						| IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
-				mediaPlayer.prepareAsync();
 			}
 			if(! mediaPlayer.isPlaying()) 
 				mediaPlayer.start();

@@ -4,6 +4,7 @@ import alex.mochalov.editor.*;
 import alex.mochalov.files.*;
 import alex.mochalov.fitplayer.R;
 import alex.mochalov.player.*;
+import alex.mochalov.player.FragmentPlayer.RunParams;
 import alex.mochalov.programm.Programm;
 import alex.mochalov.record.*;
 import android.app.*;
@@ -140,7 +141,7 @@ public class MainActivity extends Activity implements OnInitListener{
 		
 		outState.putInt( SELECTEDGROUPINDEX, fragmentFiles.getSelectedGroupIndex());
 		outState.putInt( SELECTEDITEMINDEX, fragmentFiles.getSelectedItemIndex());
-		
+
 		//outState.putString(MTEXT, MenuData.getText());
 		//outState.putBoolean(RANDOMIZE, Utils.getRandomize());
 		//outState.putIntArray(RANDOMIZATION_ORDER, MenuData.getRandomizationOrder());

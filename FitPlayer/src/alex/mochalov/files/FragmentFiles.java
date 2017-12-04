@@ -140,6 +140,11 @@ public class FragmentFiles extends Fragment
 			@Override
 			public void onGoClicked(int groupPosition, int childPosition) {
 				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
+				
+					selectedGroupIndex = groupPosition;
+					selectedItemIndex = childPosition;
+				
+				
 					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
 
 					Bundle args = new Bundle();
