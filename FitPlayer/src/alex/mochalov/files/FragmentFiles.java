@@ -111,30 +111,11 @@ public class FragmentFiles extends Fragment
 			
 			@Override
 			public void onContextMenu(int groupPosition, int childPosition) {
-				//showPopupMenu(listViewFiles, groupPosition, childPosition);
-
-				PFile pFile = getPFile(groupPosition, childPosition);
-
-				/*
-				if (pFile.isDirectory())
-				{
-					selectedGroupIndex = groupPosition;
-					selectedItemIndex = -1;
-				}
-				else
-				{
-					selectedGroupIndex = -1;
-					selectedItemIndex = groupPosition;
-				}
-				*/
-				
 				selectedGroupIndex = groupPosition;
 				selectedItemIndex = childPosition;
-				
-				//Toast.makeText(mContext,"You Clicked : "+ groupPosition+"  "+ childPosition ,Toast.LENGTH_SHORT).show();
+
 				listViewFiles.setSelection(childPosition);
-				mContext.openContextMenu(listViewFiles);
-				
+				mContext.openContextMenu(listViewFiles);				
 			}
 
 			@Override
@@ -143,21 +124,26 @@ public class FragmentFiles extends Fragment
 				
 					selectedGroupIndex = groupPosition;
 					selectedItemIndex = childPosition;
-				
-				
+									
 					FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
 
 					Bundle args = new Bundle();
 					
-					if (selectedGroupIndex == -1)
-						args.putString("name",
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-					else
-						args.putString("name",
+					if (selectedItemIndex >= 0)
+						if (selectedGroupIndex == -1)
+							args.putString("name",
+									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName());
+						else
+							args.putString("name",
 									   Files.getGroup(selectedGroupIndex).getName() + "/" +
 									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
 									   );
+					else
+						if (selectedGroupIndex == -1)
+							return;
+						else
+							args.putString("name",
+									   Files.getGroup(selectedGroupIndex).getName());
 					
 					fragmentPlayer.setArguments(args);
 

@@ -22,7 +22,6 @@ public class MainActivity extends Activity implements OnInitListener{
 	FragmentEditor fragmentEditor;
 	
 	String TAG_FRAGMENT_FILES = "TAG_FRAGMENT_FILES";
-	
 	String TAG_FRAGMENT_EDITOR = "TAG_FRAGMENT_EDITOR";
 	
 	String SELECTEDGROUPINDEX = "SELECTEDGROUPINDEX";
@@ -162,6 +161,7 @@ public class MainActivity extends Activity implements OnInitListener{
         super.onPause();
     }	
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -196,9 +196,15 @@ public class MainActivity extends Activity implements OnInitListener{
 	    if (count == 0) {
 	        super.onBackPressed();
 	    } else {
-	    	FragmentEditor myFragment = (FragmentEditor)getFragmentManager().findFragmentByTag("TAG_FRAGMENT_EDITOR");
+	    	FragmentPlayer myFragment = (FragmentPlayer)getFragmentManager().findFragmentByTag(FragmentPlayer.TAG_FRAGMENT_PLAYER);
 	    	if (myFragment != null && myFragment.isVisible()) {
-	    		if (myFragment.isModyfied()){
+	    		myFragment.clearRunParams();
+	    	}
+	    	
+	    	
+	    	FragmentEditor myFragment1 = (FragmentEditor)getFragmentManager().findFragmentByTag("TAG_FRAGMENT_EDITOR");
+	    	if (myFragment1 != null && myFragment1.isVisible()) {
+	    		if (myFragment1.isModyfied()){
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 					builder.setMessage("Save ?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();

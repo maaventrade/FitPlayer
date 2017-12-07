@@ -499,7 +499,6 @@ public class FragmentPlayer extends Fragment {
 		AlphaAnimation animation1 = new AlphaAnimation(1.0f, 0.0f);
 		animation1.setDuration(1000);
 		animation1.setStartOffset(1000);
-		animation1.setFillAfter(true);
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			if (isStopped())
@@ -530,6 +529,13 @@ public class FragmentPlayer extends Fragment {
 		bImageView.startAnimation(animation1);
 
 		;
+	}
+
+	public void clearRunParams() {
+		runParams.index = 0;
+		runParams.restOfTime = 0;
+		runParams.restOfFullTime = 0;
+		runParams.state = State.isStopped;
 	}
 	
 }
