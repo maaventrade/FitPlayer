@@ -14,9 +14,13 @@ public class PFile {
 		
 		public long mDuration;
 		private boolean mLocked;
-	private String mInfo;
+		private String mInfo;
 		
-	public PFile(File file) {
+		private String mStrType;
+		
+		
+	public PFile(File file, String strType) {
+			mStrType = strType;
 			mName = file.getName();
 			
 			mIsDirectory = file.isDirectory();
@@ -27,7 +31,7 @@ public class PFile {
 				Programm.loadXMLInfo(file.getAbsolutePath(), this);
 		}
 
-		public PFile(PFile currentRecord, Date date) {
+		public PFile(PFile currentRecord, Date date, String strType) {
 			mName = currentRecord.mName;
 			mIsDirectory = currentRecord.mIsDirectory;
 		}
@@ -80,6 +84,10 @@ public class PFile {
 	public void setName(String newFileName) {
 		mName = newFileName;
 		
+	}
+
+	public String getStrType() {
+		return mStrType;
 	}
 		
 		

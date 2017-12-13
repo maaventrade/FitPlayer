@@ -67,7 +67,7 @@ public class Programm {
 				
 	}
 
-	public static boolean isProgramm(File file)
+	public static String testType(File file, String[] strTypes)
 	{
 		try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -85,19 +85,21 @@ public class Programm {
 				} else if (eventType == XmlPullParser.START_TAG) {
 					if (parser.getName().equals("body")) 
 					{
-						if (parser.getAttributeValue(null, "type").equals("fpprogramm")) return true ;
+						for (String s: strTypes)
+							if (parser.getAttributeValue(null, "type").equals(s))
+								return s ;
 					}
 				} 
 				try {
 					eventType = parser.next();
 				} catch (XmlPullParserException e) {
-					return false;
+					return null;
 				}
 			}
 		} catch (Throwable t) {
-			return false;
+			return null;
 		}
-		return false;
+		return null;
 	}
 
 	public static void setLock() {
@@ -422,7 +424,7 @@ Log.d("a", ""+eventType);
 		summDurations(parent);
 	}
 
-	public static File save(Context mContext, String fileName) {
+	public static File save(Context mContext, String fileName, String strType) {
 		summDurationsAll();
 
 		File file = new File(Utils.APP_FOLDER);
@@ -434,55 +436,84 @@ Log.d("a", ""+eventType);
 		try {
 			Writer writer = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(file), "UTF-8"));
+			
+			if (strType.equals("fpprogramm")){
+				writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
+				writer.write("<body type = \"fpprogramm\">" + "\n");
 
-			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
-			writer.write("<body type = \"fpprogramm\">" + "\n");
+				writer.write("<main text=\"" + main.getText()  
+						+ "\"" + " duration=\""
+						+ main.getDuration() + "\"" + " soundNextGroupOn=\""
+						+ soundNextGroupOn + "\"" + " soundNextName=\""
+						+ soundNextName + "\"" + " soundNextGroupUri=\""
+						+ soundNextGroupUri + "\"" + " countBeforeTheEnd=\""
+						+ countBeforeTheEnd + "\"" + " pathToMp3=\"" + pathToMp3
+						+ "\"" + " playMusic=\"" + playMusic + "\""
+						+ " music_quieter=\"" + music_quieter + "\""
+						+ " expand_text=\"" + expand_text + "\""
+						+ " speach_descr=\"" + speach_descr + "\""					
+						+ " locked=\""+ locked + "\""
+						+ " isGroup=\""+ true + "\""
+						+ ">" + "\n");
+				writer.write("</main>" + "\n");
 
-			writer.write("<main text=\"" + main.getText()  
-					+ "\"" + " duration=\""
-					+ main.getDuration() + "\"" + " soundNextGroupOn=\""
-					+ soundNextGroupOn + "\"" + " soundNextName=\""
-					+ soundNextName + "\"" + " soundNextGroupUri=\""
-					+ soundNextGroupUri + "\"" + " countBeforeTheEnd=\""
-					+ countBeforeTheEnd + "\"" + " pathToMp3=\"" + pathToMp3
-					+ "\"" + " playMusic=\"" + playMusic + "\""
-					+ " music_quieter=\"" + music_quieter + "\""
-					+ " expand_text=\"" + expand_text + "\""
-					+ " speach_descr=\"" + speach_descr + "\""					
-					+ " locked=\""+ locked + "\""
-					+ " isGroup=\""+ true + "\""
-					+ ">" + "\n");
-			writer.write("</main>" + "\n");
-
-			for (Record r : listDataHeader) {
-				
-					writer.write(
-							"<record name=\"" + r.getName() + "\""
-									+ " text=\"" + r.getText() + "\"" 
-									+ r.getIdString()   
-									+ " duration=\""
-									+ r.getDuration() + "\""
-									+ " isGroup=\""+ r.isGroup() + "\""
-									+ ">" + "\n");
-				
-				if (listDataChild.get(r) != null) {
-					writer.write("<children>" + "\n");
-					for (Record l : listDataChild.get(r)) {
-						writer.write("<record name=\"" + l.getName() + "\""
-								+ " text=\"" + l.getText() + "\"" 
-								+ " rest=\""+ l.isRest() + "\"" 
-								+ " weight=\""+ l.isWeight() + "\"" 
-								+ " isGroup=\""+ false + "\""
-								+ l.getIdString()   
-								+ " duration=\""+ l.getDuration() + "\"" + ">" + "\n");
-						writer.write("</record>" + "\n");
+				for (Record r : listDataHeader) {
+					
+						writer.write(
+								"<record name=\"" + r.getName() + "\""
+										+ " text=\"" + r.getText() + "\"" 
+										+ r.getIdString()   
+										+ " duration=\""
+										+ r.getDuration() + "\""
+										+ " isGroup=\""+ r.isGroup() + "\""
+										+ ">" + "\n");
+					
+					if (listDataChild.get(r) != null) {
+						writer.write("<children>" + "\n");
+						for (Record l : listDataChild.get(r)) {
+							writer.write("<record name=\"" + l.getName() + "\""
+									+ " text=\"" + l.getText() + "\"" 
+									+ " rest=\""+ l.isRest() + "\"" 
+									+ " weight=\""+ l.isWeight() + "\"" 
+									+ " isGroup=\""+ false + "\""
+									+ l.getIdString()   
+									+ " duration=\""+ l.getDuration() + "\"" + ">" + "\n");
+							writer.write("</record>" + "\n");
+						}
+						writer.write("</children>" + "\n");
 					}
-					writer.write("</children>" + "\n");
+					writer.write("</record>" + "\n");
 				}
-				writer.write("</record>" + "\n");
-			}
 
-			writer.write("</body>" + "\n");
+				writer.write("</body>" + "\n");
+			} else {
+				writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+						+ "\n");
+				writer.write("<body type = \"records\">" + "\n");
+
+				for (Record r : listDataHeader) {
+
+					writer.write("<record name=\"" + r.getName() + "\""
+							+ " text=\"" + r.getText() + "\"" + r.getIdString()
+							+ ">" + "\n");
+
+					if (listDataChild.get(r) != null) {
+						writer.write("<children>" + "\n");
+						for (Record l : listDataChild.get(r)) {
+							writer.write("<record name=\"" + l.getName() + "\""
+									+ " text=\"" + l.getText() + "\""
+									+ " rest=\"" + l.isRest() + "\""
+									+ l.getIdString()
+									+ ">" + "\n");
+							writer.write("</record>" + "\n");
+						}
+						writer.write("</children>" + "\n");
+					}
+					writer.write("</record>" + "\n");
+				}
+
+				writer.write("</body>" + "\n");
+			}
 
 			writer.close();
 			// Toast.makeText(mContext,

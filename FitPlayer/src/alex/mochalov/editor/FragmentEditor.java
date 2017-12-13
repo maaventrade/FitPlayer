@@ -32,6 +32,8 @@ public class FragmentEditor extends Fragment {
 	private ExpandableListView listViewRecords;
 	private TextView durationMain;
 
+	private String mStrType;
+	
 	public FragmentEditor(Activity context) {
 		super();
 		mContext = context;
@@ -63,6 +65,7 @@ public class FragmentEditor extends Fragment {
 		Bundle args = getArguments();
 		Utils.setFileName(args.getString("name", ""));
 		// textViewFileName.setText(fileName);
+		mStrType = args.getString("strType", "");
 
 		Programm.loadXML(mContext, Utils.getFileName());
 
@@ -75,8 +78,7 @@ public class FragmentEditor extends Fragment {
 
 		nameMain.setText( Utils.getFileName());
 		durationMain.setText(Utils.MStoString(Programm.getMainRecord()
-				.getDuration()));
-				
+				.getDuration()));				
 		
 		textMain.setText(Programm.getMainRecord().getText());
 
@@ -166,8 +168,7 @@ public class FragmentEditor extends Fragment {
 
 		});
 
-		
-		
+				
 		mContext.getActionBar().setTitle(
 				mContext.getResources().getString(R.string.edit_timer));
 		mContext.getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -301,7 +302,7 @@ public class FragmentEditor extends Fragment {
 			setModyfied();
 			return true;
 		case R.id.action_save:
-			Programm.save(mContext, Utils.getFileName());
+			Programm.save(mContext, Utils.getFileName(), mStrType);
 			
 			durationMain.setText(Utils.MStoString(Programm.getMainRecord()
 					.getDuration()));

@@ -300,6 +300,8 @@ public class FragmentFiles extends Fragment
 
 				Bundle args = new Bundle();
 
+				args.putString("strType", pFile.getStrType());
+				
 				if (selectedItemIndex == -1)
 					args.putString("name",
 								   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
@@ -521,7 +523,7 @@ public class FragmentFiles extends Fragment
 					{
 						Programm.clear();
 						Utils.setFileName(newFileName);
-						File file = Programm.save(mContext, newFileName);
+						File file = Programm.save(mContext, newFileName, "fpprogramm");
 						Files.addChildRecord(Files.getGroup(selectedGroupIndex), file);
 
 					}

@@ -141,16 +141,7 @@ public class MainActivity extends Activity implements OnInitListener{
 		outState.putInt( SELECTEDGROUPINDEX, fragmentFiles.getSelectedGroupIndex());
 		outState.putInt( SELECTEDITEMINDEX, fragmentFiles.getSelectedItemIndex());
 
-		//outState.putString(MTEXT, MenuData.getText());
-		//outState.putBoolean(RANDOMIZE, Utils.getRandomize());
-		//outState.putIntArray(RANDOMIZATION_ORDER, MenuData.getRandomizationOrder());
-		
-		//outState.putInt( HELPTEXTSCALE, Utils.getScale());
-		
-		//outState.putString( DIC, Dictionary.getDictionaryName());
-		//outState.putString(DIC_LASTWORD, Dictionary.getLastWord());
-		//outState.putString(DIC_TEXT, Dictionary.getText());
-		//Log.d("aaa", "PUT "+Utils.getScale());
+
 	}
 	
 	@Override
@@ -236,7 +227,7 @@ public class MainActivity extends Activity implements OnInitListener{
 	    public void onClick(DialogInterface dialog, int which) {
 	        switch (which){
 	        case DialogInterface.BUTTON_POSITIVE:
-				Programm.save(mContext, Utils.getFileName());
+				Programm.save(mContext, Utils.getFileName(), "fpprogramm");
 		        getFragmentManager().popBackStack();
 	            break;
 	        case DialogInterface.BUTTON_NEGATIVE:

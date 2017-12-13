@@ -21,7 +21,6 @@ import alex.mochalov.fitplayer.R;
 import alex.mochalov.main.Utils;
 import alex.mochalov.programm.Programm;
 import alex.mochalov.record.Record;
-import android.widget.Toast;
 import android.widget.*;
 
 
@@ -133,7 +132,7 @@ public class Files {
 	}
 
 	public static PFile addChildRecord(PFile selectedRecord, File file) {
-		PFile pfile = new PFile(file);
+		PFile pfile = new PFile(file, "fpprogramm");
 
 		if (listDataChild.get(selectedRecord) == null) {
 			ArrayList<PFile> newArray = new ArrayList<PFile>();
@@ -164,7 +163,7 @@ public class Files {
 	public static void addGroup(File file, int index) {
 		if (index < 0) index = 0;
 		
-		PFile pFile = new PFile(file);
+		PFile pFile = new PFile(file, "fpprogramm");
 		
 		listDataHeader.add(index, pFile); 
 		listDataChild.put(pFile, new ArrayList<PFile>());
@@ -279,6 +278,9 @@ public class Files {
 			file.mkdirs();                  
 		}
 
+
+		String[] StrTypes = {"fpprogramm", "records"};
+		
 		File[] files = file.listFiles();
 		
 		for (int i = 0; i < files.length; i++)
@@ -286,7 +288,7 @@ public class Files {
 			String name = files[i].getName();
 			
 			if (files[i].isDirectory()){
-				currentGroup = new PFile(files[i]);
+				currentGroup = new PFile(files[i], "fpprogramm");
 				listDataHeader.add(currentGroup);
 				listDataChild.put(currentGroup, new ArrayList<PFile>() );
 				
@@ -297,25 +299,30 @@ public class Files {
 					
 					if (filesSubdir[i1].isDirectory()){
 					} else {
-						if (name.toLowerCase().endsWith(".xml")
-								&& Programm.isProgramm(filesSubdir[i1])
-								){
-								listDataChild.get(currentGroup).add(new PFile(filesSubdir[i1]));
-							}
+						if (name.toLowerCase().endsWith(".xml")){
+							
+							String mStrType = Programm.testType(filesSubdir[i1], StrTypes);
+							if (mStrType != null)
+								
+								listDataChild.get(currentGroup).add(new PFile(filesSubdir[i1], mStrType));
+						}
 					}
 				}
 				currentGroup = null;
 				
 			} else {
-				if (name.toLowerCase().endsWith(".xml")
-						&& Programm.isProgramm(files[i])
-						){
-						Date date  =  new Date(files[i].lastModified());
-						if (date.compareTo(date0) > 0)
-							date0 = date;
-						listDataHeader.add(new PFile(files[i]));
-						listDataChild.put(currentGroup, new ArrayList<PFile>() );
-					}
+				if (name.toLowerCase().endsWith(".xml"))
+						{
+
+							String mStrType = Programm.testType(files[i], StrTypes);
+							if (mStrType != null){
+								Date date  =  new Date(files[i].lastModified());
+								if (date.compareTo(date0) > 0)
+									date0 = date;
+								listDataHeader.add(new PFile(files[i], mStrType));
+								listDataChild.put(currentGroup, new ArrayList<PFile>() );
+							}
+				}
 			}
 		}
 		
